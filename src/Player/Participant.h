@@ -8,10 +8,11 @@
 #include <vector>
 #include <iostream>
 #include "Money.h"
-#include "../GameBoard/Property.h"
-
 using namespace std;
 
+namespace GameBoard {
+    class Property;
+}
 namespace Player {
 
     class Participant {
@@ -26,7 +27,7 @@ namespace Player {
         int getParticipantId() const;
         string getName();
         int getCurrentPosition();
-        void moveCurrentPosition(int currentPosition);
+        void setCurrentPosition(int currentPosition);
         Money & getMoney();
         vector<GameBoard::Property *> getParticipantProperties();
         void addParticipantProperty(GameBoard::Property *property);

@@ -17,12 +17,14 @@ namespace GameBoard {
         double rentCost;
         Player::Participant * owner = nullptr;
     public:
-        Property(const string &name, double propertyPrice);
-        const Player::Participant * getOwner() const;
+        Property(const string &name, double propertyPrice, double rentCost);
+        Player::Participant * getOwner();
         void setOwner(Player::Participant *owner);
         void action(Player::Participant *player, GameMechanics::Game * game) override;
-        void noOwner(Player::Participant *player);
+        void noOwner(Player::Participant *player, GameMechanics::Game * game);
         void buyHouse(Player::Participant *player);
+        void auctionHouse(GameMechanics::Game * game);
+        void payRent(Player::Participant *player);
     };
 }
 

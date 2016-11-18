@@ -36,5 +36,5 @@ void GameBoard::Xorti::mepaFine(Player::Participant &player) {
 }
 
 void GameBoard::Xorti::moveToRandomPlace(Player::Participant &player) {
-    player.moveCurrentPosition(rand() % GameBoard::TOTAL_TILES);
+    player.setCurrentPosition(rand() % GameBoard::TOTAL_TILES);
 }

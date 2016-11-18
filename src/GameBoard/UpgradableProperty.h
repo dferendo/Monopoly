@@ -14,7 +14,7 @@ namespace GameBoard {
         const int maxHouses = 4;
         int currentHousesBuild;
     public:
-        UpgradableProperty(const string &name, double propertyPrice);
+        UpgradableProperty(const string &name, double propertyPrice, double rentCost);
         void action(Player::Participant *player, GameMechanics::Game * game) override;
     };
 }

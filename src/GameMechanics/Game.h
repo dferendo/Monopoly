@@ -10,12 +10,15 @@
 
 namespace GameMechanics {
     class Game {
-    protected:
+    private:
         vector<GameBoard::Tile *> gameBoard;
         vector<Player::Participant *> participantsPlaying;
     public:
         Game();
         void play();
+        // Can change properties of players
+        vector<Player::Participant *> &getParticipantsPlaying();
+        Player::Participant *getParticipant(vector<Player::Participant *> participantsPlaying, int participantId);
     };
 }
 #endif //MONOPOLY_GAME_H

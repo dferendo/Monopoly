@@ -4,7 +4,9 @@
 
 #include "SpecialProperty.h"
 
-GameBoard::SpecialProperty::SpecialProperty(const string &name, double propertyPrice) : Property(name, propertyPrice) {}
+GameBoard::SpecialProperty::SpecialProperty(const string &name, double propertyPrice, double rentCost) : Property(name,
+                                                                                                                  propertyPrice,
+                                                                                                                  rentCost) {}
 
 void GameBoard::SpecialProperty::setDiceNumber(int diceNumber) {
     SpecialProperty::diceNumber = diceNumber;

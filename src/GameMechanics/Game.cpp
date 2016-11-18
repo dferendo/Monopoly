@@ -14,7 +14,7 @@ GameMechanics::Game::Game() {
 void GameMechanics::Game::play() {
     Dice dice;
     int turn = 0;
-    while (turn < 5) {
+    while (turn < 100) {
         for(auto const& participant : participantsPlaying) {
             cout << participant->getName() << " turns." << endl;
             // Roll dice to move
@@ -22,12 +22,26 @@ void GameMechanics::Game::play() {
             int diceCount = diceRoll->first + diceRoll->second;
             cout << "Dices rolled " << diceCount << endl;
             // Move player, if player reaches end of board go in the beginning
-            participant->moveCurrentPosition(diceCount % GameBoard::TOTAL_TILES);
+            int newLocation = (participant->getCurrentPosition() + diceCount) % GameBoard::TOTAL_TILES;
+            participant->setCurrentPosition(newLocation);
             cout << participant->getName() << " moved to position "
-                 << gameBoard[participant->getCurrentPosition()]->getName()
+                 << gameBoard[newLocation]->getName()
                  << endl;
-            gameBoard[participant->getCurrentPosition()]->action(participant, this);
+            gameBoard[newLocation]->action(participant, this);
         }
         turn++;
+    }
+}
+
+vector<Player::Participant *> &GameMechanics::Game::getParticipantsPlaying() {
+    return participantsPlaying;
+}
+
+Player::Participant * GameMechanics::Game::getParticipant(vector<Player::Participant *> participantsPlaying,
+                                                          int participantId) {
+    for (auto const &participant : participantsPlaying) {
+        if (participant->getParticipantId() == participantId) {
+            return participant;
+        }
     }
 }

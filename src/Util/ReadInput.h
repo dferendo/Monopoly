@@ -10,6 +10,7 @@ using namespace std;
 
 namespace Util {
     int readIntegerWithRange(int lowerRange, int upperRange);
+    int readPositiveInteger();
     string readString();
 }
 #endif //MONOPOLY_READINPUT_H

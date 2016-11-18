@@ -31,7 +31,7 @@ int Player::Participant::getCurrentPosition() {
     return currentPosition;
 }
 
-void Player::Participant::moveCurrentPosition(int currentPosition) {
+void Player::Participant::setCurrentPosition(int currentPosition) {
     Participant::currentPosition += currentPosition;
 }
 

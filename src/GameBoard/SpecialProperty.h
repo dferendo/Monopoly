@@ -11,12 +11,11 @@ namespace GameBoard {
 
     class SpecialProperty: public Property {
     private:
+        // Rent cost multiplied by dice number is the rent cost
         int diceNumber;
     public:
-        SpecialProperty(const string &name, double propertyPrice);
-
+        SpecialProperty(const string &name, double propertyPrice, double rentCost);
         void setDiceNumber(int diceNumber);
-
         void action(Player::Participant *player, GameMechanics::Game * game) override;
     };
 }

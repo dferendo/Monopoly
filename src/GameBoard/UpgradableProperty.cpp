@@ -4,9 +4,8 @@
 
 #include "UpgradableProperty.h"
 
-GameBoard::UpgradableProperty::UpgradableProperty(const string &name, double propertyPrice) : Property(name,
-                                                                                                       propertyPrice) {}
-
+GameBoard::UpgradableProperty::UpgradableProperty(const string &name, double propertyPrice, double rentCost) : Property(
+        name, propertyPrice, rentCost) {}
 
 void GameBoard::UpgradableProperty::action(Player::Participant *player, GameMechanics::Game * game) {
     // TODO
