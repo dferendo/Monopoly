@@ -4,9 +4,17 @@
 
 #include "UpgradableProperty.h"
 
-GameBoard::UpgradableProperty::UpgradableProperty(const string &name, double propertyPrice, double rentCost) : Property(
-        name, propertyPrice, rentCost) {}
+GameBoard::UpgradableProperty::UpgradableProperty(const string &name, double propertyPrice, double rentCost,
+                                                  string colour) : Property(name, propertyPrice, rentCost),
+                                                                   colour(colour) {}
 
 void GameBoard::UpgradableProperty::action(Player::Participant *player, GameMechanics::Game * game) {
-    // TODO
+    // Nobody owns the property
+    if (getOwner() == nullptr) {
+        noOwner(player, game);
+    } else if (getOwner()->isEqual(player)) {
+        // Upgrade hotel
+    } else {
+        payRent(player);
+    }
 }
