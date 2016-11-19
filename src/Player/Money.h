@@ -13,8 +13,8 @@ namespace Player {
     public:
         Money(double balance);
         double getBalance() const;
-        void addBalance(double balance);
-        void subtractBalance(double balance);
+        void addBalance(double amount);
+        void subtractBalance(double amount);
     };
 }
 #endif //MONOPOLY_MONEY_H

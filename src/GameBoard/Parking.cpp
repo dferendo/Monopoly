@@ -7,5 +7,6 @@
 GameBoard::Parking::Parking(const string &name) : CornerTiles(name) {}
 
 void GameBoard::Parking::action(Player::Participant *player, GameMechanics::Game * game) {
-    // TODO implement parking thing
+    player->getMoney().addBalance(game->getFreeParkingJackpot());
+    game->setFreeParkingJackpot(0);
 }

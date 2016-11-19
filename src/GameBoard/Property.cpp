@@ -3,21 +3,14 @@
 //
 
 #include "Property.h"
-#include "../Player/Participant.h"
+#include "../GameMechanics/Game.h"
 
-GameBoard::Property::Property(const string &name, double propertyPrice) : Tile(name), propertyPrice(propertyPrice) {}
+GameBoard::Property::Property(const string &name, double propertyPrice,
+                              double rentCost, string colour) : Tile(name), propertyPrice(propertyPrice),
+                                                                rentCost(rentCost), colour(colour){}
 
 
-void GameBoard::Property::action(Player::Participant *player, GameMechanics::Game * game) {
-    // Nobody owns the property
-    if (owner == nullptr) {
-        noOwner(player);
-    } else if (!owner->isEqual(player)) {
-        // Pay rent
-    }
-}
-
-const Player::Participant* GameBoard::Property::getOwner() const {
+Player::Participant* GameBoard::Property::getOwner() {
     return owner;
 }
 
@@ -25,10 +18,10 @@ void GameBoard::Property::setOwner(Player::Participant *owner) {
     Property::owner = owner;
 }
 
-void GameBoard::Property::noOwner(Player::Participant *player) {
+void GameBoard::Property::noOwner(Player::Participant *player, GameMechanics::Game * game) {
     vector<string> noOwnerChoice;
-    noOwnerChoice.push_back("Buy house");
-    noOwnerChoice.push_back("Banker auction house");
+    noOwnerChoice.push_back("Buy property");
+    noOwnerChoice.push_back("Banker auction property");
 
     cout << getName() << " is currently on sale!!\nChoices available: " << endl;
     Util::displayMenu(noOwnerChoice);
@@ -36,7 +29,7 @@ void GameBoard::Property::noOwner(Player::Participant *player) {
     if (choice == 0) {
         buyHouse(player);
     } else {
-        // TODO auction house
+        auctionHouse(game);
     }
 }
 
@@ -45,3 +38,52 @@ void GameBoard::Property::buyHouse(Player::Participant *player) {
     player->addParticipantProperty(this);
     setOwner(player);
 }
+
+// TODO fix this mass
+void GameBoard::Property::auctionHouse(GameMechanics::Game * game) {
+    double currentBid = 0;
+    int highestBidder;
+    int temp;
+    string input;
+
+    cout << "Auctioning " << getName() << "." << endl;
+    cout << "Current bid: " << currentBid << endl;
+    Util::displayPlayers(game->getParticipantsPlaying());
+    cout << "Select player number to bid." << endl;
+    highestBidder = Util::readIntegerWithRange(0, (int) game->getParticipantsPlaying().size());
+    cout << "Enter amount: ";
+    currentBid = Util::readPositiveInteger();
+    // Will loop until quit
+    while (true) {
+        cout << "Current bid: " << currentBid << endl;
+        Util::displayPlayers(game->getParticipantsPlaying());
+        cout << "Select player number to bid." << endl;
+        temp = Util::readIntegerWithRange(0, (int) game->getParticipantsPlaying().size() - 1);
+        cout << "Enter amount: ";
+        double amount = Util::readPositiveInteger();
+        if (amount > currentBid) {
+            currentBid = amount;
+            highestBidder = temp;
+        } else {
+            cout << "It is lower than the current bid, not accepted" << endl;
+        }
+        cout << "Continue bidding? (q to quit)" << endl;
+        getline(cin, input);
+        if (input[0] == 'q') {
+            break;
+        }
+    }
+    cout << "Congratulations to " << game->getParticipantsPlaying()[highestBidder]->getName() << " for buying " << getName() << endl;
+    game->getParticipantsPlaying()[highestBidder]->getMoney().subtractBalance(currentBid);
+    game->getParticipantsPlaying()[highestBidder]->addParticipantProperty(this);
+    setOwner(game->getParticipantsPlaying()[highestBidder]);
+}
+
+const string &GameBoard::Property::getColour() const {
+    return colour;
+}
+
+double GameBoard::Property::getRentCost() const {
+    return rentCost;
+}
+

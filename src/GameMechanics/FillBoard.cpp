@@ -2,51 +2,62 @@
 // Created by dylan on 18/11/2016.
 //
 
+#include <map>
 #include "FillBoard.h"
+using namespace GameBoard;
 
-void GameMechanics::fillGameBoard(vector<GameBoard::Tile *> &gameBoard) {
+void GameMechanics::fillGameBoard(vector<Tile *> &gameBoard) {
     // Xorti does not differ in the game, can use the same pointer
-    GameBoard::Xorti * xorti = new GameBoard::Xorti("Xorti");
-    gameBoard.push_back(new GameBoard::Go("Go"));
-    gameBoard.push_back(new GameBoard::UpgradableProperty("Mediterranean Avenue", 60));
+    Xorti * xorti = new Xorti("Xorti");
+    HousesPrice purpleHousePrice(50, 10, 30, 90, 160);
+    HousesPrice lightBlueHousePrice(50, 30, 90, 270, 400);
+    HousesPrice violetHousePrice(100, 50, 150, 450, 625);
+    HousesPrice orangeHousePrice(100, 70, 200, 550, 750);
+    HousesPrice redHousePrice(150, 90, 250, 700, 875);
+    HousesPrice yellowHousePrice(150, 110, 330, 800, 975);
+    HousesPrice darkGreenHousePrice(200, 130, 390, 900, 1100);
+    HousesPrice darkBlueHousePrice(200, 200, 600, 1400, 1700);
+
+    gameBoard.push_back(new Go("Go"));
+    gameBoard.push_back(new UpgradableProperty("Mediterranean Avenue", 60, 2, "PURPLE", purpleHousePrice));
     gameBoard.push_back(xorti);
-    gameBoard.push_back(new GameBoard::UpgradableProperty("Baltic Avenue", 60));
-    gameBoard.push_back(new GameBoard::Tax("Income Tax", 200));
-    gameBoard.push_back(new GameBoard::Property("Reading Railroad", 200));
-    gameBoard.push_back(new GameBoard::UpgradableProperty("Oriental Avenue", 100));
+    gameBoard.push_back(new UpgradableProperty("Baltic Avenue", 60, 2, "PURPLE", purpleHousePrice));
+    gameBoard.push_back(new Tax("Income Tax", 200));
+    gameBoard.push_back(new RailRoad("Reading Railroad", 200, 25, "BLACK"));
+    gameBoard.push_back(new UpgradableProperty("Oriental Avenue", 100, 6, "LIGHT_BLUE", lightBlueHousePrice));
     gameBoard.push_back(xorti);
-    gameBoard.push_back(new GameBoard::UpgradableProperty("Vermont Avenue", 100));
-    gameBoard.push_back(new GameBoard::UpgradableProperty("Connecticut Avenue", 100));
-    gameBoard.push_back(new GameBoard::EmptyTile("Visiting Jail"));
-    gameBoard.push_back(new GameBoard::UpgradableProperty("ST.Charles Place", 140));
-    gameBoard.push_back(new GameBoard::SpecialProperty("Electric Company", 150));
-    gameBoard.push_back(new GameBoard::UpgradableProperty("States Avenue", 140));
-    gameBoard.push_back(new GameBoard::UpgradableProperty("Virginia Avenue", 140));
-    gameBoard.push_back(new GameBoard::Property("Pennsylvania RailRoad", 200));
-    gameBoard.push_back(new GameBoard::UpgradableProperty("St. James Place", 180));
+    gameBoard.push_back(new UpgradableProperty("Vermont Avenue", 100, 6, "LIGHT_BLUE", lightBlueHousePrice));
+    gameBoard.push_back(new UpgradableProperty("Connecticut Avenue", 100, 6, "LIGHT_BLUE", lightBlueHousePrice));
+    gameBoard.push_back(new EmptyTile("Visiting Jail"));
+    gameBoard.push_back(new UpgradableProperty("St.Charles Place", 140, 10, "VIOLET", violetHousePrice));
+    gameBoard.push_back(new UtilityProperty("Electric Company", 150, 4, "WHITE"));
+    gameBoard.push_back(new UpgradableProperty("States Avenue", 140, 10, "VIOLET", violetHousePrice));
+    gameBoard.push_back(new UpgradableProperty("Virginia Avenue", 140, 10, "VIOLET", violetHousePrice));
+    gameBoard.push_back(new RailRoad("Pennsylvania RailRoad", 200, 25, "BLACK"));
+    gameBoard.push_back(new UpgradableProperty("St. James Place", 180, 14, "ORANGE", orangeHousePrice));
     gameBoard.push_back(xorti);
-    gameBoard.push_back(new GameBoard::UpgradableProperty("Tennessee Avenue", 180));
-    gameBoard.push_back(new GameBoard::UpgradableProperty("New York Avenue", 180));
-    gameBoard.push_back(new GameBoard::Parking("Parking"));
-    gameBoard.push_back(new GameBoard::UpgradableProperty("Kentucky", 220));
+    gameBoard.push_back(new UpgradableProperty("Tennessee Avenue", 180, 14, "ORANGE", orangeHousePrice));
+    gameBoard.push_back(new UpgradableProperty("New York Avenue", 180, 14, "ORANGE", orangeHousePrice));
+    gameBoard.push_back(new Parking("Parking"));
+    gameBoard.push_back(new UpgradableProperty("Kentucky", 220, 18, "RED", redHousePrice));
     gameBoard.push_back(xorti);
-    gameBoard.push_back(new GameBoard::UpgradableProperty("Indiana Avenue", 220));
-    gameBoard.push_back(new GameBoard::UpgradableProperty("Illinois Avenue", 220));
-    gameBoard.push_back(new GameBoard::Property("B. & O. RailRoad", 200));
-    gameBoard.push_back(new GameBoard::UpgradableProperty("Atlantic Avenue", 260));
-    gameBoard.push_back(new GameBoard::UpgradableProperty("Ventnor Avenue", 260));
-    gameBoard.push_back(new GameBoard::SpecialProperty("Water works", 150));
-    gameBoard.push_back(new GameBoard::UpgradableProperty("Marvin Gardens", 260));
-    gameBoard.push_back(new GameBoard::EmptyTile("Go to jail"));
-    gameBoard.push_back(new GameBoard::UpgradableProperty("Pacific Avenue", 300));
-    gameBoard.push_back(new GameBoard::UpgradableProperty("North Carolina Avenue", 300));
+    gameBoard.push_back(new UpgradableProperty("Indiana Avenue", 220, 18, "RED", redHousePrice));
+    gameBoard.push_back(new UpgradableProperty("Illinois Avenue", 220, 18, "RED", redHousePrice));
+    gameBoard.push_back(new RailRoad("B. & O. RailRoad", 200, 25, "BLACK"));
+    gameBoard.push_back(new UpgradableProperty("Atlantic Avenue", 260, 22, "YELLOW", yellowHousePrice));
+    gameBoard.push_back(new UpgradableProperty("Ventnor Avenue", 260, 22, "YELLOW", yellowHousePrice));
+    gameBoard.push_back(new UtilityProperty("Water works", 150, 4, "WHITE"));
+    gameBoard.push_back(new UpgradableProperty("Marvin Gardens", 260, 22, "YELLOW", yellowHousePrice));
+    gameBoard.push_back(new EmptyTile("Go to jail"));
+    gameBoard.push_back(new UpgradableProperty("Pacific Avenue", 300, 26, "DARK_GREEN", darkGreenHousePrice));
+    gameBoard.push_back(new UpgradableProperty("North Carolina Avenue", 300, 26, "DARK_GREEN", darkGreenHousePrice));
     gameBoard.push_back(xorti);
-    gameBoard.push_back(new GameBoard::UpgradableProperty("Pennsylvania Avenue", 300));
-    gameBoard.push_back(new GameBoard::Property("Short Line", 200));
+    gameBoard.push_back(new UpgradableProperty("Pennsylvania Avenue", 300, 26, "DARK_GREEN", darkGreenHousePrice));
+    gameBoard.push_back(new RailRoad("Short Line", 200, 25, "BLACK"));
     gameBoard.push_back(xorti);
-    gameBoard.push_back(new GameBoard::UpgradableProperty("Park Place", 350));
-    gameBoard.push_back(new GameBoard::Tax("Luxury Tax", 100));
-    gameBoard.push_back(new GameBoard::UpgradableProperty("Boardwalk", 400));
+    gameBoard.push_back(new UpgradableProperty("Park Place", 350, 35, "DARK_BLUE", darkBlueHousePrice));
+    gameBoard.push_back(new Tax("Luxury Tax", 100));
+    gameBoard.push_back(new UpgradableProperty("Boardwalk", 400, 50, "DARK_BLUE", darkBlueHousePrice));
 }
 
 void GameMechanics::determinePlayers(vector<Player::Participant *> &participantsPlaying) {
@@ -57,5 +68,18 @@ void GameMechanics::determinePlayers(vector<Player::Participant *> &participants
         string participantName = Util::readString();
         participantsPlaying.push_back(new Player::Participant(i, participantName));
     }
+}
+
+void GameMechanics::fillGroupColourSizeOfUpgradableProperties(map<string, int> &groupColoursSize) {
+    groupColoursSize.insert(pair<string, int> ("BLACK", 4));
+    groupColoursSize.insert(pair<string, int> ("WHITE", 2));
+    groupColoursSize.insert(pair<string, int> ("PURPLE", 2));
+    groupColoursSize.insert(pair<string, int> ("LIGHT_BLUE", 3));
+    groupColoursSize.insert(pair<string, int> ("VIOLET", 3));
+    groupColoursSize.insert(pair<string, int> ("ORANGE", 3));
+    groupColoursSize.insert(pair<string, int> ("RED", 3));
+    groupColoursSize.insert(pair<string, int> ("YELLOW", 3));
+    groupColoursSize.insert(pair<string, int> ("DARK_GREEN", 3));
+    groupColoursSize.insert(pair<string, int> ("DARK_BLUE", 2));
 }
 

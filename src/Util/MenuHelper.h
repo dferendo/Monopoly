@@ -7,10 +7,12 @@
 
 #include <iostream>
 #include <vector>
+#include "../Player/Participant.h"
 
 using namespace std;
 
 namespace Util {
     void displayMenu(vector<string> &options);
+    void displayPlayers(vector<Player::Participant *> participants);
 }
 #endif //MONOPOLY_MENUHELPER_H

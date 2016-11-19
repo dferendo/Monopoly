@@ -15,10 +15,11 @@
 #include "../GameBoard/Xorti.h"
 #include "../GameBoard/Tax.h"
 #include "../GameBoard/EmptyTile.h"
-#include "../GameBoard/SpecialProperty.h"
+#include "../GameBoard/UtilityProperty.h"
 #include "../GameBoard/Parking.h"
 #include "../Util/ReadInput.h"
 #include "../GameMechanics/Dice.h"
+#include "../GameBoard/RailRoad.h"
 
 namespace GameMechanics {
     const int MINIMUM_PLAYERS = 2;
@@ -26,5 +27,6 @@ namespace GameMechanics {
 
     void fillGameBoard(vector<GameBoard::Tile *> &gameBoard);
     void determinePlayers(vector<Player::Participant *> &participantsPlaying);
+    void fillGroupColourSizeOfUpgradableProperties(map<string, int> &groupColoursSize);
 }
 #endif //MONOPOLY_FILLBOARD_H

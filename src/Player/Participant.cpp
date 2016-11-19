@@ -15,7 +15,7 @@ string Player::Participant::getName() {
     return name;
 }
 
-Player::Money & Player::Participant::getMoney() {
+Player::Money &Player::Participant::getMoney() {
     return money;
 }
 
@@ -31,10 +31,30 @@ int Player::Participant::getCurrentPosition() {
     return currentPosition;
 }
 
-void Player::Participant::moveCurrentPosition(int currentPosition) {
-    Participant::currentPosition += currentPosition;
+void Player::Participant::setCurrentPosition(int currentPosition) {
+    Participant::currentPosition = currentPosition;
 }
 
 bool Player::Participant::isEqual(Player::Participant *participant) {
     return participantId == participant->participantId;
+}
+
+int Player::Participant::getSameGroupColourProperties(string colourType) {
+    int counter = 0;
+    for(auto const& property : participantProperties) {
+        if (property->getColour() == colourType){
+            counter++;
+        }
+    }
+    return counter;
+}
+
+vector<GameBoard::Property *> Player::Participant::getGroupColoursProperties(string colourType) {
+    vector<GameBoard::Property *> groupColoursProperties;
+    for (auto const& property : participantProperties) {
+        if (property->getColour() == colourType) {
+            groupColoursProperties.push_back(property);
+        }
+    }
+    return groupColoursProperties;
 }

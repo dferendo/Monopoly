@@ -6,13 +6,13 @@
 #define MONOPOLY_PARKING_H
 
 #include "CornerTiles.h"
+#include "../Player/Participant.h"
+#include "../GameMechanics/Game.h"
 
 namespace GameBoard {
-
     class Parking : public CornerTiles {
     public:
         Parking(const string &name);
-
         void action(Player::Participant *player, GameMechanics::Game * game) override;
     };
 }
