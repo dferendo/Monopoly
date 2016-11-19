@@ -11,7 +11,7 @@ namespace GameBoard {
     class RailRoad: public Property {
     public:
         RailRoad(const string &name, double propertyPrice, double rentCost, const string &colour);
-        void payRent(Player::Participant *player) override;
+        void payRent(Player::Participant *player, GameMechanics::Game * game) override;
         void action(Player::Participant *player, GameMechanics::Game *game) override;
     };
 }

@@ -5,8 +5,16 @@
 #include "UpgradableProperty.h"
 
 GameBoard::UpgradableProperty::UpgradableProperty(const string &name, double propertyPrice, double rentCost,
-                                                  const string &colour) : Property(name, propertyPrice, rentCost,
-                                                                                   colour) {}
+                                                  const string &colour, GameBoard::HousesPrice housesPrice) :
+        Property(name, propertyPrice, rentCost, colour), housesPrice(housesPrice) {}
+
+bool GameBoard::UpgradableProperty::checkIfUpgradeIsAvailable(Player::Participant *player, GameMechanics::Game *game) {
+    return player->getSameGroupColourProperties(getColour()) == game->getGroupColoursSize(getColour());
+}
+
+const GameBoard::HousesPrice &GameBoard::UpgradableProperty::getHousesPrice() const {
+    return housesPrice;
+}
 
 void GameBoard::UpgradableProperty::action(Player::Participant *player, GameMechanics::Game * game) {
     if (getOwner() == nullptr) {
@@ -23,11 +31,17 @@ void GameBoard::UpgradableProperty::action(Player::Participant *player, GameMech
     }
 }
 
-bool GameBoard::UpgradableProperty::checkIfUpgradeIsAvailable(Player::Participant *player, GameMechanics::Game *game) {
-    return player->getSameGroupColourProperties(getColour()) == game->getGroupColoursSize(getColour());
-}
-
 void GameBoard::UpgradableProperty::payRent(Player::Participant *player, GameMechanics::Game * game) {
-
+    double amount;
+    // If no hotel
+    if (currentHousesBuild == 0) {
+        amount = getRentCost();
+    } else {
+        amount = getHousesPrice().getHousePrice(currentHousesBuild);
+    }
+    player->getMoney().subtractBalance(amount);
+    getOwner()->getMoney().addBalance(amount);
 }
+
+
 

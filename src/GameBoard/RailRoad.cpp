@@ -15,11 +15,11 @@ void GameBoard::RailRoad::action(Player::Participant *player, GameMechanics::Gam
         noOwner(player, game);
     } else if (!getOwner()->isEqual(player)) {
         // Pay rent
-        payRent(player);
+        payRent(player, game);
     }
 }
 
-void GameBoard::RailRoad::payRent(Player::Participant *player) {
+void GameBoard::RailRoad::payRent(Player::Participant *player, GameMechanics::Game * game) {
     int numberOfRailRoad = getOwner()->getSameGroupColourProperties("BLACK");
     // Charge 25 if one owned, 50 if two owned, 100 if three owned, 200 if all owned by the same owner
     int amountToBePaid = pow(2, numberOfRailRoad - 1) * 25;

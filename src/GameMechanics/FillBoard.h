@@ -15,7 +15,7 @@
 #include "../GameBoard/Xorti.h"
 #include "../GameBoard/Tax.h"
 #include "../GameBoard/EmptyTile.h"
-#include "../GameBoard/SpecialProperty.h"
+#include "../GameBoard/UtilityProperty.h"
 #include "../GameBoard/Parking.h"
 #include "../Util/ReadInput.h"
 #include "../GameMechanics/Dice.h"
