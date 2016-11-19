@@ -44,3 +44,8 @@ int Util::readPositiveInteger() {
         cout << "Invalid input, try again." << endl;
     }
 }
+
+void Util::pressEnterToContinue() {
+    cout << "Press Enter to Continue";
+    cin.ignore(numeric_limits<streamsize>::max(),'\n');
+}

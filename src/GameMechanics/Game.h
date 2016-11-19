@@ -25,9 +25,9 @@ namespace GameMechanics {
         Player::Participant *getParticipant(vector<Player::Participant *> participantsPlaying, int participantId);
         int getGroupColoursSize(string colourType);
         int getDiceCount() const;
-
         double getFreeParkingJackpot() const;
         void setFreeParkingJackpot(double freeParkingJackpot);
+        const vector<GameBoard::Tile *> &getGameBoard() const;
     };
 }
 #endif //MONOPOLY_GAME_H

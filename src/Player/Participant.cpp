@@ -32,7 +32,7 @@ int Player::Participant::getCurrentPosition() {
 }
 
 void Player::Participant::setCurrentPosition(int currentPosition) {
-    Participant::currentPosition += currentPosition;
+    Participant::currentPosition = currentPosition;
 }
 
 bool Player::Participant::isEqual(Player::Participant *participant) {

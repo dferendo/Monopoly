@@ -6,11 +6,13 @@
 #define MONOPOLY_READINPUT_H
 
 #include <iostream>
+#include <limits>
 using namespace std;
 
 namespace Util {
     int readIntegerWithRange(int lowerRange, int upperRange);
     int readPositiveInteger();
     string readString();
+    void pressEnterToContinue();
 }
 #endif //MONOPOLY_READINPUT_H

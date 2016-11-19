@@ -29,7 +29,10 @@ void GameMechanics::Game::play() {
                  << gameBoard[newLocation]->getName()
                  << endl;
             gameBoard[newLocation]->action(participant, this);
+            Util::pressEnterToContinue();
         }
+        std::cout << "New turn!!" << std::endl;
+        Util::pressEnterToContinue();
         turn++;
     }
 }
@@ -62,4 +65,8 @@ double GameMechanics::Game::getFreeParkingJackpot() const {
 
 void GameMechanics::Game::setFreeParkingJackpot(double freeParkingJackpot) {
     Game::freeParkingJackpot = freeParkingJackpot;
+}
+
+const vector<GameBoard::Tile *> &GameMechanics::Game::getGameBoard() const {
+    return gameBoard;
 }

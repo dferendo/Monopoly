@@ -25,7 +25,7 @@ namespace GameBoard {
         void birthday(Player::Participant &player);
         void parkingFine(Player::Participant &player, GameMechanics::Game * game);
         void mepaFine(Player::Participant &player, GameMechanics::Game * game);
-        void moveToRandomPlace(Player::Participant &player);
+        void moveToRandomPlace(Player::Participant &player, GameMechanics::Game * game);
     };
 }
 #endif //MONOPOLY_XORTI_H
