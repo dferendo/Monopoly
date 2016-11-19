@@ -15,7 +15,7 @@ string Player::Participant::getName() {
     return name;
 }
 
-Player::Money & Player::Participant::getMoney() {
+Player::Money &Player::Participant::getMoney() {
     return money;
 }
 
@@ -37,4 +37,14 @@ void Player::Participant::setCurrentPosition(int currentPosition) {
 
 bool Player::Participant::isEqual(Player::Participant *participant) {
     return participantId == participant->participantId;
+}
+
+int Player::Participant::getSameGroupColourProperties(string colourType) {
+    int counter = 0;
+    for(auto const& property : participantProperties) {
+        if (property->getColour() == colourType){
+            counter++;
+        }
+    }
+    return counter;
 }

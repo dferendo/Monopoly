@@ -6,17 +6,19 @@
 #define MONOPOLY_UPGRADABLEPROPERTY_H
 
 #include "Property.h"
+#include "../GameMechanics/Game.h"
 
 namespace GameBoard {
+    const int maxHouses = 4;
 
     class UpgradableProperty: public Property {
     private:
-        const int maxHouses = 4;
         int currentHousesBuild;
-        string colour;
     public:
-        UpgradableProperty(const string &name, double propertyPrice, double rentCost, string colour);
+        UpgradableProperty(const string &name, double propertyPrice, double rentCost, const string &colour);
         void action(Player::Participant *player, GameMechanics::Game * game) override;
+        bool checkIfUpgradeIsAvailable(Player::Participant *player, GameMechanics::Game *game);
+        void payRent(Player::Participant *player, GameMechanics::Game * game) override;
     };
 }
 

@@ -7,12 +7,15 @@
 
 #include <vector>
 #include <iostream>
+#include <map>
 #include "Money.h"
+#include "../GameBoard/Property.h"
 using namespace std;
 
 namespace GameBoard {
     class Property;
 }
+
 namespace Player {
 
     class Participant {
@@ -21,6 +24,7 @@ namespace Player {
         int currentPosition;
         string name;
         Money money;
+        // TODO make it map?
         vector<GameBoard::Property *> participantProperties;
     public:
         Participant(int participantId, const string &name);
@@ -32,6 +36,7 @@ namespace Player {
         vector<GameBoard::Property *> getParticipantProperties();
         void addParticipantProperty(GameBoard::Property *property);
         bool isEqual(Participant *participant);
+        int getSameGroupColourProperties(string colourType);
     };
 }
 #endif //MONOPOLY_PARTICIPANT_H

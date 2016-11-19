@@ -4,14 +4,22 @@
 
 #include "SpecialProperty.h"
 
-GameBoard::SpecialProperty::SpecialProperty(const string &name, double propertyPrice, double rentCost) : Property(name,
-                                                                                                                  propertyPrice,
-                                                                                                                  rentCost) {}
-
-void GameBoard::SpecialProperty::setDiceNumber(int diceNumber) {
-    SpecialProperty::diceNumber = diceNumber;
-}
+GameBoard::SpecialProperty::SpecialProperty(const string &name, double propertyPrice, double rentCost,
+                                            const string &colour) : Property(name, propertyPrice, rentCost, colour) {}
 
 void GameBoard::SpecialProperty::action(Player::Participant *player, GameMechanics::Game * game) {
-    // TODO action
+    // Nobody owns the property
+    if (getOwner() == nullptr) {
+        noOwner(player, game);
+    } else if (!getOwner()->isEqual(player)) {
+        // Pay rent
+        payRent(player, game);
+    }
 }
+
+void GameBoard::SpecialProperty::payRent(Player::Participant *player, GameMechanics::Game * game) {
+    double amount = game->getDiceCount() * getRentCost();
+    player->getMoney().subtractBalance(amount);
+    getOwner()->getMoney().addBalance(amount);
+}
+

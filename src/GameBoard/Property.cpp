@@ -5,20 +5,10 @@
 #include "Property.h"
 #include "../GameMechanics/Game.h"
 
-GameBoard::Property::Property(const string &name, double propertyPrice, double rentCost) : Tile(name),
-                                                                                           propertyPrice(propertyPrice),
-                                                                                           rentCost(rentCost) {}
+GameBoard::Property::Property(const string &name, double propertyPrice,
+                              double rentCost, string colour) : Tile(name), propertyPrice(propertyPrice),
+                                                                rentCost(rentCost), colour(colour){}
 
-
-void GameBoard::Property::action(Player::Participant *player, GameMechanics::Game * game) {
-    // Nobody owns the property
-    if (owner == nullptr) {
-        noOwner(player, game);
-    } else if (!owner->isEqual(player)) {
-        // Pay rent
-        payRent(player);
-    }
-}
 
 Player::Participant* GameBoard::Property::getOwner() {
     return owner;
@@ -30,8 +20,8 @@ void GameBoard::Property::setOwner(Player::Participant *owner) {
 
 void GameBoard::Property::noOwner(Player::Participant *player, GameMechanics::Game * game) {
     vector<string> noOwnerChoice;
-    noOwnerChoice.push_back("Buy house");
-    noOwnerChoice.push_back("Banker auction house");
+    noOwnerChoice.push_back("Buy property");
+    noOwnerChoice.push_back("Banker auction property");
 
     cout << getName() << " is currently on sale!!\nChoices available: " << endl;
     Util::displayMenu(noOwnerChoice);
@@ -89,8 +79,11 @@ void GameBoard::Property::auctionHouse(GameMechanics::Game * game) {
     setOwner(game->getParticipantsPlaying()[highestBidder]);
 }
 
-void GameBoard::Property::payRent(Player::Participant *player) {
-    player->getMoney().subtractBalance(rentCost);
-    getOwner()->getMoney().addBalance(rentCost);
+const string &GameBoard::Property::getColour() const {
+    return colour;
+}
+
+double GameBoard::Property::getRentCost() const {
+    return rentCost;
 }
 
