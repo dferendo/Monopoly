@@ -8,4 +8,5 @@ GameBoard::Tax::Tax(const string &name, const int &taxAmount) : Tile(name), taxA
 
 void GameBoard::Tax::action(Player::Participant *player, GameMechanics::Game * game) {
     player->getMoney().subtractBalance(taxAmount);
+    game->setFreeParkingJackpot(game->getFreeParkingJackpot() + taxAmount);
 }

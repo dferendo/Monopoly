@@ -73,7 +73,7 @@ void GameBoard::Property::auctionHouse(GameMechanics::Game * game) {
             break;
         }
     }
-    cout << "Congratulations to " << game->getParticipantsPlaying()[highestBidder] << " for buying " << getName() << endl;
+    cout << "Congratulations to " << game->getParticipantsPlaying()[highestBidder]->getName() << " for buying " << getName() << endl;
     game->getParticipantsPlaying()[highestBidder]->getMoney().subtractBalance(currentBid);
     game->getParticipantsPlaying()[highestBidder]->addParticipantProperty(this);
     setOwner(game->getParticipantsPlaying()[highestBidder]);

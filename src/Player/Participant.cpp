@@ -48,3 +48,13 @@ int Player::Participant::getSameGroupColourProperties(string colourType) {
     }
     return counter;
 }
+
+vector<GameBoard::Property *> Player::Participant::getGroupColoursProperties(string colourType) {
+    vector<GameBoard::Property *> groupColoursProperties;
+    for (auto const& property : participantProperties) {
+        if (property->getColour() == colourType) {
+            groupColoursProperties.push_back(property);
+        }
+    }
+    return groupColoursProperties;
+}

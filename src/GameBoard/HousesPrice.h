@@ -21,6 +21,7 @@ namespace GameBoard {
     public:
         HousesPrice(int priceToUpgrade, int oneHouse, int secondHouse, int thirdHouse, int fourHouse);
         int getHousePrice(int numberOfHouse) const;
+        int getPriceToUpgrade() const;
     };
 }
 #endif //MONOPOLY_HOUSES_H

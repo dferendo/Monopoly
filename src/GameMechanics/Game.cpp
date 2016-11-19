@@ -55,3 +55,11 @@ int GameMechanics::Game::getGroupColoursSize(string colourType) {
 int GameMechanics::Game::getDiceCount() const {
     return diceCount;
 }
+
+double GameMechanics::Game::getFreeParkingJackpot() const {
+    return freeParkingJackpot;
+}
+
+void GameMechanics::Game::setFreeParkingJackpot(double freeParkingJackpot) {
+    Game::freeParkingJackpot = freeParkingJackpot;
+}

@@ -7,6 +7,7 @@
 
 #include "Tile.h"
 #include "../Player/Participant.h"
+#include "../GameMechanics/Game.h"
 
 namespace GameBoard {
     class Tax: public Tile {

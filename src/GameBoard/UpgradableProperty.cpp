@@ -22,7 +22,7 @@ void GameBoard::UpgradableProperty::action(Player::Participant *player, GameMech
     } else if (getOwner()->isEqual(player)) {
         // Upgrade hotel
         if (checkIfUpgradeIsAvailable(player, game)) {
-            // TODO upgrade
+            upgradeProperty(player, game);
         } else {
             cout << "Upgrading house is currently not available." << endl;
         }
@@ -41,6 +41,23 @@ void GameBoard::UpgradableProperty::payRent(Player::Participant *player, GameMec
     }
     player->getMoney().subtractBalance(amount);
     getOwner()->getMoney().addBalance(amount);
+}
+
+// TODO it like classic monopoly
+void GameBoard::UpgradableProperty::upgradeProperty(Player::Participant *player, GameMechanics::Game *game) {
+    string input;
+
+    operator<<(cout, housesPrice);
+    cout << "Want to upgrade house?(y/n)" << endl;
+    getline(cin, input);
+    if (input[0] == 'y') {
+        if (currentHousesBuild < MAX_HOUSES) {
+            currentHousesBuild += 1;
+            player->getMoney().subtractBalance(getHousesPrice().getPriceToUpgrade());
+        } else {
+            cout << "Maximum house limit." << endl;
+        }
+    }
 }
 
 

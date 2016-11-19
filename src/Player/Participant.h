@@ -34,6 +34,7 @@ namespace Player {
         void setCurrentPosition(int currentPosition);
         Money & getMoney();
         vector<GameBoard::Property *> getParticipantProperties();
+        vector<GameBoard::Property *> getGroupColoursProperties(string colourType);
         void addParticipantProperty(GameBoard::Property *property);
         bool isEqual(Participant *participant);
         int getSameGroupColourProperties(string colourType);

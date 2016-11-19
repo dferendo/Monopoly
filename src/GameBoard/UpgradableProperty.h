@@ -10,7 +10,7 @@
 #include "HousesPrice.h"
 
 namespace GameBoard {
-    const int maxHouses = 4;
+    const int MAX_HOUSES = 4;
 
     class UpgradableProperty: public Property {
     private:
@@ -21,6 +21,7 @@ namespace GameBoard {
                            GameBoard::HousesPrice housesPrice);
         void action(Player::Participant *player, GameMechanics::Game * game) override;
         bool checkIfUpgradeIsAvailable(Player::Participant *player, GameMechanics::Game *game);
+        void upgradeProperty(Player::Participant *player, GameMechanics::Game * game);
         void payRent(Player::Participant *player, GameMechanics::Game * game) override;
         const HousesPrice &getHousesPrice() const;
     };

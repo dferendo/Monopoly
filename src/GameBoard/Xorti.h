@@ -7,6 +7,7 @@
 
 #include "Tile.h"
 #include "../Player/Participant.h"
+#include "../GameMechanics/Game.h"
 
 namespace GameBoard {
     const int MAXIMUM_XORTI = 4;
@@ -22,8 +23,8 @@ namespace GameBoard {
         Xorti(const string &name);
         void action(Player::Participant *player, GameMechanics::Game * game) override;
         void birthday(Player::Participant &player);
-        void parkingFine(Player::Participant &player);
-        void mepaFine(Player::Participant &player);
+        void parkingFine(Player::Participant &player, GameMechanics::Game * game);
+        void mepaFine(Player::Participant &player, GameMechanics::Game * game);
         void moveToRandomPlace(Player::Participant &player);
     };
 }

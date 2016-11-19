@@ -15,6 +15,7 @@ namespace GameMechanics {
         vector<GameBoard::Tile *> gameBoard;
         vector<Player::Participant *> participantsPlaying;
         map<string, int> groupColoursSize;
+        double freeParkingJackpot = 0;
         int diceCount;
     public:
         Game();
@@ -24,6 +25,9 @@ namespace GameMechanics {
         Player::Participant *getParticipant(vector<Player::Participant *> participantsPlaying, int participantId);
         int getGroupColoursSize(string colourType);
         int getDiceCount() const;
+
+        double getFreeParkingJackpot() const;
+        void setFreeParkingJackpot(double freeParkingJackpot);
     };
 }
 #endif //MONOPOLY_GAME_H

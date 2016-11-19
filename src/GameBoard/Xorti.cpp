@@ -11,9 +11,9 @@ void GameBoard::Xorti::action(Player::Participant * player, GameMechanics::Game 
     if (xorti == 0) {
         birthday(*player);
     } else if (xorti == 1) {
-        parkingFine(*player);
+        parkingFine(*player), game;
     } else if (xorti == 2) {
-        mepaFine(*player);
+        mepaFine(*player, game);
     } else {
         moveToRandomPlace(*player);
     }
@@ -24,15 +24,18 @@ void GameBoard::Xorti::birthday(Player::Participant &player) {
     player.getMoney().addBalance(birthdayMoney);
 }
 
-void GameBoard::Xorti::parkingFine(Player::Participant &player) {
+void GameBoard::Xorti::parkingFine(Player::Participant &player, GameMechanics::Game * game) {
     double parkingFine = rand() % (MAXIMUM_PARKING_FINE - MINIMUM_PARKING_FINE) + MINIMUM_PARKING_FINE;
     player.getMoney().subtractBalance(parkingFine);
+    game->setFreeParkingJackpot(game->getFreeParkingJackpot() + parkingFine);
 }
 
-void GameBoard::Xorti::mepaFine(Player::Participant &player) {
+void GameBoard::Xorti::mepaFine(Player::Participant &player, GameMechanics::Game * game) {
     double mepaFine = rand() % (MAXIMUM_MEPA_FINE - MINIMUM_MEPA_FINE) + MINIMUM_MEPA_FINE;
     mepaFine *= player.getParticipantProperties().size();
     player.getMoney().subtractBalance(mepaFine);
+    game->setFreeParkingJackpot(game->getFreeParkingJackpot() + mepaFine);
+
 }
 
 void GameBoard::Xorti::moveToRandomPlace(Player::Participant &player) {
