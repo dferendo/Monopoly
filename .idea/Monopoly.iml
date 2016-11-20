@@ -8,37 +8,33 @@
       <sourceFolder url="file://$MODULE_DIR$/src/Player/Money.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/Player/Money.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/Player/Participant.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/GameMechanics/Game.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/GameMechanics/FillBoard.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/GameMechanics/Dice.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/GameMechanics/Game.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/GameMechanics/Dice.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/GameMechanics/Game.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/GameMechanics/FillBoard.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/Util/MenuHelper.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/Util/MenuHelper.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/Util/ReadInput.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/GameMechanics/Dice.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/Util/ReadInput.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/Tile.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Util/MenuHelper.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Util/ReadInput.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Util/MenuHelper.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/UpgradableProperty.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/RailRoad.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/Property.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/Go.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/Parking.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/Parking.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/Tile.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/HousesPrice.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/Tax.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/Tax.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/Property.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/RailRoad.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/UtilityProperty.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/HousesPrice.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/UtilityProperty.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/Tile.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/Xorti.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/Xorti.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/UpgradableProperty.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/Property.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/Parking.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/SpecialProperty.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/Tax.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/Houses.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/Parking.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/SpecialProperty.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/Tax.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/RailRoad.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/Houses.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/CornerTiles.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/Go.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/Tile.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/EmptyTile.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/RailRoad.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/GameBoard/UpgradableProperty.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/Monopoly.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />

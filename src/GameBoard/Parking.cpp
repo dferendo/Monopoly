@@ -4,7 +4,7 @@
 
 #include "Parking.h"
 
-GameBoard::Parking::Parking(const string &name) : CornerTiles(name) {}
+GameBoard::Parking::Parking(const string &name) : Tile(name) {}
 
 void GameBoard::Parking::action(Player::Participant *player, GameMechanics::Game * game) {
     player->getMoney().addBalance(game->getFreeParkingJackpot());

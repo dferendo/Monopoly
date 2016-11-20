@@ -18,7 +18,7 @@ void GameMechanics::fillGameBoard(vector<Tile *> &gameBoard) {
     HousesPrice darkGreenHousePrice(200, 130, 390, 900, 1100);
     HousesPrice darkBlueHousePrice(200, 200, 600, 1400, 1700);
 
-    gameBoard.push_back(new Go("Go"));
+    gameBoard.push_back(new Tile("Go"));
     gameBoard.push_back(new UpgradableProperty("Mediterranean Avenue", 60, 2, "PURPLE", purpleHousePrice));
     gameBoard.push_back(xorti);
     gameBoard.push_back(new UpgradableProperty("Baltic Avenue", 60, 2, "PURPLE", purpleHousePrice));
@@ -28,7 +28,7 @@ void GameMechanics::fillGameBoard(vector<Tile *> &gameBoard) {
     gameBoard.push_back(xorti);
     gameBoard.push_back(new UpgradableProperty("Vermont Avenue", 100, 6, "LIGHT_BLUE", lightBlueHousePrice));
     gameBoard.push_back(new UpgradableProperty("Connecticut Avenue", 100, 6, "LIGHT_BLUE", lightBlueHousePrice));
-    gameBoard.push_back(new EmptyTile("Visiting Jail"));
+    gameBoard.push_back(new Tile("Visiting Jail"));
     gameBoard.push_back(new UpgradableProperty("St.Charles Place", 140, 10, "VIOLET", violetHousePrice));
     gameBoard.push_back(new UtilityProperty("Electric Company", 150, 4, "WHITE"));
     gameBoard.push_back(new UpgradableProperty("States Avenue", 140, 10, "VIOLET", violetHousePrice));
@@ -48,7 +48,7 @@ void GameMechanics::fillGameBoard(vector<Tile *> &gameBoard) {
     gameBoard.push_back(new UpgradableProperty("Ventnor Avenue", 260, 22, "YELLOW", yellowHousePrice));
     gameBoard.push_back(new UtilityProperty("Water works", 150, 4, "WHITE"));
     gameBoard.push_back(new UpgradableProperty("Marvin Gardens", 260, 22, "YELLOW", yellowHousePrice));
-    gameBoard.push_back(new EmptyTile("Go to jail"));
+    gameBoard.push_back(new Tile("Go to jail"));
     gameBoard.push_back(new UpgradableProperty("Pacific Avenue", 300, 26, "DARK_GREEN", darkGreenHousePrice));
     gameBoard.push_back(new UpgradableProperty("North Carolina Avenue", 300, 26, "DARK_GREEN", darkGreenHousePrice));
     gameBoard.push_back(xorti);

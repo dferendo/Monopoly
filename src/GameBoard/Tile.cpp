@@ -9,3 +9,7 @@ const string &GameBoard::Tile::getName() const {
 }
 
 GameBoard::Tile::Tile(const string &name) : name(name) {}
+
+void GameBoard::Tile::action(Player::Participant *player, GameMechanics::Game *game) {
+
+}

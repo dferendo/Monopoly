@@ -42,17 +42,11 @@ void GameBoard::Property::buyHouse(Player::Participant *player) {
 // TODO fix this mass
 void GameBoard::Property::auctionHouse(GameMechanics::Game * game) {
     double currentBid = 0;
-    int highestBidder;
+    int highestBidder = -1;
     int temp;
     string input;
 
     cout << "Auctioning " << getName() << "." << endl;
-    cout << "Current bid: " << currentBid << endl;
-    Util::displayPlayers(game->getParticipantsPlaying());
-    cout << "Select player number to bid." << endl;
-    highestBidder = Util::readIntegerWithRange(0, (int) game->getParticipantsPlaying().size());
-    cout << "Enter amount: ";
-    currentBid = Util::readPositiveInteger();
     // Will loop until quit
     while (true) {
         cout << "Current bid: " << currentBid << endl;
