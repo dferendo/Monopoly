@@ -18,8 +18,15 @@ void GameBoard::UtilityProperty::action(Player::Participant *player, GameMechani
 }
 
 void GameBoard::UtilityProperty::payRent(Player::Participant *player, GameMechanics::Game * game) {
-    double amount = game->getDiceCount() * getRentCost();
+    double amount = game->getDiceCount() * rentCost(player);
     player->getMoney().subtractBalance(amount);
     getOwner()->getMoney().addBalance(amount);
+}
+
+double GameBoard::UtilityProperty::rentCost(Player::Participant *player) {
+    if (getOwner()->getSameGroupColourProperties("WHITE") == 2) {
+        return OWNER_OWNS_BOTH_UTILITY;
+    }
+    return getRentCost();
 }
 

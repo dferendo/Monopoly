@@ -12,6 +12,6 @@ std::pair<int, int> * GameMechanics::Dice::generateNewDiceRoll() {
     return &diceRoll;
 }
 
-std::pair<int, int> GameMechanics::Dice::getCurrentDiceRoll() {
-    return diceRoll;
+std::pair<int, int> *GameMechanics::Dice::getCurrentDiceRoll() {
+    return &diceRoll;
 }

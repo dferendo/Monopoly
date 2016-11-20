@@ -15,7 +15,7 @@ namespace GameMechanics {
         std::pair<int, int> diceRoll;
     public:
         std::pair<int, int> *generateNewDiceRoll();
-        std::pair<int, int> getCurrentDiceRoll();
+        std::pair<int, int> *getCurrentDiceRoll();
     };
 }
 #endif //MONOPOLY_DICE_H

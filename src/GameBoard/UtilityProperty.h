@@ -10,12 +10,15 @@
 
 namespace GameBoard {
 
+    const OWNER_OWNS_BOTH_UTILITY = 10;
+
     class UtilityProperty: public Property {
     public:
         UtilityProperty(const string &name, double propertyPrice, double rentCost, const string &colour);
         void action(Player::Participant *player, GameMechanics::Game * game) override;
         // Rent cost multiplied by dice number is the rent cost.
         void payRent(Player::Participant *player, GameMechanics::Game * game) override;
+        double rentCost(Player::Participant *player);
     };
 }
 #endif //MONOPOLY_SPECIALPROPERTY_H

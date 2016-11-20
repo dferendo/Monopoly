@@ -8,10 +8,12 @@
 #include <vector>
 #include <map>
 #include "../GameBoard/Tile.h"
+#include "Dice.h"
 
 namespace GameMechanics {
     const double GO_AMOUNT = 200;
     const int TOTAL_TILES = 40;
+    const int JAIL_TILE = 10;
 
     class Game {
     private:
@@ -20,6 +22,11 @@ namespace GameMechanics {
         map<string, int> groupColoursSize;
         double freeParkingJackpot = 0;
         int diceCount;
+        void validateGoFunds(Player::Participant *participant, int location);
+        void move(Player::Participant *participant, Dice dice);
+        int generateDiceCount(Dice dice);
+        bool checkDiceDouble(Dice dice);
+        void determineParticipantLocation(Player::Participant *participant, int diceCount);
     public:
         Game();
         void play();
@@ -30,7 +37,6 @@ namespace GameMechanics {
         double getFreeParkingJackpot() const;
         void setFreeParkingJackpot(double freeParkingJackpot);
         const vector<GameBoard::Tile *> &getGameBoard() const;
-        void addGoFunds(Player::Participant *participant);
     };
 }
 #endif //MONOPOLY_GAME_H

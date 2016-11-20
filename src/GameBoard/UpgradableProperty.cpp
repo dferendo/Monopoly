@@ -8,7 +8,7 @@ GameBoard::UpgradableProperty::UpgradableProperty(const string &name, double pro
                                                   const string &colour, GameBoard::HousesPrice housesPrice) :
         Property(name, propertyPrice, rentCost, colour), housesPrice(housesPrice) {}
 
-bool GameBoard::UpgradableProperty::checkIfUpgradeIsAvailable(Player::Participant *player, GameMechanics::Game *game) {
+bool GameBoard::UpgradableProperty::checkIfOwnerHasAllSameColour(Player::Participant *player, GameMechanics::Game *game) {
     return player->getSameGroupColourProperties(getColour()) == game->getGroupColoursSize(getColour());
 }
 
@@ -21,7 +21,7 @@ void GameBoard::UpgradableProperty::action(Player::Participant *player, GameMech
         noOwner(player, game);
     } else if (getOwner()->isEqual(player)) {
         // Upgrade hotel
-        if (checkIfUpgradeIsAvailable(player, game)) {
+        if (checkIfOwnerHasAllSameColour(player, game)) {
             upgradeProperty(player, game);
         } else {
             cout << "Upgrading house is currently not available." << endl;
@@ -33,9 +33,13 @@ void GameBoard::UpgradableProperty::action(Player::Participant *player, GameMech
 
 void GameBoard::UpgradableProperty::payRent(Player::Participant *player, GameMechanics::Game * game) {
     double amount;
-    // If no hotel
-    if (currentHousesBuild == 0) {
+    // If no hotel and does not own same colour properties
+    if (currentHousesBuild == 0 && !checkIfOwnerHasAllSameColour(getOwner(), game)) {
         amount = getRentCost();
+    } else if (currentHousesBuild == 0) {
+        // Owner has same colour properties but no house, thus pay double rent
+        cout << "Owner has all " << getColour() << " properties. Pay double rent!!" << endl;
+        amount = getRentCost() * 2;
     } else {
         amount = getHousesPrice().getHousePrice(currentHousesBuild);
     }

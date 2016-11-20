@@ -20,7 +20,7 @@ namespace GameBoard {
         UpgradableProperty(const string &name, double propertyPrice, double rentCost, const string &colour,
                            GameBoard::HousesPrice housesPrice);
         void action(Player::Participant *player, GameMechanics::Game * game) override;
-        bool checkIfUpgradeIsAvailable(Player::Participant *player, GameMechanics::Game *game);
+        bool checkIfOwnerHasAllSameColour(Player::Participant *player, GameMechanics::Game *game);
         void upgradeProperty(Player::Participant *player, GameMechanics::Game * game);
         void payRent(Player::Participant *player, GameMechanics::Game * game) override;
         const HousesPrice &getHousesPrice() const;
