@@ -24,7 +24,7 @@ namespace GameBoard {
         string name;
     public:
         Tile(const string &name);
-        const string &getName() const;
+        virtual string getName();
         // This is not declared abstract since there are corner tiles with no action.
         virtual void action(Player::Participant * player, GameMechanics::Game * game);
     };

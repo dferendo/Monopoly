@@ -24,6 +24,7 @@ namespace GameBoard {
         void upgradeProperty(Player::Participant *player, GameMechanics::Game * game);
         void payRent(Player::Participant *player, GameMechanics::Game * game) override;
         const HousesPrice &getHousesPrice() const;
+        string getName();
     };
 }
 

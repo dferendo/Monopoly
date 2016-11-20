@@ -60,5 +60,13 @@ void GameBoard::UpgradableProperty::upgradeProperty(Player::Participant *player,
     }
 }
 
+string GameBoard::UpgradableProperty::getName() {
+    string houseUpgrade;
+    for (int i = 0; i < currentHousesBuild; i++) {
+        houseUpgrade += "*";
+    }
+    return Tile::getName() + houseUpgrade;
+}
+
 
 

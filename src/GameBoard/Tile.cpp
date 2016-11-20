@@ -4,7 +4,7 @@
 
 #include "Tile.h"
 
-const string &GameBoard::Tile::getName() const {
+string GameBoard::Tile::getName() {
     return name;
 }
 
