@@ -23,7 +23,12 @@ void GameMechanics::Game::play() {
             diceCount = diceRoll->first + diceRoll->second;
             cout << "Dices rolled " << diceCount << endl;
             // Move player, if player reaches end of board go in the beginning
-            int newLocation = (participant->getCurrentPosition() + diceCount) % GameBoard::TOTAL_TILES;
+            int newLocation = participant->getCurrentPosition() + diceCount;
+            if (newLocation >= TOTAL_TILES) {
+                cout << "Adding Go Funds!!" << endl;
+                addGoFunds(participant);
+            }
+            newLocation %= TOTAL_TILES;
             participant->setCurrentPosition(newLocation);
             cout << participant->getName() << " moved to position "
                  << gameBoard[newLocation]->getName()
@@ -39,15 +44,6 @@ void GameMechanics::Game::play() {
 
 vector<Player::Participant *> &GameMechanics::Game::getParticipantsPlaying() {
     return participantsPlaying;
-}
-
-Player::Participant * GameMechanics::Game::getParticipant(vector<Player::Participant *> participantsPlaying,
-                                                          int participantId) {
-    for (auto const &participant : participantsPlaying) {
-        if (participant->getParticipantId() == participantId) {
-            return participant;
-        }
-    }
 }
 
 int GameMechanics::Game::getGroupColoursSize(string colourType) {
@@ -69,4 +65,8 @@ void GameMechanics::Game::setFreeParkingJackpot(double freeParkingJackpot) {
 
 const vector<GameBoard::Tile *> &GameMechanics::Game::getGameBoard() const {
     return gameBoard;
+}
+
+void GameMechanics::Game::addGoFunds(Player::Participant *participant) {
+    participant->getMoney().addBalance(GO_AMOUNT);
 }

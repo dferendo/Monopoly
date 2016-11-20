@@ -19,8 +19,6 @@ namespace GameMechanics {
 }
 
 namespace GameBoard {
-    const int TOTAL_TILES = 40;
-
     class Tile {
     private:
         string name;

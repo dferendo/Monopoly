@@ -35,16 +35,16 @@ void GameBoard::Xorti::parkingFine(Player::Participant &player, GameMechanics::G
 void GameBoard::Xorti::mepaFine(Player::Participant &player, GameMechanics::Game * game) {
     double mepaFine = rand() % (MAXIMUM_MEPA_FINE - MINIMUM_MEPA_FINE) + MINIMUM_MEPA_FINE;
     double totalFine = mepaFine * player.getParticipantProperties().size();
-    std::cout << "MEPA fined you!!! You were fined in total" << totalFine << ". You have in total "
+    std::cout << "MEPA fined you!!! You were fined in total: " << totalFine << ". You have in total "
               << player.getParticipantProperties().size() << " buildings and each building was fined "
-              << mepaFine << std::endl;
+              << mepaFine << "." << std::endl;
     player.getMoney().subtractBalance(totalFine);
     game->setFreeParkingJackpot(game->getFreeParkingJackpot() + totalFine);
 
 }
 
 void GameBoard::Xorti::moveToRandomPlace(Player::Participant &player, GameMechanics::Game * game) {
-    player.setCurrentPosition(rand() % GameBoard::TOTAL_TILES);
+    player.setCurrentPosition(rand() % GameMechanics::TOTAL_TILES);
     std::cout << "You were moved to a random location!!! New location is: "
               << game->getGameBoard()[player.getCurrentPosition()]->getName() << std::endl;
 }
