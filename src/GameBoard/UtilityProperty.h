@@ -10,7 +10,7 @@
 
 namespace GameBoard {
 
-    const OWNER_OWNS_BOTH_UTILITY = 10;
+    const double OWNER_OWNS_BOTH_UTILITY = 10;
 
     class UtilityProperty: public Property {
     public:

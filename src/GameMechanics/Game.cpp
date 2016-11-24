@@ -15,14 +15,54 @@ GameMechanics::Game::Game() {
 void GameMechanics::Game::play() {
     Dice dice;
     int turn = 0;
+    vector<string> displayTradeOrSellMenu;
+
+    displayTradeOrSellMenu.push_back("Trade");
+    displayTradeOrSellMenu.push_back("Sell buildings(houses)");
+    displayTradeOrSellMenu.push_back("Move");
     while (turn < 100) {
-        for(auto const& participant : participantsPlaying) {
-            cout << participant->getName() << " turns." << endl;
-            move(participant, dice);
+        int selection = 0;
+        // Trade, sell property or move
+        while (selection != 2) {
+            Util::displayMenu(displayTradeOrSellMenu);
+            selection = Util::readIntegerWithRange(0, 2);
+            if (selection == 0) {
+                trade(this);
+            } else if (selection == 1) {
+                sellBuilding(getParticipantsPlaying());
+            }
         }
+        move(getParticipantsPlaying(), &dice);
         std::cout << "New turn!!" << std::endl;
         Util::pressEnterToContinue();
         turn++;
+        // TODO trade
+        // TODO sell properties at a offer (no houses on them)
+        // TODO offer to sell houses, half price
+    }
+}
+
+void GameMechanics::Game::move(vector<Player::Participant *> participantsPlaying, Dice *dice) {
+    for(auto const& participant : participantsPlaying) {
+        cout << "\033[1;31m" << participant->getName() << "'s turn." << "\033[0m" << endl;
+        bool anotherTurnForPlayer = true;
+        int counter = 0;
+        while (anotherTurnForPlayer) {
+            // Roll dice to move
+            diceCount = generateDiceCount(dice);
+            anotherTurnForPlayer = checkDiceDouble(dice);
+            // If player did 2 turns and roll doubles again, move to the jail empty tail
+            if (counter == 2 && anotherTurnForPlayer) {
+                cout << "Doubles for the third consecutive time!! Moving to jail." << endl;
+                participant->setCurrentPosition(JAIL_TILE);
+                Util::pressEnterToContinue();
+                break;
+            }
+            determineParticipantLocation(participant, diceCount);
+            gameBoard[participant->getCurrentPosition()]->action(participant, this);
+            counter++;
+            Util::pressEnterToContinue();
+        }
     }
 }
 
@@ -34,33 +74,18 @@ void GameMechanics::Game::validateGoFunds(Player::Participant *participant, int 
     }
 }
 
-void GameMechanics::Game::move(Player::Participant *participant, Dice dice) {
-    bool anotherTurnForPlayer = true;
-    int counter = 0;
-    while (anotherTurnForPlayer) {
-        // Roll dice to move
-        diceCount = generateDiceCount(dice);
-        anotherTurnForPlayer = checkDiceDouble(dice);
-        if (counter == 2) {
-            cout << "Doubles for the third consecutive time!! Moving to jail." << endl;
-            participant->setCurrentPosition(JAIL_TILE);
-            Util::pressEnterToContinue();
-            break;
-        }
-        determineParticipantLocation(participant, diceCount);
-        gameBoard[participant->getCurrentPosition()]->action(participant, this);
-        counter++;
-        Util::pressEnterToContinue();
+bool GameMechanics::Game::checkDiceDouble(GameMechanics::Dice *dice) {
+    pair<int, int> * diceRoll = dice->getCurrentDiceRoll();
+    if (diceRoll->first == diceRoll->second) {
+        cout << "Doubles!! Player gets another dice roll after doing a tile action unless it"
+                "is the third consecutive time!" << endl;
+        return true;
     }
+    return false;
 }
 
-bool GameMechanics::Game::checkDiceDouble(GameMechanics::Dice dice) {
-    pair<int, int> * diceRoll = dice.getCurrentDiceRoll();
-    return diceRoll->first == diceRoll->second;
-}
-
-int GameMechanics::Game::generateDiceCount(GameMechanics::Dice dice) {
-    pair<int,int> * diceRoll = dice.generateNewDiceRoll();
+int GameMechanics::Game::generateDiceCount(GameMechanics::Dice *dice) {
+    pair<int,int> * diceRoll = dice->generateNewDiceRoll();
     cout << "Dices rolled: " << diceRoll->first << ", " << diceRoll->second << endl;
     return diceRoll->first + diceRoll->second;
 }
@@ -74,6 +99,22 @@ void GameMechanics::Game::determineParticipantLocation(Player::Participant *part
     cout << participant->getName() << " moved to position "
          << gameBoard[newLocation]->getName()
          << endl;
+}
+
+void GameMechanics::Game::trade(GameMechanics::Game *game) {
+    cout << "Which player are you?" << endl;
+    Util::displayPlayers(game->getParticipantsPlaying());
+    int indexOfParticipant = Util::readIntegerWithRange(0, (int) game->getParticipantsPlaying().size() - 1);
+    Player::Participant * seller = game->getParticipantsPlaying()[indexOfParticipant];
+    // TODO remove seller
+    cout << "To whom you want to trade?" << endl;
+    indexOfParticipant = Util::readIntegerWithRange(0, (int) game->getParticipantsPlaying().size() - 1);
+    Player::Participant * buyer = game->getParticipantsPlaying()[indexOfParticipant];
+
+}
+
+void GameMechanics::Game::sellBuilding(vector<Player::Participant *> participantsPlaying) {
+
 }
 
 vector<Player::Participant *> &GameMechanics::Game::getParticipantsPlaying() {
@@ -100,5 +141,3 @@ void GameMechanics::Game::setFreeParkingJackpot(double freeParkingJackpot) {
 const vector<GameBoard::Tile *> &GameMechanics::Game::getGameBoard() const {
     return gameBoard;
 }
-
-

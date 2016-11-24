@@ -47,7 +47,6 @@ void GameBoard::UpgradableProperty::payRent(Player::Participant *player, GameMec
     getOwner()->getMoney().addBalance(amount);
 }
 
-// TODO it like classic monopoly
 void GameBoard::UpgradableProperty::upgradeProperty(Player::Participant *player, GameMechanics::Game *game) {
     string input;
 
@@ -55,6 +54,7 @@ void GameBoard::UpgradableProperty::upgradeProperty(Player::Participant *player,
     cout << "Want to upgrade house?(y/n)" << endl;
     getline(cin, input);
     if (input[0] == 'y') {
+        // TODO Build evenly
         if (currentHousesBuild < MAX_HOUSES) {
             currentHousesBuild += 1;
             player->getMoney().subtractBalance(getHousesPrice().getPriceToUpgrade());

@@ -23,9 +23,11 @@ namespace GameMechanics {
         double freeParkingJackpot = 0;
         int diceCount;
         void validateGoFunds(Player::Participant *participant, int location);
-        void move(Player::Participant *participant, Dice dice);
-        int generateDiceCount(Dice dice);
-        bool checkDiceDouble(Dice dice);
+        void move(vector<Player::Participant *>, Dice *dice);
+        void trade(Game *game);
+        void sellBuilding(vector<Player::Participant *> participantsPlaying);
+        int generateDiceCount(Dice *dice);
+        bool checkDiceDouble(Dice *dice);
         void determineParticipantLocation(Player::Participant *participant, int diceCount);
     public:
         Game();
@@ -37,6 +39,7 @@ namespace GameMechanics {
         double getFreeParkingJackpot() const;
         void setFreeParkingJackpot(double freeParkingJackpot);
         const vector<GameBoard::Tile *> &getGameBoard() const;
+
     };
 }
 #endif //MONOPOLY_GAME_H
