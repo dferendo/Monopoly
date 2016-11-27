@@ -14,5 +14,6 @@ using namespace std;
 namespace Util {
     void displayMenu(vector<string> &options);
     void displayPlayers(vector<Player::Participant *> participants);
+    void displayAllHouseForPlayer(Player::Participant *participant);
 }
 #endif //MONOPOLY_MENUHELPER_H

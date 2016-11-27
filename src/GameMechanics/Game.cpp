@@ -4,6 +4,8 @@
 
 #include "Game.h"
 #include "FillBoard.h"
+#include "../Exception/NoHousesException.h"
+#include "Trade.h"
 
 GameMechanics::Game::Game() {
     // Initialise
@@ -14,6 +16,7 @@ GameMechanics::Game::Game() {
 
 void GameMechanics::Game::play() {
     Dice dice;
+    Trade trade;
     int turn = 0;
     vector<string> displayTradeOrSellMenu;
 
@@ -27,7 +30,7 @@ void GameMechanics::Game::play() {
             Util::displayMenu(displayTradeOrSellMenu);
             selection = Util::readIntegerWithRange(0, 2);
             if (selection == 0) {
-                trade(this);
+                trade.tradeProperty(this);
             } else if (selection == 1) {
                 sellBuilding(getParticipantsPlaying());
             }
@@ -36,7 +39,7 @@ void GameMechanics::Game::play() {
         std::cout << "New turn!!" << std::endl;
         Util::pressEnterToContinue();
         turn++;
-        // TODO trade
+        // TODO tradeProperty
         // TODO sell properties at a offer (no houses on them)
         // TODO offer to sell houses, half price
     }
@@ -99,18 +102,6 @@ void GameMechanics::Game::determineParticipantLocation(Player::Participant *part
     cout << participant->getName() << " moved to position "
          << gameBoard[newLocation]->getName()
          << endl;
-}
-
-void GameMechanics::Game::trade(GameMechanics::Game *game) {
-    cout << "Which player are you?" << endl;
-    Util::displayPlayers(game->getParticipantsPlaying());
-    int indexOfParticipant = Util::readIntegerWithRange(0, (int) game->getParticipantsPlaying().size() - 1);
-    Player::Participant * seller = game->getParticipantsPlaying()[indexOfParticipant];
-    // TODO remove seller
-    cout << "To whom you want to trade?" << endl;
-    indexOfParticipant = Util::readIntegerWithRange(0, (int) game->getParticipantsPlaying().size() - 1);
-    Player::Participant * buyer = game->getParticipantsPlaying()[indexOfParticipant];
-
 }
 
 void GameMechanics::Game::sellBuilding(vector<Player::Participant *> participantsPlaying) {

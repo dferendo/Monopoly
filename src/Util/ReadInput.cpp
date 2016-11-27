@@ -30,13 +30,13 @@ string Util::readString() {
     }
 }
 
-int Util::readPositiveInteger() {
+double Util::readPositiveDouble() {
     string number;
     while(true) {
         try {
             getline(cin, number);
             // stoi will throw an exception if no numbers were given
-            int givenNumber = stoi(number);
+            double givenNumber = stoi(number);
             if (givenNumber >= 0) {
                 return givenNumber;
             }

@@ -11,7 +11,7 @@ using namespace std;
 
 namespace Util {
     int readIntegerWithRange(int lowerRange, int upperRange);
-    int readPositiveInteger();
+    double readPositiveDouble();
     string readString();
     void pressEnterToContinue();
 }

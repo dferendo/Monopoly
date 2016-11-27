@@ -19,7 +19,7 @@ Player::Money &Player::Participant::getMoney() {
     return money;
 }
 
-vector<GameBoard::Property *> Player::Participant::getParticipantProperties() {
+vector<GameBoard::Property *> & Player::Participant::getParticipantProperties() {
     return participantProperties;
 }
 
@@ -57,4 +57,9 @@ vector<GameBoard::Property *> Player::Participant::getGroupColoursProperties(str
         }
     }
     return groupColoursProperties;
+}
+
+void Player::Participant::removeProperty(GameBoard::Property * property) {
+    participantProperties.erase(remove(participantProperties.begin(), participantProperties.end(), property),
+                                participantProperties.end());
 }

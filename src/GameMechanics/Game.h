@@ -9,6 +9,7 @@
 #include <map>
 #include "../GameBoard/Tile.h"
 #include "Dice.h"
+#include "../GameBoard/Property.h"
 
 namespace GameMechanics {
     const double GO_AMOUNT = 200;
@@ -24,7 +25,6 @@ namespace GameMechanics {
         int diceCount;
         void validateGoFunds(Player::Participant *participant, int location);
         void move(vector<Player::Participant *>, Dice *dice);
-        void trade(Game *game);
         void sellBuilding(vector<Player::Participant *> participantsPlaying);
         int generateDiceCount(Dice *dice);
         bool checkDiceDouble(Dice *dice);

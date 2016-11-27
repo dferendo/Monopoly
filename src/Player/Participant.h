@@ -10,6 +10,8 @@
 #include <map>
 #include "Money.h"
 #include "../GameBoard/Property.h"
+#include <algorithm>
+
 using namespace std;
 
 namespace GameBoard {
@@ -33,7 +35,8 @@ namespace Player {
         int getCurrentPosition();
         void setCurrentPosition(int currentPosition);
         Money & getMoney();
-        vector<GameBoard::Property *> getParticipantProperties();
+        vector<GameBoard::Property *> & getParticipantProperties();
+        void removeProperty(GameBoard::Property * property);
         vector<GameBoard::Property *> getGroupColoursProperties(string colourType);
         void addParticipantProperty(GameBoard::Property *property);
         bool isEqual(Participant *participant);

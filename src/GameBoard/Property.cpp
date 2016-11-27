@@ -54,7 +54,7 @@ void GameBoard::Property::auctionHouse(GameMechanics::Game * game) {
         cout << "Select player number to bid." << endl;
         temp = Util::readIntegerWithRange(0, (int) game->getParticipantsPlaying().size() - 1);
         cout << "Enter amount: ";
-        double amount = Util::readPositiveInteger();
+        double amount = Util::readPositiveDouble();
         if (amount > currentBid) {
             currentBid = amount;
             highestBidder = temp;
