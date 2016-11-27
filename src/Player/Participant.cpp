@@ -64,16 +64,13 @@ void Player::Participant::removeProperty(GameBoard::Property * property) {
                                 participantProperties.end());
 }
 
-vector<GameBoard::Property *> &Player::Participant::getNonImprovedParticipantProperties() {
-    vector<GameBoard::Property *> * nonImprovedProperties = new vector<GameBoard::Property *>;
+void Player::Participant::getNonImprovedParticipantProperties(vector<GameBoard::Property *> &nonImprovedProperties) {
     for (auto &property : participantProperties) {
         if (property->getCurrentHousesBuild() == 0) {
-            nonImprovedProperties->push_back(property);
+            nonImprovedProperties.push_back(property);
         }
     }
-    if (nonImprovedProperties->size() == 0) {
-        delete(nonImprovedProperties);
+    if (nonImprovedProperties.size() == 0) {
         throw NoHousesException(*this);
     }
-    return *nonImprovedProperties;
 }

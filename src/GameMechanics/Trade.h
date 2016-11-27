@@ -7,19 +7,24 @@
 
 #include "Game.h"
 #include <set>
+#include <algorithm>
+using namespace Player;
 
 namespace GameMechanics {
     class Trade {
+    private:
+        Participant *determineBuyer(vector<Participant *> &participants);
+        Participant *determineSeller(vector<Participant *> participants, Participant *buyer);
     public:
         void tradeProperty(Game *game);
-        void transactionTrade(Player::Participant *buyer, Player::Participant *seller,
+        void transactionTrade(Participant *buyer, Participant *seller,
                               GameBoard::Property *propertyForSale);
-        double offerCash(Player::Participant *buyer);
-        GameBoard::Property * offerProperty(Player::Participant *buyer);
-        bool makeTransaction(Player::Participant *buyer, Player::Participant *seller,
+        double offerCash(Participant *buyer);
+        GameBoard::Property * offerProperty(Participant *buyer);
+        bool makeTransaction(Participant *buyer, Participant *seller,
                              double cashOffered, set<GameBoard::Property *> propertiesOffered,
                              GameBoard::Property *propertyForSale);
-        string buyerOffer(Player::Participant *buyer, double cashOffered,
+        string buyerOffer(Participant *buyer, double cashOffered,
                           set<GameBoard::Property *> propertiesOffered);
     };
 }

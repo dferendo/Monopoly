@@ -29,18 +29,30 @@ namespace Player {
         vector<GameBoard::Property *> participantProperties;
     public:
         Participant(int participantId, const string &name);
+
         int getParticipantId() const;
+
         string getName();
+
         int getCurrentPosition();
+
         void setCurrentPosition(int currentPosition);
-        Money & getMoney();
-        vector<GameBoard::Property *> & getParticipantProperties();
-        void removeProperty(GameBoard::Property * property);
+
+        Money &getMoney();
+
+        vector<GameBoard::Property *> &getParticipantProperties();
+
+        void removeProperty(GameBoard::Property *property);
+
         vector<GameBoard::Property *> getGroupColoursProperties(string colourType);
+
         void addParticipantProperty(GameBoard::Property *property);
+
         bool isEqual(Participant *participant);
+
         int getSameGroupColourPropertiesAmount(string colourType);
-        vector<GameBoard::Property *> & getNonImprovedParticipantProperties();
+
+        void getNonImprovedParticipantProperties(vector<GameBoard::Property *> &nonImprovedProperties);
     };
 }
 #endif //MONOPOLY_PARTICIPANT_H
