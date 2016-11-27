@@ -16,6 +16,7 @@ namespace GameBoard {
         double propertyPrice;
         double rentCost;
         Player::Participant * owner = nullptr;
+        int currentHousesBuild = 0;
         string colour;
     public:
         Property(const string &name, double propertyPrice, double rentCost, string colour);
@@ -29,6 +30,8 @@ namespace GameBoard {
         virtual void payRent(Player::Participant *player, GameMechanics::Game * game) = 0;
         const string &getColour() const;
         double getRentCost() const;
+        int getCurrentHousesBuild() const;
+        void setCurrentHousesBuild(int currentHousesBuild);
     };
 }
 

@@ -24,7 +24,7 @@ void GameBoard::UtilityProperty::payRent(Player::Participant *player, GameMechan
 }
 
 double GameBoard::UtilityProperty::rentCost(Player::Participant *player) {
-    if (getOwner()->getSameGroupColourProperties("WHITE") == 2) {
+    if (getOwner()->getSameGroupColourPropertiesAmount("WHITE") == 2) {
         return OWNER_OWNS_BOTH_UTILITY;
     }
     return getRentCost();

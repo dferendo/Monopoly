@@ -23,10 +23,9 @@ namespace Player {
     class Participant {
     private:
         int participantId;
-        int currentPosition;
+        int currentPosition = 0;
         string name;
-        Money money;
-        // TODO make it map?
+        Money money = Money(1500);
         vector<GameBoard::Property *> participantProperties;
     public:
         Participant(int participantId, const string &name);
@@ -40,7 +39,8 @@ namespace Player {
         vector<GameBoard::Property *> getGroupColoursProperties(string colourType);
         void addParticipantProperty(GameBoard::Property *property);
         bool isEqual(Participant *participant);
-        int getSameGroupColourProperties(string colourType);
+        int getSameGroupColourPropertiesAmount(string colourType);
+        vector<GameBoard::Property *> & getNonImprovedParticipantProperties();
     };
 }
 #endif //MONOPOLY_PARTICIPANT_H

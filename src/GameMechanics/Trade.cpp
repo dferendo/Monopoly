@@ -9,7 +9,6 @@
 void GameMechanics::Trade::tradeProperty(GameMechanics::Game *game) {
     cout << "Which player are you? (Buyer, offering transaction)" << endl;
     Util::displayPlayers(game->getParticipantsPlaying());
-    // TODO return player?
     int indexOfParticipant = Util::readIntegerWithRange(0, (int) game->getParticipantsPlaying().size() - 1);
     Player::Participant * buyer = game->getParticipantsPlaying()[indexOfParticipant];
     // TODO remove buyer from list
@@ -17,12 +16,14 @@ void GameMechanics::Trade::tradeProperty(GameMechanics::Game *game) {
     Util::displayPlayers(game->getParticipantsPlaying());
     indexOfParticipant = Util::readIntegerWithRange(0, (int) game->getParticipantsPlaying().size() - 1);
     Player::Participant * seller = game->getParticipantsPlaying()[indexOfParticipant];
-    // Display properties
     try {
-        cout << "Displaying " << seller->getName() << " properties. Choice one:" << endl;
-        Util::displayAllHouseForPlayer(seller);
-        int indexOfHouseToBuy = Util::readIntegerWithRange(0, (int) seller->getParticipantProperties().size() - 1);
-        transactionTrade(buyer, seller, seller->getParticipantProperties()[indexOfHouseToBuy]);
+        // Display properties
+        vector<GameBoard::Property *> &nonImprovedProperties = seller->getNonImprovedParticipantProperties();
+        Util::displayNonImprovedHouseForPlayer(seller, nonImprovedProperties);
+        int indexOfHouseToBuy = Util::readIntegerWithRange(0, (int) nonImprovedProperties.size() - 1);
+        transactionTrade(buyer, seller, nonImprovedProperties[indexOfHouseToBuy]);
+        // Deallocate memory
+        // TODO deallocate memory
     } catch(NoHousesException &exception) {
         cout << exception.message << " Cancelling trade." << endl;
         return;
@@ -41,7 +42,6 @@ void GameMechanics::Trade::transactionTrade(Player::Participant *buyer, Player::
     displayTradeOptions.push_back("Make transaction");
     displayTradeOptions.push_back("Quit transaction");
 
-    // TODO unimproved only
     cout << buyer->getName() << " request to buy " << propertyForSale->getName() << " from " << seller->getName()
          << "." << endl;
     while (offerChoice != 3) {
@@ -80,10 +80,13 @@ double GameMechanics::Trade::offerCash(Player::Participant *buyer) {
 
 GameBoard::Property *GameMechanics::Trade::offerProperty(Player::Participant *buyer) {
     try {
-        cout << "Displaying " << buyer->getName() << " properties:" << endl;
-        Util::displayAllHouseForPlayer(buyer);
-        int indexOfHouseToOffer = Util::readIntegerWithRange(0, (int) buyer->getParticipantProperties().size() - 1);
-        return buyer->getParticipantProperties()[indexOfHouseToOffer];
+        vector<GameBoard::Property *> &nonImprovedProperties = buyer->getNonImprovedParticipantProperties();
+        Util::displayNonImprovedHouseForPlayer(buyer, nonImprovedProperties);
+        int indexOfHouseToOffer = Util::readIntegerWithRange(0, (int) nonImprovedProperties.size() - 1);
+        GameBoard::Property * property = nonImprovedProperties[indexOfHouseToOffer];
+        // TODO deallocate memory
+//        delete(nonImprovedProperties);
+        return property;
     } catch(NoHousesException &exception) {
         cout << exception.message << " Cancelling property offer. (Make cash only)" << endl;
         return nullptr;

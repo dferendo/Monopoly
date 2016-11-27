@@ -81,3 +81,11 @@ double GameBoard::Property::getRentCost() const {
     return rentCost;
 }
 
+int GameBoard::Property::getCurrentHousesBuild() const {
+    return currentHousesBuild;
+}
+
+void GameBoard::Property::setCurrentHousesBuild(int currentHousesBuild) {
+    Property::currentHousesBuild = currentHousesBuild;
+}
+

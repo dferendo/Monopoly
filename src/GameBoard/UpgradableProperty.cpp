@@ -9,7 +9,7 @@ GameBoard::UpgradableProperty::UpgradableProperty(const string &name, double pro
         Property(name, propertyPrice, rentCost, colour), housesPrice(housesPrice) {}
 
 bool GameBoard::UpgradableProperty::checkIfOwnerHasAllSameColour(Player::Participant *player, GameMechanics::Game *game) {
-    return player->getSameGroupColourProperties(getColour()) == game->getGroupColoursSize(getColour());
+    return player->getSameGroupColourPropertiesAmount(getColour()) == game->getGroupColoursSize(getColour());
 }
 
 const GameBoard::HousesPrice &GameBoard::UpgradableProperty::getHousesPrice() const {
@@ -33,6 +33,7 @@ void GameBoard::UpgradableProperty::action(Player::Participant *player, GameMech
 
 void GameBoard::UpgradableProperty::payRent(Player::Participant *player, GameMechanics::Game * game) {
     double amount;
+    int currentHousesBuild = getCurrentHousesBuild();
     // If no hotel and does not own same colour properties
     if (currentHousesBuild == 0 && !checkIfOwnerHasAllSameColour(getOwner(), game)) {
         amount = getRentCost();
@@ -55,8 +56,9 @@ void GameBoard::UpgradableProperty::upgradeProperty(Player::Participant *player,
     getline(cin, input);
     if (input[0] == 'y') {
         // TODO Build evenly
-        if (currentHousesBuild < MAX_HOUSES) {
-            currentHousesBuild += 1;
+        int currentHouseBuild = getCurrentHousesBuild();
+        if (currentHouseBuild < MAX_HOUSES) {
+            setCurrentHousesBuild(currentHouseBuild + 1);
             player->getMoney().subtractBalance(getHousesPrice().getPriceToUpgrade());
         } else {
             cout << "Maximum house limit." << endl;
@@ -66,7 +68,7 @@ void GameBoard::UpgradableProperty::upgradeProperty(Player::Participant *player,
 
 string GameBoard::UpgradableProperty::getName() {
     string houseUpgrade;
-    for (int i = 0; i < currentHousesBuild; i++) {
+    for (int i = 0; i < getCurrentHousesBuild(); i++) {
         houseUpgrade += "*";
     }
     return Tile::getName() + houseUpgrade;

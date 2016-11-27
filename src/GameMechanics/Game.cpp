@@ -39,7 +39,6 @@ void GameMechanics::Game::play() {
         std::cout << "New turn!!" << std::endl;
         Util::pressEnterToContinue();
         turn++;
-        // TODO tradeProperty
         // TODO sell properties at a offer (no houses on them)
         // TODO offer to sell houses, half price
     }

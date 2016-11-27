@@ -15,7 +15,6 @@ namespace GameBoard {
     class UpgradableProperty: public Property {
     private:
         HousesPrice housesPrice;
-        int currentHousesBuild = 0;
     public:
         UpgradableProperty(const string &name, double propertyPrice, double rentCost, const string &colour,
                            GameBoard::HousesPrice housesPrice);
