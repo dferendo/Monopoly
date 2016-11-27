@@ -52,9 +52,9 @@ void GameBoard::UpgradableProperty::upgradeProperty(Player::Participant *player,
     string input;
 
     operator<<(cout, housesPrice);
-    cout << "Want to upgrade house?(y/n)" << endl;
+    cout << "Want to upgrade house? (Y/n)" << endl;
     getline(cin, input);
-    if (input[0] == 'y') {
+    if (input[0] == 'y' || input[0] == 'Y') {
         // TODO Build evenly
         int currentHouseBuild = getCurrentHousesBuild();
         if (currentHouseBuild < MAX_HOUSES) {

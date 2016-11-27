@@ -11,6 +11,7 @@ class NoHousesException {
 public:
     string message;
     NoHousesException(Player::Participant & participant);
+    NoHousesException(Player::Participant & participant, string message);
 };
 
 

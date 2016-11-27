@@ -7,10 +7,6 @@
 
 Player::Participant::Participant(int participantId, const string &name) : participantId(participantId), name(name) {}
 
-int Player::Participant::getParticipantId() const {
-    return participantId;
-}
-
 string Player::Participant::getName() {
     return name;
 }
@@ -67,6 +63,17 @@ void Player::Participant::removeProperty(GameBoard::Property * property) {
 void Player::Participant::getNonImprovedParticipantProperties(vector<GameBoard::Property *> &nonImprovedProperties) {
     for (auto &property : participantProperties) {
         if (property->getCurrentHousesBuild() == 0) {
+            nonImprovedProperties.push_back(property);
+        }
+    }
+    if (nonImprovedProperties.size() == 0) {
+        throw NoHousesException(*this);
+    }
+}
+
+void Player::Participant::getImprovedParticipantProperties(vector<GameBoard::Property *> &nonImprovedProperties) {
+    for (auto &property : participantProperties) {
+        if (property->getCurrentHousesBuild() != 0) {
             nonImprovedProperties.push_back(property);
         }
     }

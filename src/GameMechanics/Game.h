@@ -10,6 +10,8 @@
 #include "../GameBoard/Tile.h"
 #include "Dice.h"
 #include "../GameBoard/Property.h"
+#include "Trade.h"
+using namespace Player;
 
 namespace GameMechanics {
     const double GO_AMOUNT = 200;
@@ -23,17 +25,18 @@ namespace GameMechanics {
         map<string, int> groupColoursSize;
         double freeParkingJackpot = 0;
         int diceCount;
-        void validateGoFunds(Player::Participant *participant, int location);
-        void move(vector<Player::Participant *>, Dice *dice);
-        void sellBuilding(vector<Player::Participant *> participantsPlaying);
+        void validateGoFunds(Participant *participant, int location);
+        Participant *determinePlayer(vector<Participant *> &participants);
+        void move(vector<Participant *>, Dice *dice);
+        void sellBuilding(vector<Participant *> &participantsPlaying);
         int generateDiceCount(Dice *dice);
         bool checkDiceDouble(Dice *dice);
-        void determineParticipantLocation(Player::Participant *participant, int diceCount);
+        void determineParticipantLocation(Participant *participant, int diceCount);
     public:
         Game();
         void play();
         // Can change properties of players
-        vector<Player::Participant *> &getParticipantsPlaying();
+        vector<Participant *> &getParticipantsPlaying();
         int getGroupColoursSize(string colourType);
         int getDiceCount() const;
         double getFreeParkingJackpot() const;

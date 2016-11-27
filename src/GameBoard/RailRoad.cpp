@@ -21,7 +21,7 @@ void GameBoard::RailRoad::action(Player::Participant *player, GameMechanics::Gam
 
 void GameBoard::RailRoad::payRent(Player::Participant *player, GameMechanics::Game * game) {
     int numberOfRailRoad = getOwner()->getSameGroupColourPropertiesAmount("BLACK");
-    cout << "The owner has in total " << numberOfRailRoad << "railroads" << endl;
+    cout << "The owner has in total " << numberOfRailRoad << " railroads" << endl;
     // Charge 25 if one owned, 50 if two owned, 100 if three owned, 200 if all owned by the same owner
     int amountToBePaid = pow(2, numberOfRailRoad - 1) * 25;
     player->getMoney().subtractBalance(amountToBePaid);

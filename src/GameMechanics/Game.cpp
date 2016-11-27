@@ -5,7 +5,6 @@
 #include "Game.h"
 #include "FillBoard.h"
 #include "../Exception/NoHousesException.h"
-#include "Trade.h"
 
 GameMechanics::Game::Game() {
     // Initialise
@@ -39,12 +38,10 @@ void GameMechanics::Game::play() {
         std::cout << "New turn!!" << std::endl;
         Util::pressEnterToContinue();
         turn++;
-        // TODO sell properties at a offer (no houses on them)
-        // TODO offer to sell houses, half price
     }
 }
 
-void GameMechanics::Game::move(vector<Player::Participant *> participantsPlaying, Dice *dice) {
+void GameMechanics::Game::move(vector<Participant *> participantsPlaying, Dice *dice) {
     for(auto const& participant : participantsPlaying) {
         cout << "\033[1;31m" << participant->getName() << "'s turn." << "\033[0m" << endl;
         bool anotherTurnForPlayer = true;
@@ -68,7 +65,7 @@ void GameMechanics::Game::move(vector<Player::Participant *> participantsPlaying
     }
 }
 
-void GameMechanics::Game::validateGoFunds(Player::Participant *participant, int location) {
+void GameMechanics::Game::validateGoFunds(Participant *participant, int location) {
     if (location >= TOTAL_TILES) {
         cout << "Adding Go Funds!!" << endl;
         participant->getMoney().addBalance(GO_AMOUNT);
@@ -79,8 +76,8 @@ void GameMechanics::Game::validateGoFunds(Player::Participant *participant, int 
 bool GameMechanics::Game::checkDiceDouble(GameMechanics::Dice *dice) {
     pair<int, int> * diceRoll = dice->getCurrentDiceRoll();
     if (diceRoll->first == diceRoll->second) {
-        cout << "Doubles!! Player gets another dice roll after doing a tile action unless it"
-                "is the third consecutive time!" << endl;
+        cout << "Doubles!! Player gets another dice roll after doing a  tile action unless it"
+                " is the third consecutive time!" << endl;
         return true;
     }
     return false;
@@ -92,7 +89,7 @@ int GameMechanics::Game::generateDiceCount(GameMechanics::Dice *dice) {
     return diceRoll->first + diceRoll->second;
 }
 
-void GameMechanics::Game::determineParticipantLocation(Player::Participant *participant, int diceCount) {
+void GameMechanics::Game::determineParticipantLocation(Participant *participant, int diceCount) {
     // Move player, if player reaches end of board go in the beginning of the board
     int newLocation = participant->getCurrentPosition() + diceCount;
     validateGoFunds(participant, newLocation);
@@ -103,11 +100,43 @@ void GameMechanics::Game::determineParticipantLocation(Player::Participant *part
          << endl;
 }
 
-void GameMechanics::Game::sellBuilding(vector<Player::Participant *> participantsPlaying) {
-
+void GameMechanics::Game::sellBuilding(vector<Participant *> &participantsPlaying) {
+    // TODO sell evenly
+    string input;
+    vector<GameBoard::Property *> nonImprovedProperties;
+    try {
+        Participant *player = determinePlayer(participantsPlaying);
+        player->getImprovedParticipantProperties(nonImprovedProperties);
+        Util::displayImprovedHouseForPlayer(player, nonImprovedProperties);
+        int sellBuildingPropertyIndex = Util::readIntegerWithRange(0, (int) nonImprovedProperties.size() - 1);
+        GameBoard::Property * property = nonImprovedProperties[sellBuildingPropertyIndex];
+        // If building has houses, it is an upgradeableProperty
+        GameBoard::UpgradableProperty * upgradableProperty = dynamic_cast<GameBoard::UpgradableProperty *> (property);
+        // Check if dynamic cast did not fail
+        if (upgradableProperty) {
+            cout << "Do you really want to remove a house? You will receive half the cost it took to build it. (Y/n)"
+                 << endl;
+            getline(cin, input);
+            if (input[0] == 'Y' || input[0] == 'y') {
+                upgradableProperty->setCurrentHousesBuild(upgradableProperty->getCurrentHousesBuild() - 1);
+                player->getMoney().addBalance(upgradableProperty->getHousesPrice().getPriceToUpgrade() / 2);
+            }
+        } else {
+            // TODO check with JP for this thing
+        }
+    } catch (NoHousesException &exception) {
+        cout << exception.message << ". Returning to previous menu." << endl;
+    }
 }
 
-vector<Player::Participant *> &GameMechanics::Game::getParticipantsPlaying() {
+Participant *GameMechanics::Game::determinePlayer(vector<Participant *> &participants) {
+    cout << "Which player are you?" << endl;
+    Util::displayPlayers(participants);
+    int indexOfParticipant = Util::readIntegerWithRange(0, (int) participants.size() - 1);
+    return participants[indexOfParticipant];
+}
+
+vector<Participant *> &GameMechanics::Game::getParticipantsPlaying() {
     return participantsPlaying;
 }
 

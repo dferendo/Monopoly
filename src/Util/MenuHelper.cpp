@@ -20,7 +20,19 @@ void Util::displayNonImprovedHouseForPlayer(Player::Participant *participant,
     if (properties.size() == 0) {
         throw NoHousesException(*participant);
     }
-    cout << "Displaying non improved properties " << participant->getName() << " properties. Choice one:" << endl;
+    cout << "Displaying all non improved properties " << participant->getName() << " properties. Choice one:" << endl;
+    for (vector<GameBoard::Property *>::size_type i = 0; i != properties.size(); i++) {
+        cout << i << ". " << properties[i]->getName() << endl;
+    }
+}
+
+void Util::displayImprovedHouseForPlayer(Player::Participant *participant,
+                                           vector<GameBoard::Property *> properties) {
+    if (properties.size() == 0) {
+        // TODO not throwing good??
+        throw NoHousesException(*participant, " has no improved houses!");
+    }
+    cout << "Displaying all improved properties " << participant->getName() << " properties. Choice one:" << endl;
     for (vector<GameBoard::Property *>::size_type i = 0; i != properties.size(); i++) {
         cout << i << ". " << properties[i]->getName() << endl;
     }

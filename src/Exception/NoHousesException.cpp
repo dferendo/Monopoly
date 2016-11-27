@@ -10,3 +10,9 @@ NoHousesException::NoHousesException(Player::Participant &participant) {
     messageCompose << participant.getName() << " has no houses!";
     message = messageCompose.str();
 }
+
+NoHousesException::NoHousesException(Player::Participant &participant, string message) {
+    stringstream messageCompose;
+    messageCompose << participant.getName() << message;
+    this->message = messageCompose.str();
+}
