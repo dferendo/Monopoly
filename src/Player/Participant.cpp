@@ -63,8 +63,7 @@ namespace Player {
                                     participantProperties.end());
     }
 
-    void
-    Participant::getNonImprovedParticipantProperties(vector<GameBoard::Property *> &nonImprovedProperties) {
+    void Participant::getNonImprovedParticipantProperties(vector<GameBoard::Property *> &nonImprovedProperties) {
         for (auto &property : participantProperties) {
             if (property->getCurrentHousesBuild() == 0) {
                 nonImprovedProperties.push_back(property);
@@ -75,13 +74,24 @@ namespace Player {
         }
     }
 
-    void Participant::getImprovedParticipantProperties(vector<GameBoard::Property *> &nonImprovedProperties) {
+    void Participant::getImprovedParticipantProperties(vector<GameBoard::Property *> &improvedProperties) {
         for (auto &property : participantProperties) {
             if (property->getCurrentHousesBuild() != 0) {
-                nonImprovedProperties.push_back(property);
+                improvedProperties.push_back(property);
             }
         }
-        if (nonImprovedProperties.size() == 0) {
+        if (improvedProperties.size() == 0) {
+            throw NoHousesException(*this);
+        }
+    }
+
+    void Participant::getMortgageParticipantProperties(vector<GameBoard::Property *> &mortgageProperties) {
+        for (auto &property : participantProperties) {
+            if (property->isPropertyMortgage()) {
+                mortgageProperties.push_back(property);
+            }
+        }
+        if (mortgageProperties.size() == 0) {
             throw NoHousesException(*this);
         }
     }
@@ -114,7 +124,7 @@ namespace Player {
                 properties << property->getName() << ", ";
             }
         }
-        message <<participant.getName() << " is at position: " << participant.getCurrentPosition() << "\n"
+        message << participant.getName() << " is at position: " << participant.getCurrentPosition() << "\n"
                 << "Current balance: " << participant.getMoney().getBalance() << "\n"
                 << properties.str();
         return message.str();

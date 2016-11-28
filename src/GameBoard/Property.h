@@ -33,6 +33,7 @@ namespace GameBoard {
         double getRentCost() const;
         int getCurrentHousesBuild() const;
         void setCurrentHousesBuild(int currentHousesBuild);
+        string getName();
     };
 }
 

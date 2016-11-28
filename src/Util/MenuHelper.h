@@ -22,5 +22,6 @@ namespace Util {
     void displayPlayers(vector<Player::Participant *> participants);
     void displayNonImprovedHouseForPlayer(Player::Participant *participant, vector<GameBoard::Property *> properties);
     void displayImprovedHouseForPlayer(Player::Participant *participant, vector<GameBoard::Property *> properties);
+    void displayAllMortgageProperties(Player::Participant *participant, vector<GameBoard::Property *> properties);
 }
 #endif //MONOPOLY_MENUHELPER_H

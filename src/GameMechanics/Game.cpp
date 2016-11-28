@@ -5,6 +5,7 @@
 #include "Game.h"
 #include "FillBoard.h"
 #include "../Exception/NoHousesException.h"
+#include "../Exception/HouseIsAlreadyMortgageException.h"
 
 GameMechanics::Game::Game() {
     // Initialise
@@ -51,7 +52,7 @@ void GameMechanics::Game::play() {
                         break;
                     }
                     case 3: {
-                        mortgage();
+                        mortgage(participant);
                     }
                     // TODO remove it useless, handled by menu. So that IntelliJ doesnt complain
                     default:break;
@@ -94,8 +95,51 @@ void GameMechanics::Game::sellBuilding(Participant *participant) {
     }
 }
 
-void GameMechanics::Game::mortgage() {
+void GameMechanics::Game::mortgage(Participant *participant) {
+    vector<string> displayMenu;
 
+    displayMenu.push_back("Mortgage a property");
+    displayMenu.push_back("Remove mortgage (10% increase interest)");
+    displayMenu.push_back("Return to previous menu");
+
+    Util::displayMenu(displayMenu);
+    int selection = Util::readIntegerWithRange(0, (int) displayMenu.size() - 1);
+    if (selection == 0) {
+        mortgageProperty(participant);
+    } else if (selection == 1) {
+        removeMortgageFromProperty(participant);
+    }
+    return;
+}
+
+void GameMechanics::Game::mortgageProperty(Participant *participant) {
+    vector<GameBoard::Property *> nonImprovedProperties;
+    try {
+        participant->getNonImprovedParticipantProperties(nonImprovedProperties);
+        Util::displayNonImprovedHouseForPlayer(participant, nonImprovedProperties);
+        int mortgageBuildingIndex = Util::readIntegerWithRange(0, (int) nonImprovedProperties.size() - 1);
+        GameBoard::Property * property = nonImprovedProperties[mortgageBuildingIndex];
+        property->makePropertyMortgage(participant);
+    } catch (NoHousesException &exception) {
+        cout << exception.message << " Returning to previous menu." << endl;
+    } catch (HouseIsAlreadyMortgageException &error) {
+        // This exception can be remove by not letting the user see mortgaged building,
+        // left to understand better concepts
+        cout << error.message << " Returning to previous menu." << endl;
+    }
+}
+
+void GameMechanics::Game::removeMortgageFromProperty(Participant *participant) {
+    vector<GameBoard::Property *> mortgageProperties;
+    try {
+        participant->getMortgageParticipantProperties(mortgageProperties);
+        Util::displayAllMortgageProperties(participant, mortgageProperties);
+        int mortgageBuildingIndex = Util::readIntegerWithRange(0, (int) mortgageProperties.size() - 1);
+        GameBoard::Property * property = mortgageProperties[mortgageBuildingIndex];
+        property->removeMortgage(participant);
+    } catch (NoHousesException &exception) {
+        cout << exception.message << ". Returning to previous menu." << endl;
+    }
 }
 
 vector<Participant *> &GameMechanics::Game::getParticipantsPlaying() {
@@ -126,4 +170,5 @@ const vector<GameBoard::Tile *> &GameMechanics::Game::getGameBoard() const {
 void GameMechanics::Game::setDiceCount(int diceCount) {
     Game::diceCount = diceCount;
 }
+
 

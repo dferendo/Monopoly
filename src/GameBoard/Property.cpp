@@ -89,3 +89,10 @@ void GameBoard::Property::setCurrentHousesBuild(int currentHousesBuild) {
     Property::currentHousesBuild = currentHousesBuild;
 }
 
+string GameBoard::Property::getName() {
+    if (isPropertyMortgage()) {
+        return Tile::getName() + " - Mortgage";
+    }
+    return Tile::getName();
+}
+

@@ -4,6 +4,7 @@
 
 #include "Mortgage.h"
 #include "../Player/Participant.h"
+#include "../Exception/HouseIsAlreadyMortgageException.h"
 
 GameBoard::Mortgage::Mortgage(double mortgagePrice) : mortgagePrice(mortgagePrice) {}
 
@@ -16,6 +17,9 @@ double GameBoard::Mortgage::getMortgagePrice() const {
 }
 
 void GameBoard::Mortgage::makePropertyMortgage(Player::Participant *participant) {
+    if (isPropertyMortgage()) {
+        throw HouseIsAlreadyMortgageException();
+    }
     participant->getMoney().addBalance(mortgagePrice);
     propertyMortgage = true;
 }

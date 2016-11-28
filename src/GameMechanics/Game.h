@@ -29,7 +29,9 @@ namespace GameMechanics {
         int diceCount;
         // Functions
         void sellBuilding(Participant *participant);
-        void mortgage();
+        void mortgage(Participant *participant);
+        void mortgageProperty(Participant *participant);
+        void removeMortgageFromProperty(Participant *participant);
     public:
         Game();
         void play();

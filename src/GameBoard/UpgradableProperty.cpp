@@ -68,6 +68,10 @@ void GameBoard::UpgradableProperty::upgradeProperty(Player::Participant *player,
 
 string GameBoard::UpgradableProperty::getName() {
     string houseUpgrade;
+    // House cannot be mortgage if there are building on it.
+    if (isPropertyMortgage()) {
+        return Tile::getName() + " - Mortgage";
+    }
     for (int i = 0; i < getCurrentHousesBuild(); i++) {
         houseUpgrade += "*";
     }
