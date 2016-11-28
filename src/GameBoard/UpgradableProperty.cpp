@@ -5,8 +5,8 @@
 #include "UpgradableProperty.h"
 
 GameBoard::UpgradableProperty::UpgradableProperty(const string &name, double propertyPrice, double rentCost,
-                                                  const string &colour, GameBoard::HousesPrice housesPrice) :
-        Property(name, propertyPrice, rentCost, colour), housesPrice(housesPrice) {}
+                                                  const string &colour, GameBoard::HousesPrice housesPrice, double mortgage) :
+        Property(name, propertyPrice, rentCost, colour, mortgage), housesPrice(housesPrice) {}
 
 bool GameBoard::UpgradableProperty::checkIfOwnerHasAllSameColour(Player::Participant *player, GameMechanics::Game *game) {
     return player->getSameGroupColourPropertiesAmount(getColour()) == game->getGroupColoursSize(getColour());

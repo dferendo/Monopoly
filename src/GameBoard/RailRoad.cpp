@@ -5,8 +5,9 @@
 #include <cmath>
 #include "RailRoad.h"
 
-GameBoard::RailRoad::RailRoad(const string &name, double propertyPrice, double rentCost, const string &colour)
-        : Property(name, propertyPrice, rentCost, colour) {}
+GameBoard::RailRoad::RailRoad(const string &name, double propertyPrice,
+                              double rentCost, const string &colour, double mortgage)
+        : Property(name, propertyPrice, rentCost, colour, mortgage) {}
 
 
 void GameBoard::RailRoad::action(Player::Participant *player, GameMechanics::Game *game) {

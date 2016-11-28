@@ -14,7 +14,7 @@ namespace GameBoard {
 
     class UtilityProperty: public Property {
     public:
-        UtilityProperty(const string &name, double propertyPrice, double rentCost, const string &colour);
+        UtilityProperty(const string &name, double propertyPrice, double rentCost, const string &colour, double mortgage);
         void action(Player::Participant *player, GameMechanics::Game * game) override;
         // Rent cost multiplied by dice number is the rent cost.
         void payRent(Player::Participant *player, GameMechanics::Game * game) override;

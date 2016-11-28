@@ -5,7 +5,8 @@
 #include "UtilityProperty.h"
 
 GameBoard::UtilityProperty::UtilityProperty(const string &name, double propertyPrice, double rentCost,
-                                            const string &colour) : Property(name, propertyPrice, rentCost, colour) {}
+                                            const string &colour, double mortgage)
+        : Property(name, propertyPrice, rentCost, colour, mortgage) {}
 
 void GameBoard::UtilityProperty::action(Player::Participant *player, GameMechanics::Game * game) {
     // Nobody owns the property

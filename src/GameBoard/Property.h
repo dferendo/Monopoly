@@ -8,10 +8,11 @@
 #include "Tile.h"
 #include "../Util/ReadInput.h"
 #include "../Util/MenuHelper.h"
+#include "Mortgage.h"
 
 namespace GameBoard {
 
-    class Property: public Tile {
+    class Property: public Tile, public Mortgage {
     private:
         double propertyPrice;
         double rentCost;
@@ -19,7 +20,7 @@ namespace GameBoard {
         int currentHousesBuild = 0;
         string colour;
     public:
-        Property(const string &name, double propertyPrice, double rentCost, string colour);
+        Property(const string &name, double propertyPrice, double rentCost, string colour, double mortgage);
         Player::Participant * getOwner();
         void setOwner(Player::Participant *owner);
         virtual void action(Player::Participant *player, GameMechanics::Game * game) = 0;

@@ -6,8 +6,8 @@
 #include "../GameMechanics/Game.h"
 
 GameBoard::Property::Property(const string &name, double propertyPrice,
-                              double rentCost, string colour) : Tile(name), propertyPrice(propertyPrice),
-                                                                rentCost(rentCost), colour(colour){}
+                              double rentCost, string colour, double mortgage) : Tile(name), Mortgage(mortgage), propertyPrice(propertyPrice),
+                                                                                 rentCost(rentCost), colour(colour){}
 
 
 Player::Participant* GameBoard::Property::getOwner() {
