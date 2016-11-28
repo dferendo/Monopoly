@@ -16,102 +16,63 @@ GameMechanics::Game::Game() {
 void GameMechanics::Game::play() {
     Dice dice;
     Trade trade;
+    Move move;
     int turn = 0;
+    // Every player turn will have these options
     vector<string> displayMenu;
 
     displayMenu.push_back("Trade");
     displayMenu.push_back("Sell buildings(houses)");
     displayMenu.push_back("Player Profile");
+    displayMenu.push_back("Mortgage");
     displayMenu.push_back("Move");
+
+    // TODO proper ending
     while (turn < 100) {
-        int selection = 0;
-        // Trade, sell property, display participant information or move
-        // TODO switch statement?
-        while (selection != 3) {
-            Util::displayMenu(displayMenu);
-            selection = Util::readIntegerWithRange(0, 3);
-            if (selection == 0) {
-                trade.tradeProperty(this);
-            } else if (selection == 1) {
-                sellBuilding(getParticipantsPlaying());
-            } else if (selection == 2) {
-                displayParticipantProfile(getParticipantsPlaying());
+        for (auto &participant : participantsPlaying) {
+            // Change terminal colour, better for reading
+            cout << "\033[1;31m" << participant->getName() << "'s turn." << "\033[0m" << endl;
+            int selection = 0;
+            // Trade, sell property, display participant information or move
+            while (selection != 4) {
+                Util::displayMenu(displayMenu);
+                selection = Util::readIntegerWithRange(0, 4);
+                switch (selection) {
+                    case 0: {
+                        trade.tradeProperty(this, participant);
+                        break;
+                    }
+                    case 1: {
+                        sellBuilding(participant);
+                        break;
+                    }
+                    case 2: {
+                        cout << participant->toString(*participant) << endl;
+                        break;
+                    }
+                    case 3: {
+                        mortgage();
+                    }
+                    // TODO remove it useless, handled by menu. So that IntelliJ doesnt complain
+                    default:break;
+                }
             }
+            // Move will go to another player after execution
+            move.move(this, participant, &dice);
         }
-        move(getParticipantsPlaying(), &dice);
-        std::cout << "New turn!!" << std::endl;
+        cout << "New turn!!" << endl;
         Util::pressEnterToContinue();
         turn++;
     }
 }
 
-void GameMechanics::Game::move(vector<Participant *> participantsPlaying, Dice *dice) {
-    for(auto const& participant : participantsPlaying) {
-        cout << "\033[1;31m" << participant->getName() << "'s turn." << "\033[0m" << endl;
-        bool anotherTurnForPlayer = true;
-        int counter = 0;
-        while (anotherTurnForPlayer) {
-            // Roll dice to move
-            diceCount = generateDiceCount(dice);
-            anotherTurnForPlayer = checkDiceDouble(dice);
-            // If player did 2 turns and roll doubles again, move to the jail empty tail
-            if (counter == 2 && anotherTurnForPlayer) {
-                cout << "Doubles for the third consecutive time!! Moving to jail." << endl;
-                participant->setCurrentPosition(JAIL_TILE);
-                Util::pressEnterToContinue();
-                break;
-            }
-            determineParticipantLocation(participant, diceCount);
-            gameBoard[participant->getCurrentPosition()]->action(participant, this);
-            counter++;
-            Util::pressEnterToContinue();
-        }
-    }
-}
-
-void GameMechanics::Game::validateGoFunds(Participant *participant, int location) {
-    if (location >= TOTAL_TILES) {
-        cout << "Adding Go Funds!!" << endl;
-        participant->getMoney().addBalance(GO_AMOUNT);
-        Util::pressEnterToContinue();
-    }
-}
-
-bool GameMechanics::Game::checkDiceDouble(GameMechanics::Dice *dice) {
-    pair<int, int> * diceRoll = dice->getCurrentDiceRoll();
-    if (diceRoll->first == diceRoll->second) {
-        cout << "Doubles!! Player gets another dice roll after doing a  tile action unless it"
-                " is the third consecutive time!" << endl;
-        return true;
-    }
-    return false;
-}
-
-int GameMechanics::Game::generateDiceCount(GameMechanics::Dice *dice) {
-    pair<int,int> * diceRoll = dice->generateNewDiceRoll();
-    cout << "Dices rolled: " << diceRoll->first << ", " << diceRoll->second << endl;
-    return diceRoll->first + diceRoll->second;
-}
-
-void GameMechanics::Game::determineParticipantLocation(Participant *participant, int diceCount) {
-    // Move player, if player reaches end of board go in the beginning of the board
-    int newLocation = participant->getCurrentPosition() + diceCount;
-    validateGoFunds(participant, newLocation);
-    newLocation %= TOTAL_TILES;
-    participant->setCurrentPosition(newLocation);
-    cout << participant->getName() << " moved to position "
-         << gameBoard[newLocation]->getName()
-         << endl;
-}
-
-void GameMechanics::Game::sellBuilding(vector<Participant *> &participantsPlaying) {
+void GameMechanics::Game::sellBuilding(Participant *participant) {
     // TODO sell evenly
     string input;
     vector<GameBoard::Property *> nonImprovedProperties;
     try {
-        Participant *player = determinePlayer(participantsPlaying);
-        player->getImprovedParticipantProperties(nonImprovedProperties);
-        Util::displayImprovedHouseForPlayer(player, nonImprovedProperties);
+        participant->getImprovedParticipantProperties(nonImprovedProperties);
+        Util::displayImprovedHouseForPlayer(participant, nonImprovedProperties);
         int sellBuildingPropertyIndex = Util::readIntegerWithRange(0, (int) nonImprovedProperties.size() - 1);
         GameBoard::Property * property = nonImprovedProperties[sellBuildingPropertyIndex];
         // If building has houses, it is an upgradeableProperty
@@ -123,7 +84,7 @@ void GameMechanics::Game::sellBuilding(vector<Participant *> &participantsPlayin
             getline(cin, input);
             if (input[0] == 'Y' || input[0] == 'y') {
                 upgradableProperty->setCurrentHousesBuild(upgradableProperty->getCurrentHousesBuild() - 1);
-                player->getMoney().addBalance(upgradableProperty->getHousesPrice().getPriceToUpgrade() / 2);
+                participant->getMoney().addBalance(upgradableProperty->getHousesPrice().getPriceToUpgrade() / 2);
             }
         } else {
             // TODO check with JP for this thing
@@ -133,16 +94,8 @@ void GameMechanics::Game::sellBuilding(vector<Participant *> &participantsPlayin
     }
 }
 
-void GameMechanics::Game::displayParticipantProfile(vector<Participant *> &participants) {
-    Participant *player = determinePlayer(participants);
-    cout << player->toString(*player) << endl;
-}
+void GameMechanics::Game::mortgage() {
 
-Participant *GameMechanics::Game::determinePlayer(vector<Participant *> &participants) {
-    cout << "Which player are you?" << endl;
-    Util::displayPlayers(participants);
-    int indexOfParticipant = Util::readIntegerWithRange(0, (int) participants.size() - 1);
-    return participants[indexOfParticipant];
 }
 
 vector<Participant *> &GameMechanics::Game::getParticipantsPlaying() {
@@ -168,5 +121,9 @@ void GameMechanics::Game::setFreeParkingJackpot(double freeParkingJackpot) {
 
 const vector<GameBoard::Tile *> &GameMechanics::Game::getGameBoard() const {
     return gameBoard;
+}
+
+void GameMechanics::Game::setDiceCount(int diceCount) {
+    Game::diceCount = diceCount;
 }
 

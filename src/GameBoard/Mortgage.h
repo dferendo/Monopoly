@@ -5,8 +5,13 @@
 #ifndef MONOPOLY_MORTGAGES_H
 #define MONOPOLY_MORTGAGES_H
 
+
+namespace Player {
+    class Participant;
+}
+
 namespace GameBoard {
-    const double INTEREST_PERCENTAGE = 10;
+    const double INTEREST_PERCENTAGE = 0.1;
 
     class Mortgage {
     private:
@@ -15,8 +20,9 @@ namespace GameBoard {
     public:
         Mortgage(double mortgagePrice);
         bool isPropertyMortgage() const;
-        int getMortgagePrice() const;
-        void setPropertyMortgage(bool propertyMortgage);
+        double getMortgagePrice() const;
+        void makePropertyMortgage(Player::Participant* participant);
+        void removeMortgage(Player::Participant* participant);
     };
 }
 

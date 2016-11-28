@@ -11,6 +11,7 @@
 #include "Dice.h"
 #include "../GameBoard/Property.h"
 #include "Trade.h"
+#include "Move.h"
 using namespace Player;
 
 namespace GameMechanics {
@@ -20,19 +21,15 @@ namespace GameMechanics {
 
     class Game {
     private:
+        // Variables
         vector<GameBoard::Tile *> gameBoard;
         vector<Player::Participant *> participantsPlaying;
         map<string, int> groupColoursSize;
         double freeParkingJackpot = 0;
         int diceCount;
-        void validateGoFunds(Participant *participant, int location);
-        Participant *determinePlayer(vector<Participant *> &participants);
-        void move(vector<Participant *>, Dice *dice);
-        void sellBuilding(vector<Participant *> &participantsPlaying);
-        int generateDiceCount(Dice *dice);
-        bool checkDiceDouble(Dice *dice);
-        void determineParticipantLocation(Participant *participant, int diceCount);
-        void displayParticipantProfile(vector<Participant *> &participants);
+        // Functions
+        void sellBuilding(Participant *participant);
+        void mortgage();
     public:
         Game();
         void play();
@@ -40,6 +37,7 @@ namespace GameMechanics {
         vector<Participant *> &getParticipantsPlaying();
         int getGroupColoursSize(string colourType);
         int getDiceCount() const;
+        void setDiceCount(int diceCount);
         double getFreeParkingJackpot() const;
         void setFreeParkingJackpot(double freeParkingJackpot);
         const vector<GameBoard::Tile *> &getGameBoard() const;

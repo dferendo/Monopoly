@@ -6,8 +6,7 @@
 #include "Trade.h"
 #include "../Exception/NoHousesException.h"
 
-void GameMechanics::Trade::tradeProperty(GameMechanics::Game *game) {
-    Participant * buyer = determineBuyer(game->getParticipantsPlaying());
+void GameMechanics::Trade::tradeProperty(GameMechanics::Game *game, Participant * buyer) {
     Participant * seller = determineSeller(game->getParticipantsPlaying(), buyer);
     try {
         // Display properties
@@ -22,15 +21,9 @@ void GameMechanics::Trade::tradeProperty(GameMechanics::Game *game) {
     }
 }
 
-Participant *GameMechanics::Trade::determineBuyer(vector<Participant *> &participants) {
-    cout << "Which player are you? (Buyer, offering transaction)" << endl;
-    Util::displayPlayers(participants);
-    int indexOfParticipant = Util::readIntegerWithRange(0, (int) participants.size() - 1);
-    return participants[indexOfParticipant];
-}
-
 Participant *GameMechanics::Trade::determineSeller(vector<Participant *> participants, Participant *buyer) {
     cout << "To whom you want to trade?" << endl;
+    // Erase is done on a copy of the reference
     participants.erase(remove(participants.begin(), participants.end(), buyer), participants.end());
     Util::displayPlayers(participants);
     int indexOfParticipant = Util::readIntegerWithRange(0, (int) participants.size() - 1);
