@@ -51,7 +51,7 @@ void GameBoard::UpgradableProperty::payRent(Player::Participant *player, GameMec
 void GameBoard::UpgradableProperty::upgradeProperty(Player::Participant *player, GameMechanics::Game *game) {
     string input;
 
-    operator<<(cout, housesPrice);
+    cout << housesPrice << endl;
     cout << "Want to upgrade house? (Y/n)" << endl;
     getline(cin, input);
     if (input[0] == 'y' || input[0] == 'Y') {

@@ -17,21 +17,25 @@ void GameMechanics::Game::play() {
     Dice dice;
     Trade trade;
     int turn = 0;
-    vector<string> displayTradeOrSellMenu;
+    vector<string> displayMenu;
 
-    displayTradeOrSellMenu.push_back("Trade");
-    displayTradeOrSellMenu.push_back("Sell buildings(houses)");
-    displayTradeOrSellMenu.push_back("Move");
+    displayMenu.push_back("Trade");
+    displayMenu.push_back("Sell buildings(houses)");
+    displayMenu.push_back("Player Profile");
+    displayMenu.push_back("Move");
     while (turn < 100) {
         int selection = 0;
-        // Trade, sell property or move
-        while (selection != 2) {
-            Util::displayMenu(displayTradeOrSellMenu);
-            selection = Util::readIntegerWithRange(0, 2);
+        // Trade, sell property, display participant information or move
+        // TODO switch statement?
+        while (selection != 3) {
+            Util::displayMenu(displayMenu);
+            selection = Util::readIntegerWithRange(0, 3);
             if (selection == 0) {
                 trade.tradeProperty(this);
             } else if (selection == 1) {
                 sellBuilding(getParticipantsPlaying());
+            } else if (selection == 2) {
+                displayParticipantProfile(getParticipantsPlaying());
             }
         }
         move(getParticipantsPlaying(), &dice);
@@ -129,6 +133,11 @@ void GameMechanics::Game::sellBuilding(vector<Participant *> &participantsPlayin
     }
 }
 
+void GameMechanics::Game::displayParticipantProfile(vector<Participant *> &participants) {
+    Participant *player = determinePlayer(participants);
+    cout << player->toString(*player) << endl;
+}
+
 Participant *GameMechanics::Game::determinePlayer(vector<Participant *> &participants) {
     cout << "Which player are you?" << endl;
     Util::displayPlayers(participants);
@@ -160,3 +169,4 @@ void GameMechanics::Game::setFreeParkingJackpot(double freeParkingJackpot) {
 const vector<GameBoard::Tile *> &GameMechanics::Game::getGameBoard() const {
     return gameBoard;
 }
+

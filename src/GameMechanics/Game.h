@@ -32,6 +32,7 @@ namespace GameMechanics {
         int generateDiceCount(Dice *dice);
         bool checkDiceDouble(Dice *dice);
         void determineParticipantLocation(Participant *participant, int diceCount);
+        void displayParticipantProfile(vector<Participant *> &participants);
     public:
         Game();
         void play();

@@ -2,82 +2,121 @@
 // Created by dylan on 17/11/2016.
 //
 
+#include <sstream>
 #include "Participant.h"
 #include "../Exception/NoHousesException.h"
 
-Player::Participant::Participant(int participantId, const string &name) : participantId(participantId), name(name) {}
+namespace Player {
+    Participant::Participant(int participantId, const string &name) : participantId(participantId),
+                                                                      name(name) {}
 
-string Player::Participant::getName() {
-    return name;
-}
+    string Participant::getName()const {
+        return name;
+    }
 
-Player::Money &Player::Participant::getMoney() {
-    return money;
-}
+    Money & Participant::getMoney() {
+        return money;
+    }
 
-vector<GameBoard::Property *> & Player::Participant::getParticipantProperties() {
-    return participantProperties;
-}
+    vector<GameBoard::Property *> & Participant::getParticipantProperties() {
+        return participantProperties;
+    }
 
-void Player::Participant::addParticipantProperty(GameBoard::Property *property) {
-    participantProperties.push_back(property);
-}
+    void Participant::addParticipantProperty(GameBoard::Property *property) {
+        participantProperties.push_back(property);
+    }
 
-int Player::Participant::getCurrentPosition() {
-    return currentPosition;
-}
+    int Participant::getCurrentPosition()const {
+        return currentPosition;
+    }
 
-void Player::Participant::setCurrentPosition(int currentPosition) {
-    Participant::currentPosition = currentPosition;
-}
+    void Participant::setCurrentPosition(int currentPosition) {
+        Participant::currentPosition = currentPosition;
+    }
 
-bool Player::Participant::isEqual(Player::Participant *participant) {
-    return participantId == participant->participantId;
-}
+    bool Participant::isEqual(Participant *participant) {
+        return participantId == participant->participantId;
+    }
 
-int Player::Participant::getSameGroupColourPropertiesAmount(string colourType) {
-    int counter = 0;
-    for(auto const& property : participantProperties) {
-        if (property->getColour() == colourType){
-            counter++;
+    int Participant::getSameGroupColourPropertiesAmount(string colourType) {
+        int counter = 0;
+        for (auto const &property : participantProperties) {
+            if (property->getColour() == colourType) {
+                counter++;
+            }
+        }
+        return counter;
+    }
+
+    vector<GameBoard::Property *> Participant::getGroupColoursProperties(string colourType) {
+        vector<GameBoard::Property *> groupColoursProperties;
+        for (auto const &property : participantProperties) {
+            if (property->getColour() == colourType) {
+                groupColoursProperties.push_back(property);
+            }
+        }
+        return groupColoursProperties;
+    }
+
+    void Participant::removeProperty(GameBoard::Property *property) {
+        participantProperties.erase(remove(participantProperties.begin(), participantProperties.end(), property),
+                                    participantProperties.end());
+    }
+
+    void
+    Participant::getNonImprovedParticipantProperties(vector<GameBoard::Property *> &nonImprovedProperties) {
+        for (auto &property : participantProperties) {
+            if (property->getCurrentHousesBuild() == 0) {
+                nonImprovedProperties.push_back(property);
+            }
+        }
+        if (nonImprovedProperties.size() == 0) {
+            throw NoHousesException(*this);
         }
     }
-    return counter;
-}
 
-vector<GameBoard::Property *> Player::Participant::getGroupColoursProperties(string colourType) {
-    vector<GameBoard::Property *> groupColoursProperties;
-    for (auto const& property : participantProperties) {
-        if (property->getColour() == colourType) {
-            groupColoursProperties.push_back(property);
+    void Participant::getImprovedParticipantProperties(vector<GameBoard::Property *> &nonImprovedProperties) {
+        for (auto &property : participantProperties) {
+            if (property->getCurrentHousesBuild() != 0) {
+                nonImprovedProperties.push_back(property);
+            }
+        }
+        if (nonImprovedProperties.size() == 0) {
+            throw NoHousesException(*this);
         }
     }
-    return groupColoursProperties;
-}
 
-void Player::Participant::removeProperty(GameBoard::Property * property) {
-    participantProperties.erase(remove(participantProperties.begin(), participantProperties.end(), property),
-                                participantProperties.end());
-}
+//    ostream &Participant::operator<<(std::ostream &stream, const Participant &participant) {
+//        stringstream properties;
+//        properties << "Current properties: ";
+//        if (participant.getParticipantProperties().size() == 0) {
+//            properties << "Nothing";
+//        } else {
+//            for (auto &property : participant.getParticipantProperties()) {
+//                // TODO fix comma
+//                properties << property->getName() << ", ";
+//            }
+//        }
+//        return stream << participant.getName() << " is at position: " << participant.getCurrentPosition() << "\n"
+//                      << "Current balance: " << participant.getMoney().getBalance() << "\n"
+//                      << properties.str();
+//    }
 
-void Player::Participant::getNonImprovedParticipantProperties(vector<GameBoard::Property *> &nonImprovedProperties) {
-    for (auto &property : participantProperties) {
-        if (property->getCurrentHousesBuild() == 0) {
-            nonImprovedProperties.push_back(property);
+    string Participant::toString(Participant &participant) {
+        stringstream properties;
+        stringstream message;
+        properties << "Current properties: ";
+        if (participant.getParticipantProperties().size() == 0) {
+            properties << "Nothing";
+        } else {
+            for (auto &property : participant.getParticipantProperties()) {
+                // TODO fix comma
+                properties << property->getName() << ", ";
+            }
         }
-    }
-    if (nonImprovedProperties.size() == 0) {
-        throw NoHousesException(*this);
-    }
-}
-
-void Player::Participant::getImprovedParticipantProperties(vector<GameBoard::Property *> &nonImprovedProperties) {
-    for (auto &property : participantProperties) {
-        if (property->getCurrentHousesBuild() != 0) {
-            nonImprovedProperties.push_back(property);
-        }
-    }
-    if (nonImprovedProperties.size() == 0) {
-        throw NoHousesException(*this);
+        message <<participant.getName() << " is at position: " << participant.getCurrentPosition() << "\n"
+                << "Current balance: " << participant.getMoney().getBalance() << "\n"
+                << properties.str();
+        return message.str();
     }
 }
