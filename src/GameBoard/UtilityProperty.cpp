@@ -4,6 +4,7 @@
 
 #include "UtilityProperty.h"
 #include "../Exception/NoMoneyException.h"
+#include "../GameMechanics/Bankruptcy.h"
 
 GameBoard::UtilityProperty::UtilityProperty(const string &name, double propertyPrice, double rentCost,
                                             const string &colour, double mortgage)
@@ -32,7 +33,11 @@ void GameBoard::UtilityProperty::payRent(Player::Participant *player, GameMechan
         getOwner()->getMoney().addBalance(amount);
     } catch (NoMoneyException & noMoneyException) {
         cout << noMoneyException.message << endl;
-        // TODO fix this
+        // If player cannot pay debt, he will be declared bankrupt
+        bool isPlayerNotBankrupt = noMoneyException.payAmountDue(game, noMoneyException.amountDue, player, getOwner());
+        if (!isPlayerNotBankrupt) {
+            Bankruptcy::transferProperties(game, player, getOwner());
+        }
     }
 }
 

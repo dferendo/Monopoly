@@ -6,10 +6,11 @@
 #include "Trade.h"
 #include "../Exception/NoHousesException.h"
 
-void GameMechanics::Trade::tradeProperty(GameMechanics::Game *game, Participant * buyer) {
+void GameMechanics::Trade::tradePropertyBuyerKnown(GameMechanics::Game *game, Participant *buyer) {
     Trade trade;
     // Note that mortgage properties can still be traded
-    Participant * seller = trade.determineSeller(game->getParticipantsPlaying(), buyer);
+    cout << "To whom you want to trade?" << endl;
+    Participant * seller = trade.determineTrader(game->getParticipantsPlaying(), buyer);
     try {
         // Display properties
         vector<GameBoard::Property *> nonImprovedProperties;
@@ -23,8 +24,25 @@ void GameMechanics::Trade::tradeProperty(GameMechanics::Game *game, Participant 
     }
 }
 
-Participant *GameMechanics::Trade::determineSeller(vector<Participant *> participants, Participant *buyer) {
-    cout << "To whom you want to trade?" << endl;
+void GameMechanics::Trade::tradePropertySellerKnown(GameMechanics::Game *game, Participant *seller) {
+    Trade trade;
+    // Note that mortgage properties can still be traded
+    cout << "Anyone wants to trade with " << seller->getName() << "?" << endl;
+    Participant * buyer = trade.determineTrader(game->getParticipantsPlaying(), seller);
+    try {
+        // Display properties
+        vector<GameBoard::Property *> nonImprovedProperties;
+        seller->getNonImprovedParticipantProperties(nonImprovedProperties);
+        Util::displayNonImprovedHouseForPlayer(seller, nonImprovedProperties);
+        int indexOfHouseToBuy = Util::readIntegerWithRange(0, (int) nonImprovedProperties.size() - 1);
+        trade.transactionTrade(buyer, seller, nonImprovedProperties[indexOfHouseToBuy]);
+    } catch(NoHousesException &exception) {
+        cout << exception.message << " Cancelling trade." << endl;
+        return;
+    }
+}
+
+Participant *GameMechanics::Trade::determineTrader(vector<Participant *> participants, Participant *buyer) {
     // Erase is done on a copy of the reference
     participants.erase(remove(participants.begin(), participants.end(), buyer), participants.end());
     Util::displayPlayers(participants);

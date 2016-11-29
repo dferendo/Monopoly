@@ -26,7 +26,6 @@ namespace GameBoard {
     protected:
         void noOwner(Participant *player, GameMechanics::Game * game);
         void buyProperty(Participant *player);
-        void auctionHouse(GameMechanics::Game * game);
         Participant * selectBidder(vector<Participant *> participants, Participant *currentBidder);
     public:
         Property(const string &name, double propertyPrice, double rentCost, string colour, double mortgage);
@@ -38,6 +37,7 @@ namespace GameBoard {
         virtual void action(Participant *player, GameMechanics::Game * game) = 0;
         // The 3 types of property pay differently.
         virtual void payRent(Participant *player, GameMechanics::Game * game) = 0;
+        void auctionHouse(GameMechanics::Game * game);
         string getName();
     };
 }

@@ -30,7 +30,6 @@ namespace GameMechanics {
         int diceCount;
         // Functions
         void mortgage(Participant *participant);
-        void mortgageProperty(Participant *participant);
         void removeMortgageFromProperty(Participant *participant);
     public:
         Game();
@@ -43,6 +42,7 @@ namespace GameMechanics {
         double getFreeParkingJackpot() const;
         void setFreeParkingJackpot(double freeParkingJackpot);
         const vector<GameBoard::Tile *> &getGameBoard() const;
+        void mortgageProperty(Participant *participant);
     };
 }
 #endif //MONOPOLY_GAME_H

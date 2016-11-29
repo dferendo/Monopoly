@@ -26,7 +26,7 @@ void GameMechanics::Game::play() {
     displayMenu.push_back("Move");
 
     // When only 1 participant left, he won
-    while (participantsPlaying.size() == 1) {
+    while (participantsPlaying.size() != 1) {
         for (auto &participant : participantsPlaying) {
             // Change terminal colour, better for reading
             cout << "\033[1;31m" << participant->getName() << "'s turn." << "\033[0m" << endl;
@@ -37,7 +37,7 @@ void GameMechanics::Game::play() {
                 selection = Util::readIntegerWithRange(0, 4);
                 switch (selection) {
                     case 0: {
-                        Trade::tradeProperty(this, participant);
+                        Trade::tradePropertyBuyerKnown(this, participant);
                         break;
                     }
                     case 1: {
@@ -50,6 +50,7 @@ void GameMechanics::Game::play() {
                     }
                     case 3: {
                         mortgage(participant);
+                        break;
                     }
                     // TODO remove it useless, handled by menu. So that IntelliJ doesnt complain
                     default:break;

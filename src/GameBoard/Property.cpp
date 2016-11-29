@@ -7,7 +7,6 @@
 #include "../Exception/NoMoneyException.h"
 #include <algorithm>
 GameBoard::Property::Property(const string &name, double propertyPrice,
-
                               double rentCost, string colour, double mortgage) : Tile(name), Mortgage(mortgage), propertyPrice(propertyPrice),
                                                                                  rentCost(rentCost), colour(colour){}
 
@@ -47,7 +46,7 @@ void GameBoard::Property::buyProperty(Participant *player) {
         setOwner(player);
     } catch (NoMoneyException &exception) {
         // Catching the exception and rethrow it.
-        throw NoMoneyException();
+        throw NoMoneyException(exception.amountDue);
     }
 }
 

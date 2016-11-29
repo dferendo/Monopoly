@@ -44,6 +44,6 @@ void GameBoard::Mortgage::removeMortgage(Player::Participant *participant) {
             propertyMortgage = false;
         }
     } catch (NoMoneyException &exception) {
-        cout << exception.message << " Returning to main menu." << endl;
+        cout << exception.message << " Returning to previous menu." << endl;
     }
 }

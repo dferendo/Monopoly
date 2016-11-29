@@ -13,7 +13,7 @@ using namespace Player;
 namespace GameMechanics {
     class Trade {
     private:
-        Participant *determineSeller(vector<Participant *> participants, Participant *buyer);
+        Participant *determineTrader(vector<Participant *> participants, Participant *buyer);
         void transactionTrade(Participant *buyer, Participant *seller,
                               GameBoard::Property *propertyForSale);
         double offerCash(Participant *buyer);
@@ -24,7 +24,8 @@ namespace GameMechanics {
         string buyerOffer(Participant *buyer, double cashOffered,
                           set<GameBoard::Property *> propertiesOffered);
     public:
-        static void tradeProperty(Game *game, Participant * buyer);
+        static void tradePropertyBuyerKnown(Game *game, Participant *buyer);
+        static void tradePropertySellerKnown(Game *game, Participant *seller);
     };
 }
 

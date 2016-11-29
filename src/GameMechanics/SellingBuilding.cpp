@@ -5,7 +5,6 @@
 #include "SellingBuilding.h"
 
 void GameMechanics::SellingBuilding::sellBuilding(Participant *participant) {
-    // TODO sell evenly
     string input;
     std::vector<GameBoard::Property *> nonImprovedProperties;
     try {

@@ -5,6 +5,7 @@
 #include <cmath>
 #include "RailRoad.h"
 #include "../Exception/NoMoneyException.h"
+#include "../GameMechanics/Bankruptcy.h"
 
 GameBoard::RailRoad::RailRoad(const string &name, double propertyPrice,
                               double rentCost, const string &colour, double mortgage)
@@ -31,6 +32,10 @@ void GameBoard::RailRoad::payRent(Player::Participant *player, GameMechanics::Ga
         getOwner()->getMoney().addBalance(amountToBePaid);
     } catch (NoMoneyException & exception) {
         cout << exception.message << endl;
-        // TODO sell property to fix this
+        // If player cannot pay debt, he will be declared bankrupt
+        bool isPlayerNotBankrupt = exception.payAmountDue(game, exception.amountDue, player, getOwner());
+        if (!isPlayerNotBankrupt) {
+            Bankruptcy::transferProperties(game, player, getOwner());
+        }
     }
 }

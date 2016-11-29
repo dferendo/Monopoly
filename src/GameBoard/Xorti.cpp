@@ -4,6 +4,7 @@
 
 #include "Xorti.h"
 #include "../Exception/NoMoneyException.h"
+#include "../GameMechanics/Bankruptcy.h"
 
 GameBoard::Xorti::Xorti(const string &name) : Tile(name) {}
 
@@ -21,6 +22,11 @@ void GameBoard::Xorti::action(Player::Participant * player, GameMechanics::Game 
         }
     } catch (NoMoneyException & exception) {
         cout << exception.message << endl;
+        // If player cannot pay debt, he will be declared bankrupt
+        bool isPlayerNotBankrupt = exception.payAmountDue(game, exception.amountDue, player, nullptr);
+        if (!isPlayerNotBankrupt) {
+            Bankruptcy::transferProperties(game, player, nullptr);
+        }
     }
 }
 
@@ -37,7 +43,7 @@ void GameBoard::Xorti::parkingFine(Player::Participant &player, GameMechanics::G
         player.getMoney().subtractBalance(parkingFine);
         game->setFreeParkingJackpot(game->getFreeParkingJackpot() + parkingFine);
     } catch (NoMoneyException & noMoneyException) {
-        throw NoMoneyException();
+        throw NoMoneyException(noMoneyException.amountDue);
     }
 }
 
@@ -51,7 +57,7 @@ void GameBoard::Xorti::mepaFine(Player::Participant &player, GameMechanics::Game
         player.getMoney().subtractBalance(totalFine);
         game->setFreeParkingJackpot(game->getFreeParkingJackpot() + totalFine);
     } catch (NoMoneyException & noMoneyException) {
-        throw NoMoneyException();
+        throw NoMoneyException(noMoneyException.amountDue);
     }
 }
 

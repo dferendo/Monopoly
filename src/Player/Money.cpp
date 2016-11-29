@@ -19,9 +19,9 @@ void Player::Money::addBalance(double amount) {
 }
 
 void Player::Money::subtractBalance(double amount) {
-    double currentAmount = getBalance();
-    if (currentAmount - amount < 0) {
-        throw NoMoneyException();
+    double checkIfInDebt = getBalance() - amount;
+    if (checkIfInDebt < 0) {
+        throw NoMoneyException(abs(checkIfInDebt));
     }
     std::cout << "Current balance: " << balance << " Subtracted balance: " << amount << std::endl;
     Money::balance -= amount;

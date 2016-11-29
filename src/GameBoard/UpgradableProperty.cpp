@@ -5,6 +5,7 @@
 #include "UpgradableProperty.h"
 #include "../Exception/HouseIsMortgageException.h"
 #include "../Exception/NoMoneyException.h"
+#include "../GameMechanics/Bankruptcy.h"
 
 GameBoard::UpgradableProperty::UpgradableProperty(const string &name, double propertyPrice, double rentCost,
                                                   const string &colour, GameBoard::HousesPrice housesPrice, double mortgage) :
@@ -51,7 +52,11 @@ void GameBoard::UpgradableProperty::payRent(Player::Participant *player, GameMec
         getOwner()->getMoney().addBalance(amount);
     } catch (NoMoneyException & noMoneyException) {
         cout << noMoneyException.message << endl;
-        // TODO pay him
+        // If player cannot pay debt, he will be declared bankrupt
+        bool isPlayerNotBankrupt = noMoneyException.payAmountDue(game, noMoneyException.amountDue, player, getOwner());
+        if (!isPlayerNotBankrupt) {
+            Bankruptcy::transferProperties(game, player, getOwner());
+        }
     }
 }
 
@@ -63,7 +68,6 @@ void GameBoard::UpgradableProperty::upgradeProperty(Player::Participant *player)
     getline(cin, input);
     try {
         if (input[0] == 'y' || input[0] == 'Y') {
-            // TODO Build evenly
             int currentHouseBuild = getCurrentHousesBuild();
             if (currentHouseBuild < MAX_HOUSES) {
                 addHouseToProperty(player);
@@ -98,7 +102,7 @@ void GameBoard::UpgradableProperty::addHouseToProperty(Player::Participant *play
         setCurrentHousesBuild(getCurrentHousesBuild() + 1);
         player->getMoney().subtractBalance(getHousesPrice().getPriceToUpgrade());
     } catch (NoMoneyException & exception) {
-        throw NoMoneyException();
+        throw NoMoneyException(exception.amountDue);
     }
 }
 

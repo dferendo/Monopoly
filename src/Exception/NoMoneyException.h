@@ -6,10 +6,22 @@
 #define MONOPOLY_NOMONEYEXCEPTION_H
 
 #include <iostream>
+#include "../Player/Participant.h"
+#include "../GameMechanics/Trade.h"
+#include "../GameMechanics/Move.h"
+#include "../GameMechanics/SellingBuilding.h"
+
+using namespace std;
+using namespace Player;
+using namespace GameMechanics;
 
 class NoMoneyException {
 public:
-    std::string message = "Player has no money!";
+    string message;
+    double amountDue;
+    NoMoneyException(double amountDue);
+    bool payAmountDue(GameMechanics::Game *game, double amountDue, Participant *debitor, Participant * creditor);
+    bool payDebt(double amountDue, Participant *debitor, Participant * creditor);
 };
 
 #endif //MONOPOLY_NOMONEYEXCEPTION_H

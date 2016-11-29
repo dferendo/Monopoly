@@ -10,7 +10,6 @@ namespace GameBoard {
                                                          secondHouse(secondHouse), thirdHouse(thirdHouse),
                                                          fourHouse(fourHouse) {}
 
-// TODO throw exception if out of range??
     int HousesPrice::getHousePrice(int numberOfHouse) const {
         if (numberOfHouse == 1) {
             return oneHouse;
