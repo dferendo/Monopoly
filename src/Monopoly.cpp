@@ -36,7 +36,8 @@ void Monopoly::play() {
 void Monopoly::userManual() {
     vector<string> displayMenu;
     int selection = 0;
-
+    cout << "This menu includes the rules and assumptions made using the monopoly classic rules. "
+            "\nIf there are no assumptions for a chapter, that means that all rules were followed." << endl;
     displayMenu.push_back("Game objective");
     displayMenu.push_back("Preparation");
     displayMenu.push_back("The bank");
