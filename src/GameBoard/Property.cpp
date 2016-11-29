@@ -4,21 +4,22 @@
 
 #include "Property.h"
 #include "../GameMechanics/Game.h"
+#include <algorithm>
 GameBoard::Property::Property(const string &name, double propertyPrice,
 
                               double rentCost, string colour, double mortgage) : Tile(name), Mortgage(mortgage), propertyPrice(propertyPrice),
                                                                                  rentCost(rentCost), colour(colour){}
 
 
-Player::Participant* GameBoard::Property::getOwner() {
+Participant* GameBoard::Property::getOwner() {
     return owner;
 }
 
-void GameBoard::Property::setOwner(Player::Participant *owner) {
+void GameBoard::Property::setOwner(Participant *owner) {
     Property::owner = owner;
 }
 
-void GameBoard::Property::noOwner(Player::Participant *player, GameMechanics::Game * game) {
+void GameBoard::Property::noOwner(Participant *player, GameMechanics::Game * game) {
     vector<string> noOwnerChoice;
     noOwnerChoice.push_back("Buy property");
     noOwnerChoice.push_back("Banker auction property");
@@ -33,44 +34,50 @@ void GameBoard::Property::noOwner(Player::Participant *player, GameMechanics::Ga
     }
 }
 
-void GameBoard::Property::buyProperty(Player::Participant *player) {
+void GameBoard::Property::buyProperty(Participant *player) {
     player->getMoney().subtractBalance(propertyPrice);
     player->addParticipantProperty(this);
     setOwner(player);
 }
 
-// TODO fix this mass
 void GameBoard::Property::auctionHouse(GameMechanics::Game * game) {
     double currentBid = 0;
-    int highestBidder = -1;
-    int temp;
-    string input;
+    Participant * bidder = nullptr;
+    Participant * tempBidder = nullptr;
+    string input = "y";
 
     cout << "Auctioning " << getName() << "." << endl;
     // Will loop until quit
-    while (true) {
+    while (input[0] == 'Y' || input[0] == 'y') {
         cout << "Current bid: " << currentBid << endl;
-        Util::displayPlayers(game->getParticipantsPlaying());
-        cout << "Select player number to bid." << endl;
-        temp = Util::readIntegerWithRange(0, (int) game->getParticipantsPlaying().size() - 1);
+        tempBidder = selectBidder(game->getParticipantsPlaying(), bidder);
         cout << "Enter amount: ";
         double amount = Util::readPositiveDouble();
+        // First bid will always be greater than 0, thus the first bid is always accepted. No nullptr risk.
         if (amount > currentBid) {
             currentBid = amount;
-            highestBidder = temp;
+            bidder = tempBidder;
         } else {
-            cout << "It is lower than the current bid, not accepted" << endl;
+            cout << "It is lower than the current bid, not accepted." << endl;
         }
-        cout << "Continue bidding? (q to quit)" << endl;
+        cout << "Continue bidding? (Y/n)" << endl;
         getline(cin, input);
-        if (input[0] == 'q') {
-            break;
-        }
     }
-    cout << "Congratulations to " << game->getParticipantsPlaying()[highestBidder]->getName() << " for buying " << getName() << endl;
-    game->getParticipantsPlaying()[highestBidder]->getMoney().subtractBalance(currentBid);
-    game->getParticipantsPlaying()[highestBidder]->addParticipantProperty(this);
-    setOwner(game->getParticipantsPlaying()[highestBidder]);
+    cout << "Congratulations to " << bidder->getName() << " for buying " << getName() << endl;
+    bidder->getMoney().subtractBalance(currentBid);
+    bidder->addParticipantProperty(this);
+    setOwner(bidder);
+}
+
+Participant * GameBoard::Property::selectBidder(vector<Participant *> participants, Participant *currentBidder) {
+    // Remove current bidder from bidding again
+    if (currentBidder != nullptr) {
+        participants.erase(remove(participants.begin(), participants.end(), currentBidder), participants.end());
+    }
+    Util::displayPlayers(participants);
+    cout << "Select player number to bid." << endl;
+    int participantIndex = Util::readIntegerWithRange(0, (int) participants.size() - 1);
+    return participants[participantIndex];
 }
 
 const string &GameBoard::Property::getColour() const {
@@ -95,4 +102,5 @@ string GameBoard::Property::getName() {
 void GameBoard::Property::setCurrentHousesBuild(int currentHousesBuild) {
     Property::currentHousesBuild = currentHousesBuild;
 }
+
 

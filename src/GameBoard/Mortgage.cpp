@@ -24,7 +24,7 @@ void GameBoard::Mortgage::makePropertyMortgage(Player::Participant *participant)
     }
     cout << "You will receive " << getMortgagePrice() << ". Do you accept? (Y/n)" << endl;
     getline(cin, input);
-    
+
     if (input[0] == 'Y' || input[1] == 'y') {
         participant->getMoney().addBalance(mortgagePrice);
         propertyMortgage = true;

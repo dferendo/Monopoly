@@ -37,7 +37,7 @@ double Util::readPositiveDouble() {
             getline(cin, number);
             // stoi will throw an exception if no numbers were given
             double givenNumber = stoi(number);
-            if (givenNumber >= 0) {
+            if (givenNumber > 0) {
                 return givenNumber;
             }
         } catch (invalid_argument error){};

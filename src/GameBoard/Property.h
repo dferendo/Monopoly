@@ -9,6 +9,7 @@
 #include "../Util/ReadInput.h"
 #include "../Util/MenuHelper.h"
 #include "Mortgage.h"
+using namespace Player;
 
 namespace GameBoard {
 
@@ -17,25 +18,26 @@ namespace GameBoard {
     private:
         double propertyPrice;
         double rentCost;
-        Player::Participant * owner = nullptr;
+        Participant * owner = nullptr;
         int currentHousesBuild = 0;
         string colour;
         // This can be accessed only by UpgradableProperty
         void setCurrentHousesBuild(int currentHousesBuild);
     protected:
-        void noOwner(Player::Participant *player, GameMechanics::Game * game);
-        void buyProperty(Player::Participant *player);
+        void noOwner(Participant *player, GameMechanics::Game * game);
+        void buyProperty(Participant *player);
         void auctionHouse(GameMechanics::Game * game);
+        Participant * selectBidder(vector<Participant *> participants, Participant *currentBidder);
     public:
         Property(const string &name, double propertyPrice, double rentCost, string colour, double mortgage);
-        Player::Participant * getOwner();
-        void setOwner(Player::Participant *owner);
+        Participant * getOwner();
+        void setOwner(Participant *owner);
         const string &getColour() const;
         double getRentCost() const;
         int getCurrentHousesBuild() const;
-        virtual void action(Player::Participant *player, GameMechanics::Game * game) = 0;
+        virtual void action(Participant *player, GameMechanics::Game * game) = 0;
         // The 3 types of property pay differently.
-        virtual void payRent(Player::Participant *player, GameMechanics::Game * game) = 0;
+        virtual void payRent(Participant *player, GameMechanics::Game * game) = 0;
         string getName();
     };
 }

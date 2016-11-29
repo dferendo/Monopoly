@@ -70,7 +70,7 @@ void GameMechanics::Game::play() {
 void GameMechanics::Game::sellBuilding(Participant *participant) {
     // TODO sell evenly
     string input;
-    vector<GameBoard::Property *> nonImprovedProperties;
+    std::vector<GameBoard::Property *> nonImprovedProperties;
     try {
         participant->getImprovedParticipantProperties(nonImprovedProperties);
         Util::displayImprovedHouseForPlayer(participant, nonImprovedProperties);
