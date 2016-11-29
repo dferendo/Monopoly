@@ -5,6 +5,7 @@
 #include "Mortgage.h"
 #include "../Player/Participant.h"
 #include "../Exception/HouseIsAlreadyMortgageException.h"
+#include "../Exception/NoMoneyException.h"
 
 GameBoard::Mortgage::Mortgage(double mortgagePrice) : mortgagePrice(mortgagePrice) {}
 
@@ -37,8 +38,12 @@ void GameBoard::Mortgage::removeMortgage(Player::Participant *participant) {
     cout << "To remove the mortgage it will cost you " << amount << ". Do you accept? (Y/n)" << endl;
     getline(cin, input);
 
-    if (input[0] == 'Y' || input[1] == 'y') {
-        participant->getMoney().subtractBalance(amount);
-        propertyMortgage = false;
+    try {
+        if (input[0] == 'Y' || input[1] == 'y') {
+            participant->getMoney().subtractBalance(amount);
+            propertyMortgage = false;
+        }
+    } catch (NoMoneyException &exception) {
+        // TODO
     }
 }

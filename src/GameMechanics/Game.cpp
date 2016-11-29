@@ -18,7 +18,6 @@ void GameMechanics::Game::play() {
     Dice dice;
     Trade trade;
     Move move;
-    int turn = 0;
     // Every player turn will have these options
     vector<string> displayMenu;
 
@@ -28,8 +27,8 @@ void GameMechanics::Game::play() {
     displayMenu.push_back("Mortgage");
     displayMenu.push_back("Move");
 
-    // TODO proper ending
-    while (turn < 100) {
+    // When only 1 participant left, he won
+    while (participantsPlaying.size() == 1) {
         for (auto &participant : participantsPlaying) {
             // Change terminal colour, better for reading
             cout << "\033[1;31m" << participant->getName() << "'s turn." << "\033[0m" << endl;
@@ -63,7 +62,6 @@ void GameMechanics::Game::play() {
         }
         cout << "New turn!!" << endl;
         Util::pressEnterToContinue();
-        turn++;
     }
 }
 

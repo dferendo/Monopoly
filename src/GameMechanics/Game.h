@@ -43,7 +43,6 @@ namespace GameMechanics {
         double getFreeParkingJackpot() const;
         void setFreeParkingJackpot(double freeParkingJackpot);
         const vector<GameBoard::Tile *> &getGameBoard() const;
-
     };
 }
 #endif //MONOPOLY_GAME_H

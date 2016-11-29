@@ -74,9 +74,10 @@ void GameMechanics::Trade::transactionTrade(Participant *buyer, Participant *sel
 }
 
 double GameMechanics::Trade::offerCash(Participant *buyer) {
-    // TODO check if buyer has amount
+    double highestOffer = buyer->getMoney().getBalance();
+    cout << buyer->getName() << " highest offer is " << highestOffer << "." << endl;
     cout << "Enter offer amount: ";
-    return Util::readPositiveDouble();
+    return Util::readPositiveDoubleWithLimit(highestOffer);
 }
 
 GameBoard::Property *GameMechanics::Trade::offerProperty(Participant *buyer) {
@@ -103,6 +104,8 @@ bool GameMechanics::Trade::makeTransaction(Participant *buyer, Participant *sell
     if (input[0] == 'y' || input[0] == 'Y') {
         // Add cash to seller
         if (cashOffered != 0) {
+            // The NoMoneyException can never be triggered since user can only enter an amount
+            // that he has.
             buyer->getMoney().subtractBalance(cashOffered);
             seller->getMoney().addBalance(cashOffered);
         }

@@ -9,7 +9,7 @@
 
 class NoHousesException {
 public:
-    string message;
+    string message = " ran out of money!";
     NoHousesException(Player::Participant & participant);
     NoHousesException(Player::Participant & participant, string message);
 };

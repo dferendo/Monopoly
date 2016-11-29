@@ -4,6 +4,7 @@
 
 #include <cmath>
 #include "RailRoad.h"
+#include "../Exception/NoMoneyException.h"
 
 GameBoard::RailRoad::RailRoad(const string &name, double propertyPrice,
                               double rentCost, const string &colour, double mortgage)
@@ -25,6 +26,11 @@ void GameBoard::RailRoad::payRent(Player::Participant *player, GameMechanics::Ga
     cout << "The owner has in total " << numberOfRailRoad << " railroads" << endl;
     // Charge 25 if one owned, 50 if two owned, 100 if three owned, 200 if all owned by the same owner
     int amountToBePaid = pow(2, numberOfRailRoad - 1) * 25;
-    player->getMoney().subtractBalance(amountToBePaid);
-    getOwner()->getMoney().addBalance(amountToBePaid);
+    try {
+        player->getMoney().subtractBalance(amountToBePaid);
+        getOwner()->getMoney().addBalance(amountToBePaid);
+    } catch (NoMoneyException & exception) {
+        cout << exception.message << endl;
+        // TODO sell property to fix this
+    }
 }

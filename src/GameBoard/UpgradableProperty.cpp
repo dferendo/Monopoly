@@ -4,6 +4,7 @@
 
 #include "UpgradableProperty.h"
 #include "../Exception/HouseIsMortgageException.h"
+#include "../Exception/NoMoneyException.h"
 
 GameBoard::UpgradableProperty::UpgradableProperty(const string &name, double propertyPrice, double rentCost,
                                                   const string &colour, GameBoard::HousesPrice housesPrice, double mortgage) :
@@ -45,8 +46,13 @@ void GameBoard::UpgradableProperty::payRent(Player::Participant *player, GameMec
     } else {
         amount = getHousesPrice().getHousePrice(currentHousesBuild);
     }
-    player->getMoney().subtractBalance(amount);
-    getOwner()->getMoney().addBalance(amount);
+    try {
+        player->getMoney().subtractBalance(amount);
+        getOwner()->getMoney().addBalance(amount);
+    } catch (NoMoneyException & noMoneyException) {
+        cout << noMoneyException.message << endl;
+        // TODO pay him
+    }
 }
 
 void GameBoard::UpgradableProperty::upgradeProperty(Player::Participant *player) {
@@ -67,6 +73,8 @@ void GameBoard::UpgradableProperty::upgradeProperty(Player::Participant *player)
         }
     } catch (HouseIsMortgageException &exception) {
         cout << exception.message << " Returning to previous menu." << endl;
+    } catch (NoMoneyException & noMoneyException) {
+        cout << noMoneyException.message << " Returning to previous menu." << endl;
     }
 }
 
@@ -83,12 +91,15 @@ string GameBoard::UpgradableProperty::getName() {
 }
 
 void GameBoard::UpgradableProperty::addHouseToProperty(Player::Participant *player) {
-    // TODO not enough amount
     if (isPropertyMortgage()) {
         throw HouseIsMortgageException();
     }
-    setCurrentHousesBuild(getCurrentHousesBuild() + 1);
-    player->getMoney().subtractBalance(getHousesPrice().getPriceToUpgrade());
+    try {
+        setCurrentHousesBuild(getCurrentHousesBuild() + 1);
+        player->getMoney().subtractBalance(getHousesPrice().getPriceToUpgrade());
+    } catch (NoMoneyException & exception) {
+        throw NoMoneyException();
+    }
 }
 
 void GameBoard::UpgradableProperty::removeHouseFromProperty(Player::Participant *player) {

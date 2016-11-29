@@ -30,14 +30,14 @@ string Util::readString() {
     }
 }
 
-double Util::readPositiveDouble() {
+double Util::readPositiveDoubleWithLimit(double limit) {
     string number;
     while(true) {
         try {
             getline(cin, number);
             // stoi will throw an exception if no numbers were given
             double givenNumber = stoi(number);
-            if (givenNumber > 0) {
+            if (givenNumber >= 0 && givenNumber <= limit) {
                 return givenNumber;
             }
         } catch (invalid_argument error){};

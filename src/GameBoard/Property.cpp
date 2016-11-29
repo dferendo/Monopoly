@@ -4,6 +4,7 @@
 
 #include "Property.h"
 #include "../GameMechanics/Game.h"
+#include "../Exception/NoMoneyException.h"
 #include <algorithm>
 GameBoard::Property::Property(const string &name, double propertyPrice,
 
@@ -27,33 +28,47 @@ void GameBoard::Property::noOwner(Participant *player, GameMechanics::Game * gam
     cout << getName() << " is currently on sale!!\nChoices available: " << endl;
     Util::displayMenu(noOwnerChoice);
     int choice = Util::readIntegerWithRange(0, 1);
-    if (choice == 0) {
-        buyProperty(player);
-    } else {
+    try {
+        if (choice == 0) {
+            buyProperty(player);
+        } else {
+            auctionHouse(game);
+        }
+    } catch (NoMoneyException & exception) {
+        cout << exception.message << " The house will be auctioned." << endl;
         auctionHouse(game);
     }
 }
 
 void GameBoard::Property::buyProperty(Participant *player) {
-    player->getMoney().subtractBalance(propertyPrice);
-    player->addParticipantProperty(this);
-    setOwner(player);
+    try {
+        player->getMoney().subtractBalance(propertyPrice);
+        player->addParticipantProperty(this);
+        setOwner(player);
+    } catch (NoMoneyException &exception) {
+        // Catching the exception and rethrow it.
+        throw NoMoneyException();
+    }
 }
 
 void GameBoard::Property::auctionHouse(GameMechanics::Game * game) {
-    double currentBid = 0;
+    // Bids can start from any amount including 0
+    double currentBid = -1;
     Participant * bidder = nullptr;
     Participant * tempBidder = nullptr;
     string input = "y";
 
     cout << "Auctioning " << getName() << "." << endl;
     // Will loop until quit
-    while (input[0] == 'Y' || input[0] == 'y') {
+    while (input[0] == 'Y' || input[0] == 'y')  {
         cout << "Current bid: " << currentBid << endl;
         tempBidder = selectBidder(game->getParticipantsPlaying(), bidder);
+        double highestAmount = tempBidder->getMoney().getBalance();
+        cout << tempBidder->getName() << " highest offer is " << highestAmount << "." <<endl;
         cout << "Enter amount: ";
-        double amount = Util::readPositiveDouble();
-        // First bid will always be greater than 0, thus the first bid is always accepted. No nullptr risk.
+        double amount = Util::readPositiveDoubleWithLimit(tempBidder->getMoney().getBalance());
+        // First bid will always be greater or equal than 0, thus the first bid
+        // is always accepted. No nullptr risk.
         if (amount > currentBid) {
             currentBid = amount;
             bidder = tempBidder;
@@ -63,10 +78,11 @@ void GameBoard::Property::auctionHouse(GameMechanics::Game * game) {
         cout << "Continue bidding? (Y/n)" << endl;
         getline(cin, input);
     }
-    cout << "Congratulations to " << bidder->getName() << " for buying " << getName() << endl;
+    // This exception can be thrown since participant can never enter an amount greater then he can afford
     bidder->getMoney().subtractBalance(currentBid);
     bidder->addParticipantProperty(this);
     setOwner(bidder);
+    cout << "Congratulations to " << bidder->getName() << " for buying " << getName() << endl;
 }
 
 Participant * GameBoard::Property::selectBidder(vector<Participant *> participants, Participant *currentBidder) {
@@ -84,6 +100,7 @@ const string &GameBoard::Property::getColour() const {
     return colour;
 }
 
+// TODO rent cost do it here
 double GameBoard::Property::getRentCost() const {
     return rentCost;
 }

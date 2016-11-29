@@ -3,19 +3,24 @@
 //
 
 #include "Xorti.h"
+#include "../Exception/NoMoneyException.h"
 
 GameBoard::Xorti::Xorti(const string &name) : Tile(name) {}
 
 void GameBoard::Xorti::action(Player::Participant * player, GameMechanics::Game * game) {
     int xorti = rand() % MAXIMUM_XORTI;
-    if (xorti == 0) {
-        birthday(*player);
-    } else if (xorti == 1) {
-        parkingFine(*player, game);
-    } else if (xorti == 2) {
-        mepaFine(*player, game);
-    } else {
-        moveToRandomPlace(*player, game);
+    try {
+        if (xorti == 0) {
+            birthday(*player);
+        } else if (xorti == 1) {
+            parkingFine(*player, game);
+        } else if (xorti == 2) {
+            mepaFine(*player, game);
+        } else {
+            moveToRandomPlace(*player, game);
+        }
+    } catch (NoMoneyException & exception) {
+        cout << exception.message << endl;
     }
 }
 
@@ -28,8 +33,12 @@ void GameBoard::Xorti::birthday(Player::Participant &player) {
 void GameBoard::Xorti::parkingFine(Player::Participant &player, GameMechanics::Game * game) {
     double parkingFine = rand() % (MAXIMUM_PARKING_FINE - MINIMUM_PARKING_FINE) + MINIMUM_PARKING_FINE;
     std::cout << "You parked at a lecturer's spot!!! You were fined " << parkingFine << "." << std::endl;
-    player.getMoney().subtractBalance(parkingFine);
-    game->setFreeParkingJackpot(game->getFreeParkingJackpot() + parkingFine);
+    try {
+        player.getMoney().subtractBalance(parkingFine);
+        game->setFreeParkingJackpot(game->getFreeParkingJackpot() + parkingFine);
+    } catch (NoMoneyException & noMoneyException) {
+        throw NoMoneyException();
+    }
 }
 
 void GameBoard::Xorti::mepaFine(Player::Participant &player, GameMechanics::Game * game) {
@@ -38,9 +47,12 @@ void GameBoard::Xorti::mepaFine(Player::Participant &player, GameMechanics::Game
     std::cout << "MEPA fined you!!! You were fined in total: " << totalFine << ". You have in total "
               << player.getParticipantProperties().size() << " buildings and each building was fined "
               << mepaFine << "." << std::endl;
-    player.getMoney().subtractBalance(totalFine);
-    game->setFreeParkingJackpot(game->getFreeParkingJackpot() + totalFine);
-
+    try {
+        player.getMoney().subtractBalance(totalFine);
+        game->setFreeParkingJackpot(game->getFreeParkingJackpot() + totalFine);
+    } catch (NoMoneyException & noMoneyException) {
+        throw NoMoneyException();
+    }
 }
 
 void GameBoard::Xorti::moveToRandomPlace(Player::Participant &player, GameMechanics::Game * game) {
