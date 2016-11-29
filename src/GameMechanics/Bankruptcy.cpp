@@ -32,4 +32,6 @@ void Bankruptcy::transferProperties(GameMechanics::Game * game, Player::Particip
             currentOwner->removeProperty(property);
         }
     }
+    // Deallocate user
+    delete currentOwner;
 }

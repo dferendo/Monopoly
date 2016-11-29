@@ -9,6 +9,9 @@
 
 class Monopoly {
 public:
-    Monopoly();
+    void start();
+    void play();
+    void userManual();
+    void readFromFile(int chapterNumber);
 };
 #endif //MONOPOLY_MONOPOLY_H
