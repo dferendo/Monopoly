@@ -4,8 +4,8 @@
 
 #include "Property.h"
 #include "../GameMechanics/Game.h"
-
 GameBoard::Property::Property(const string &name, double propertyPrice,
+
                               double rentCost, string colour, double mortgage) : Tile(name), Mortgage(mortgage), propertyPrice(propertyPrice),
                                                                                  rentCost(rentCost), colour(colour){}
 
@@ -27,13 +27,13 @@ void GameBoard::Property::noOwner(Player::Participant *player, GameMechanics::Ga
     Util::displayMenu(noOwnerChoice);
     int choice = Util::readIntegerWithRange(0, 1);
     if (choice == 0) {
-        buyHouse(player);
+        buyProperty(player);
     } else {
         auctionHouse(game);
     }
 }
 
-void GameBoard::Property::buyHouse(Player::Participant *player) {
+void GameBoard::Property::buyProperty(Player::Participant *player) {
     player->getMoney().subtractBalance(propertyPrice);
     player->addParticipantProperty(this);
     setOwner(player);
@@ -85,14 +85,14 @@ int GameBoard::Property::getCurrentHousesBuild() const {
     return currentHousesBuild;
 }
 
-void GameBoard::Property::setCurrentHousesBuild(int currentHousesBuild) {
-    Property::currentHousesBuild = currentHousesBuild;
-}
-
 string GameBoard::Property::getName() {
     if (isPropertyMortgage()) {
         return Tile::getName() + " - Mortgage";
     }
     return Tile::getName();
+}
+
+void GameBoard::Property::setCurrentHousesBuild(int currentHousesBuild) {
+    Property::currentHousesBuild = currentHousesBuild;
 }
 

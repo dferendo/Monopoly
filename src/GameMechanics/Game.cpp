@@ -84,8 +84,7 @@ void GameMechanics::Game::sellBuilding(Participant *participant) {
                  << endl;
             getline(cin, input);
             if (input[0] == 'Y' || input[0] == 'y') {
-                upgradableProperty->setCurrentHousesBuild(upgradableProperty->getCurrentHousesBuild() - 1);
-                participant->getMoney().addBalance(upgradableProperty->getHousesPrice().getPriceToUpgrade() / 2);
+                upgradableProperty->removeHouseFromProperty(participant);
             }
         } else {
             // TODO check with JP for this thing

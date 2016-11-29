@@ -20,8 +20,10 @@ namespace GameBoard {
                            GameBoard::HousesPrice housesPrice, double mortgage);
         void action(Player::Participant *player, GameMechanics::Game * game) override;
         bool checkIfOwnerHasAllSameColour(Player::Participant *player, GameMechanics::Game *game);
-        void upgradeProperty(Player::Participant *player, GameMechanics::Game * game);
+        void upgradeProperty(Player::Participant *player);
         void payRent(Player::Participant *player, GameMechanics::Game * game) override;
+        void addHouseToProperty(Player::Participant *player);
+        void removeHouseFromProperty(Player::Participant *player);
         const HousesPrice &getHousesPrice() const;
         string getName();
     };

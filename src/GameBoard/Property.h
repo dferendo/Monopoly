@@ -13,26 +13,29 @@
 namespace GameBoard {
 
     class Property: public Tile, public Mortgage {
+        friend class UpgradableProperty;
     private:
         double propertyPrice;
         double rentCost;
         Player::Participant * owner = nullptr;
         int currentHousesBuild = 0;
         string colour;
+        // This can be accessed only by UpgradableProperty
+        void setCurrentHousesBuild(int currentHousesBuild);
+    protected:
+        void noOwner(Player::Participant *player, GameMechanics::Game * game);
+        void buyProperty(Player::Participant *player);
+        void auctionHouse(GameMechanics::Game * game);
     public:
         Property(const string &name, double propertyPrice, double rentCost, string colour, double mortgage);
         Player::Participant * getOwner();
         void setOwner(Player::Participant *owner);
-        virtual void action(Player::Participant *player, GameMechanics::Game * game) = 0;
-        void noOwner(Player::Participant *player, GameMechanics::Game * game);
-        void buyHouse(Player::Participant *player);
-        void auctionHouse(GameMechanics::Game * game);
-        // The 3 types of property pay differently.
-        virtual void payRent(Player::Participant *player, GameMechanics::Game * game) = 0;
         const string &getColour() const;
         double getRentCost() const;
         int getCurrentHousesBuild() const;
-        void setCurrentHousesBuild(int currentHousesBuild);
+        virtual void action(Player::Participant *player, GameMechanics::Game * game) = 0;
+        // The 3 types of property pay differently.
+        virtual void payRent(Player::Participant *player, GameMechanics::Game * game) = 0;
         string getName();
     };
 }

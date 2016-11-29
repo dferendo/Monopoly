@@ -7,6 +7,7 @@
 #include "../Exception/NoHousesException.h"
 
 void GameMechanics::Trade::tradeProperty(GameMechanics::Game *game, Participant * buyer) {
+    // Note that mortgage properties can still be traded
     Participant * seller = determineSeller(game->getParticipantsPlaying(), buyer);
     try {
         // Display properties

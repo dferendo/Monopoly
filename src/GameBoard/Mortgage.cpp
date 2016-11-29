@@ -17,14 +17,28 @@ double GameBoard::Mortgage::getMortgagePrice() const {
 }
 
 void GameBoard::Mortgage::makePropertyMortgage(Player::Participant *participant) {
+    string input;
+
     if (isPropertyMortgage()) {
         throw HouseIsAlreadyMortgageException();
     }
-    participant->getMoney().addBalance(mortgagePrice);
-    propertyMortgage = true;
+    cout << "You will receive " << getMortgagePrice() << ". Do you accept? (Y/n)" << endl;
+    getline(cin, input);
+    
+    if (input[0] == 'Y' || input[1] == 'y') {
+        participant->getMoney().addBalance(mortgagePrice);
+        propertyMortgage = true;
+    }
 }
 
 void GameBoard::Mortgage::removeMortgage(Player::Participant *participant) {
-    participant->getMoney().subtractBalance(mortgagePrice * INTEREST_PERCENTAGE);
-    propertyMortgage = false;
+    string input;
+    double amount = mortgagePrice * INTEREST_PERCENTAGE;
+    cout << "To remove the mortgage it will cost you " << amount << ". Do you accept? (Y/n)" << endl;
+    getline(cin, input);
+
+    if (input[0] == 'Y' || input[1] == 'y') {
+        participant->getMoney().subtractBalance(amount);
+        propertyMortgage = false;
+    }
 }

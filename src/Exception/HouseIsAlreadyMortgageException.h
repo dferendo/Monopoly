@@ -5,7 +5,7 @@
 #ifndef MONOPOLY_HOUSEISALREADYMORTGAGEEXCEPTION_H
 #define MONOPOLY_HOUSEISALREADYMORTGAGEEXCEPTION_H
 
-#include "../GameBoard/Property.h"
+#include <iostream>
 
 class HouseIsAlreadyMortgageException {
 public:

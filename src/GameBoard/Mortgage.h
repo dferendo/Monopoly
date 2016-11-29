@@ -11,7 +11,7 @@ namespace Player {
 }
 
 namespace GameBoard {
-    const double INTEREST_PERCENTAGE = 0.1;
+    const double INTEREST_PERCENTAGE = 1.1;
 
     class Mortgage {
     private:
