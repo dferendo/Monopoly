@@ -5,12 +5,13 @@
 #include "Move.h"
 
 void GameMechanics::Move::move(Game * game, Participant * participant, Dice *dice) {
+    Move move;
     bool anotherTurnForPlayer = true;
     int counter = 0;
     while (anotherTurnForPlayer) {
         // Roll dice to move
-        game->setDiceCount(generateDiceCount(dice));
-        anotherTurnForPlayer = checkDiceDouble(dice);
+        game->setDiceCount(move.generateDiceCount(dice));
+        anotherTurnForPlayer = move.checkDiceDouble(dice);
         // If player did 2 turns and roll doubles again, move to the jail empty tail
         if (counter == 2 && anotherTurnForPlayer) {
             cout << "Doubles for the third consecutive time!! Moving to jail." << endl;
@@ -18,7 +19,7 @@ void GameMechanics::Move::move(Game * game, Participant * participant, Dice *dic
             Util::pressEnterToContinue();
             break;
         }
-        determineParticipantLocation(game, participant, game->getDiceCount());
+        move.determineParticipantLocation(game, participant, game->getDiceCount());
         game->getGameBoard()[participant->getCurrentPosition()]->action(participant, game);
         counter++;
         Util::pressEnterToContinue();

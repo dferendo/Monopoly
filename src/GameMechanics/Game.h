@@ -12,6 +12,7 @@
 #include "../GameBoard/Property.h"
 #include "Trade.h"
 #include "Move.h"
+#include "SellingBuilding.h"
 using namespace Player;
 
 namespace GameMechanics {
@@ -28,7 +29,6 @@ namespace GameMechanics {
         double freeParkingJackpot = 0;
         int diceCount;
         // Functions
-        void sellBuilding(Participant *participant);
         void mortgage(Participant *participant);
         void mortgageProperty(Participant *participant);
         void removeMortgageFromProperty(Participant *participant);

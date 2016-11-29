@@ -7,15 +7,16 @@
 #include "../Exception/NoHousesException.h"
 
 void GameMechanics::Trade::tradeProperty(GameMechanics::Game *game, Participant * buyer) {
+    Trade trade;
     // Note that mortgage properties can still be traded
-    Participant * seller = determineSeller(game->getParticipantsPlaying(), buyer);
+    Participant * seller = trade.determineSeller(game->getParticipantsPlaying(), buyer);
     try {
         // Display properties
         vector<GameBoard::Property *> nonImprovedProperties;
         seller->getNonImprovedParticipantProperties(nonImprovedProperties);
         Util::displayNonImprovedHouseForPlayer(seller, nonImprovedProperties);
         int indexOfHouseToBuy = Util::readIntegerWithRange(0, (int) nonImprovedProperties.size() - 1);
-        transactionTrade(buyer, seller, nonImprovedProperties[indexOfHouseToBuy]);
+        trade.transactionTrade(buyer, seller, nonImprovedProperties[indexOfHouseToBuy]);
     } catch(NoHousesException &exception) {
         cout << exception.message << " Cancelling trade." << endl;
         return;

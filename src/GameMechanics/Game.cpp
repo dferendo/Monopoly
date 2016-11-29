@@ -16,8 +16,6 @@ GameMechanics::Game::Game() {
 
 void GameMechanics::Game::play() {
     Dice dice;
-    Trade trade;
-    Move move;
     // Every player turn will have these options
     vector<string> displayMenu;
 
@@ -39,11 +37,11 @@ void GameMechanics::Game::play() {
                 selection = Util::readIntegerWithRange(0, 4);
                 switch (selection) {
                     case 0: {
-                        trade.tradeProperty(this, participant);
+                        Trade::tradeProperty(this, participant);
                         break;
                     }
                     case 1: {
-                        sellBuilding(participant);
+                        SellingBuilding::sellBuilding(participant);
                         break;
                     }
                     case 2: {
@@ -58,37 +56,10 @@ void GameMechanics::Game::play() {
                 }
             }
             // Move will go to another player after execution
-            move.move(this, participant, &dice);
+            Move::move(this, participant, &dice);
         }
         cout << "New turn!!" << endl;
         Util::pressEnterToContinue();
-    }
-}
-
-void GameMechanics::Game::sellBuilding(Participant *participant) {
-    // TODO sell evenly
-    string input;
-    std::vector<GameBoard::Property *> nonImprovedProperties;
-    try {
-        participant->getImprovedParticipantProperties(nonImprovedProperties);
-        Util::displayImprovedHouseForPlayer(participant, nonImprovedProperties);
-        int sellBuildingPropertyIndex = Util::readIntegerWithRange(0, (int) nonImprovedProperties.size() - 1);
-        GameBoard::Property * property = nonImprovedProperties[sellBuildingPropertyIndex];
-        // If building has houses, it is an upgradeableProperty
-        GameBoard::UpgradableProperty * upgradableProperty = dynamic_cast<GameBoard::UpgradableProperty *> (property);
-        // Check if dynamic cast did not fail
-        if (upgradableProperty) {
-            cout << "Do you really want to remove a house? You will receive half the cost it took to build it. (Y/n)"
-                 << endl;
-            getline(cin, input);
-            if (input[0] == 'Y' || input[0] == 'y') {
-                upgradableProperty->removeHouseFromProperty(participant);
-            }
-        } else {
-            // TODO check with JP for this thing
-        }
-    } catch (NoHousesException &exception) {
-        cout << exception.message << ". Returning to previous menu." << endl;
     }
 }
 

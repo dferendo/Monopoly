@@ -17,7 +17,7 @@ namespace GameMechanics {
         int generateDiceCount(Dice *dice);
         bool checkDiceDouble(Dice *dice);
     public:
-        void move(Game * game, Participant *participant, Dice *dice);
+        static void move(Game * game, Participant *participant, Dice *dice);
     };
 }
 

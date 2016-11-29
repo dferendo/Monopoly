@@ -24,7 +24,7 @@ namespace GameMechanics {
         string buyerOffer(Participant *buyer, double cashOffered,
                           set<GameBoard::Property *> propertiesOffered);
     public:
-        void tradeProperty(Game *game, Participant * buyer);
+        static void tradeProperty(Game *game, Participant * buyer);
     };
 }
 

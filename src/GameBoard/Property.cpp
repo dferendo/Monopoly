@@ -100,7 +100,6 @@ const string &GameBoard::Property::getColour() const {
     return colour;
 }
 
-// TODO rent cost do it here
 double GameBoard::Property::getRentCost() const {
     return rentCost;
 }
