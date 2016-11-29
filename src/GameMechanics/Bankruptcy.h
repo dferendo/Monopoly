@@ -12,8 +12,6 @@
 class Bankruptcy {
 public:
     static void transferProperties(GameMechanics::Game * game, Player::Participant * currentOwner, Player::Participant * newOwner);
-    void auctionProperties();
-    void transferPropertiesToPlayer();
 };
 
 
