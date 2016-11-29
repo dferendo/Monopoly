@@ -5,6 +5,7 @@
 #include "Tax.h"
 #include "../Exception/NoMoneyException.h"
 #include "../GameMechanics/Bankruptcy.h"
+using namespace Exception;
 
 GameBoard::Tax::Tax(const string &name, const int &taxAmount) : Tile(name), taxAmount(taxAmount) {}
 

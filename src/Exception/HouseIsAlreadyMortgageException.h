@@ -6,11 +6,12 @@
 #define MONOPOLY_HOUSEISALREADYMORTGAGEEXCEPTION_H
 
 #include <iostream>
-
-class HouseIsAlreadyMortgageException {
-public:
-    std::string message = "House is already mortgage!";
-};
+namespace Exception {
+    class HouseIsAlreadyMortgageException {
+    public:
+        std::string message = "House is already mortgage!";
+    };
+}
 
 
 #endif //MONOPOLY_HOUSEISALREADYMORTGAGEEXCEPTION_H

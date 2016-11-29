@@ -5,6 +5,7 @@
 #include "UtilityProperty.h"
 #include "../Exception/NoMoneyException.h"
 #include "../GameMechanics/Bankruptcy.h"
+using namespace Exception;
 
 GameBoard::UtilityProperty::UtilityProperty(const string &name, double propertyPrice, double rentCost,
                                             const string &colour, double mortgage)

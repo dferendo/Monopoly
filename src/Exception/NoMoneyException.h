@@ -15,13 +15,15 @@ using namespace std;
 using namespace Player;
 using namespace GameMechanics;
 
-class NoMoneyException {
-public:
-    string message;
-    double amountDue;
-    NoMoneyException(double amountDue);
-    bool payAmountDue(GameMechanics::Game *game, double amountDue, Participant *debitor, Participant * creditor);
-    bool payDebt(double amountDue, Participant *debitor, Participant * creditor);
-};
+namespace Exception {
+    class NoMoneyException {
+    public:
+        string message;
+        double amountDue;
+        NoMoneyException(double amountDue);
+        bool payAmountDue(GameMechanics::Game *game, double amountDue, Participant *debitor, Participant *creditor);
+        bool payDebt(double amountDue, Participant *debitor, Participant *creditor);
+    };
+}
 
 #endif //MONOPOLY_NOMONEYEXCEPTION_H

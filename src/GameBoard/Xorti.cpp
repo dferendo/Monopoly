@@ -5,6 +5,7 @@
 #include "Xorti.h"
 #include "../Exception/NoMoneyException.h"
 #include "../GameMechanics/Bankruptcy.h"
+using namespace Exception;
 
 GameBoard::Xorti::Xorti(const string &name) : Tile(name) {}
 

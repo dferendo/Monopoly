@@ -7,12 +7,14 @@
 
 #include "../Player/Participant.h"
 
-class NoHousesException {
-public:
-    string message = " ran out of money!";
-    NoHousesException(Player::Participant & participant);
-    NoHousesException(Player::Participant & participant, string message);
-};
+namespace Exception {
+    class NoHousesException {
+    public:
+        string message = " ran out of money!";
+        NoHousesException(Player::Participant &participant);
+        NoHousesException(Player::Participant &participant, string message);
+    };
+}
 
 
 #endif //MONOPOLY_NOHOUSESEXCEPTION_H

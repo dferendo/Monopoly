@@ -6,6 +6,7 @@
 #include "../Player/Participant.h"
 #include "../Exception/HouseIsAlreadyMortgageException.h"
 #include "../Exception/NoMoneyException.h"
+using namespace Exception;
 
 GameBoard::Mortgage::Mortgage(double mortgagePrice) : mortgagePrice(mortgagePrice) {}
 

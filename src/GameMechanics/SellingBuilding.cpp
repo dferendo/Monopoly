@@ -3,6 +3,7 @@
 //
 
 #include "SellingBuilding.h"
+using namespace Exception;
 
 void GameMechanics::SellingBuilding::sellBuilding(Participant *participant) {
     string input;

@@ -5,14 +5,16 @@
 #include <sstream>
 #include "NoHousesException.h"
 
-NoHousesException::NoHousesException(Player::Participant &participant) {
-    stringstream messageCompose;
-    messageCompose << participant.getName() << " has no houses!";
-    message = messageCompose.str();
-}
+namespace Exception {
+    NoHousesException::NoHousesException(Player::Participant &participant) {
+        stringstream messageCompose;
+        messageCompose << participant.getName() << " has no houses!";
+        message = messageCompose.str();
+    }
 
-NoHousesException::NoHousesException(Player::Participant &participant, string message) {
-    stringstream messageCompose;
-    messageCompose << participant.getName() << message;
-    this->message = messageCompose.str();
+    NoHousesException::NoHousesException(Player::Participant &participant, string message) {
+        stringstream messageCompose;
+        messageCompose << participant.getName() << message;
+        this->message = messageCompose.str();
+    }
 }

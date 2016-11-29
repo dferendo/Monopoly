@@ -6,6 +6,8 @@
 #include "../GameMechanics/Game.h"
 #include "../Exception/NoMoneyException.h"
 #include <algorithm>
+using namespace Exception;
+
 GameBoard::Property::Property(const string &name, double propertyPrice,
                               double rentCost, string colour, double mortgage) : Tile(name), Mortgage(mortgage), propertyPrice(propertyPrice),
                                                                                  rentCost(rentCost), colour(colour){}

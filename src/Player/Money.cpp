@@ -6,6 +6,7 @@
 #include <iostream>
 #include "../Util/ReadInput.h"
 #include "../Exception/NoMoneyException.h"
+using namespace Exception;
 
 Player::Money::Money(double balance) : balance(balance) {}
 

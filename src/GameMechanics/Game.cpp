@@ -6,6 +6,7 @@
 #include "FillBoard.h"
 #include "../Exception/NoHousesException.h"
 #include "../Exception/HouseIsAlreadyMortgageException.h"
+using namespace Exception;
 
 GameMechanics::Game::Game() {
     // Initialise

@@ -6,6 +6,7 @@
 #include "RailRoad.h"
 #include "../Exception/NoMoneyException.h"
 #include "../GameMechanics/Bankruptcy.h"
+using namespace Exception;
 
 GameBoard::RailRoad::RailRoad(const string &name, double propertyPrice,
                               double rentCost, const string &colour, double mortgage)

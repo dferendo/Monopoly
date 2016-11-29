@@ -5,6 +5,7 @@
 #include <sstream>
 #include "Participant.h"
 #include "../Exception/NoHousesException.h"
+using namespace Exception;
 
 namespace Player {
     Participant::Participant(int participantId, const string &name) : participantId(participantId),

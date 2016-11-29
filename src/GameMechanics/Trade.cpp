@@ -5,6 +5,7 @@
 #include <sstream>
 #include "Trade.h"
 #include "../Exception/NoHousesException.h"
+using namespace Exception;
 
 void GameMechanics::Trade::tradePropertyBuyerKnown(GameMechanics::Game *game, Participant *buyer) {
     Trade trade;

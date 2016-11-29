@@ -6,10 +6,11 @@
 #define MONOPOLY_HOUSEISMORTGAGEEXCEPTION_H
 
 #include <iostream>
-
-class HouseIsMortgageException {
-public:
-    std::string message = "House is mortgaged! Cannot build on it.";
-};
+namespace Exception {
+    class HouseIsMortgageException {
+    public:
+        std::string message = "House is mortgaged! Cannot build on it.";
+    };
+}
 
 #endif //MONOPOLY_HOUSEISMORTGAGEEXCEPTION_H

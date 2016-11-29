@@ -8,7 +8,6 @@
 #include <iostream>
 #include <vector>
 #include "../Player/Participant.h"
-#include "../GameBoard/Property.h"
 #include "../Exception/NoHousesException.h"
 
 using namespace std;

@@ -6,6 +6,7 @@
 #include "../Exception/HouseIsMortgageException.h"
 #include "../Exception/NoMoneyException.h"
 #include "../GameMechanics/Bankruptcy.h"
+using namespace Exception;
 
 GameBoard::UpgradableProperty::UpgradableProperty(const string &name, double propertyPrice, double rentCost,
                                                   const string &colour, GameBoard::HousesPrice housesPrice, double mortgage) :
