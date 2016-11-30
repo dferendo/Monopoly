@@ -19,8 +19,7 @@ namespace Exception {
         vector<string> displayMenu;
 
         displayMenu.push_back("Trade");
-        displayMenu.push_back("Sell buildings(houses)");
-        displayMenu.push_back("Mortgage");
+        displayMenu.push_back("Manage properties");
         displayMenu.push_back("Pay debt");
         displayMenu.push_back("Declare Bankruptcy");
         // Trade, sell property, display participant information or move
@@ -33,18 +32,14 @@ namespace Exception {
                     break;
                 }
                 case 1: {
-                    SellingBuilding::sellBuilding(debitor);
+                    game->manageProperties(debitor, game);
                     break;
                 }
                 case 2: {
-                    game->mortgageProperty(debitor);
-                    break;
-                }
-                case 3: {
                     amountIsPaid = payDebt(amountDue, debitor, creditor);
                     break;
                 }
-                case 4: {
+                case 3: {
                     return false;
                 }
             }

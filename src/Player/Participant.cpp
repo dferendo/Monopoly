@@ -64,39 +64,6 @@ namespace Player {
                                     participantProperties.end());
     }
 
-    void Participant::getNonImprovedParticipantProperties(vector<GameBoard::Property *> &nonImprovedProperties) {
-        for (auto &property : participantProperties) {
-            if (property->getCurrentHousesBuild() == 0) {
-                nonImprovedProperties.push_back(property);
-            }
-        }
-        if (nonImprovedProperties.size() == 0) {
-            throw NoPropertyException(*this);
-        }
-    }
-
-    void Participant::getImprovedParticipantProperties(vector<GameBoard::Property *> &improvedProperties) {
-        for (auto &property : participantProperties) {
-            if (property->getCurrentHousesBuild() != 0) {
-                improvedProperties.push_back(property);
-            }
-        }
-        if (improvedProperties.size() == 0) {
-            throw NoPropertyException(*this);
-        }
-    }
-
-    void Participant::getMortgageParticipantProperties(vector<GameBoard::Property *> &mortgageProperties) {
-        for (auto &property : participantProperties) {
-            if (property->isPropertyMortgage()) {
-                mortgageProperties.push_back(property);
-            }
-        }
-        if (mortgageProperties.size() == 0) {
-            throw NoPropertyException(*this);
-        }
-    }
-
 //    ostream &Participant::operator<<(std::ostream &stream, const Participant &participant) {
 //        stringstream properties;
 //        properties << "Current properties: ";

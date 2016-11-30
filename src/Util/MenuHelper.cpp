@@ -16,38 +16,12 @@ void Util::displayPlayers(vector<Player::Participant *> participants) {
     }
 }
 
-void Util::displayNonImprovedHouseForPlayer(Player::Participant *participant,
-                                            vector<GameBoard::Property *> properties) {
+void Util::displayHouseForPlayer(Player::Participant *participant, vector<GameBoard::Property *> properties) {
     if (properties.size() == 0) {
         throw NoPropertyException(*participant);
     }
-    cout << "Displaying all non improved properties " << participant->getName() << " properties. Choice one:" << endl;
+    cout << "Displaying all properties " << participant->getName() << " properties. Choice one:" << endl;
     for (vector<GameBoard::Property *>::size_type i = 0; i != properties.size(); i++) {
         cout << i << ". " << properties[i]->getName() << endl;
     }
 }
-
-void Util::displayImprovedHouseForPlayer(Player::Participant *participant,
-                                           vector<GameBoard::Property *> properties) {
-    if (properties.size() == 0) {
-        // TODO not throwing good??
-        throw NoPropertyException(*participant, " has no improved houses!");
-    }
-    cout << "Displaying all improved properties " << participant->getName() << " properties. Choice one:" << endl;
-    for (vector<GameBoard::Property *>::size_type i = 0; i != properties.size(); i++) {
-        cout << i << ". " << properties[i]->getName() << endl;
-    }
-}
-
-void Util::displayAllMortgageProperties(Player::Participant *participant,
-                                         vector<GameBoard::Property *> properties) {
-    if (properties.size() == 0) {
-        // TODO not throwing good??
-        throw NoPropertyException(*participant, " has no mortgage houses!");
-    }
-    cout << "Displaying all mortgage properties " << participant->getName() << " properties. Choice one:" << endl;
-    for (vector<GameBoard::Property *>::size_type i = 0; i != properties.size(); i++) {
-        cout << i << ". " << properties[i]->getName() << endl;
-    }
-}
-

@@ -14,11 +14,10 @@ void GameMechanics::Trade::tradePropertyBuyerKnown(GameMechanics::Game *game, Pa
     Participant * seller = trade.determineTrader(game->getParticipantsPlaying(), buyer);
     try {
         // Display properties
-        vector<GameBoard::Property *> nonImprovedProperties;
-        seller->getNonImprovedParticipantProperties(nonImprovedProperties);
-        Util::displayNonImprovedHouseForPlayer(seller, nonImprovedProperties);
-        int indexOfHouseToBuy = Util::readIntegerWithRange(0, (int) nonImprovedProperties.size() - 1);
-        trade.transactionTrade(buyer, seller, nonImprovedProperties[indexOfHouseToBuy]);
+        vector<GameBoard::Property *> &allParticipantsProperties= seller->getParticipantProperties();
+        Util::displayHouseForPlayer(seller, allParticipantsProperties);
+        int indexOfHouseToBuy = Util::readIntegerWithRange(0, (int) allParticipantsProperties.size() - 1);
+        trade.transactionTrade(buyer, seller, allParticipantsProperties[indexOfHouseToBuy]);
     } catch(NoPropertyException &exception) {
         cout << exception.message << " Cancelling trade." << endl;
         return;
@@ -32,11 +31,10 @@ void GameMechanics::Trade::tradePropertySellerKnown(GameMechanics::Game *game, P
     Participant * buyer = trade.determineTrader(game->getParticipantsPlaying(), seller);
     try {
         // Display properties
-        vector<GameBoard::Property *> nonImprovedProperties;
-        seller->getNonImprovedParticipantProperties(nonImprovedProperties);
-        Util::displayNonImprovedHouseForPlayer(seller, nonImprovedProperties);
-        int indexOfHouseToBuy = Util::readIntegerWithRange(0, (int) nonImprovedProperties.size() - 1);
-        trade.transactionTrade(buyer, seller, nonImprovedProperties[indexOfHouseToBuy]);
+        vector<GameBoard::Property *> &allParticipantProperties = seller->getParticipantProperties();
+        Util::displayHouseForPlayer(seller, allParticipantProperties);
+        int indexOfHouseToBuy = Util::readIntegerWithRange(0, (int) allParticipantProperties.size() - 1);
+        trade.transactionTrade(buyer, seller, allParticipantProperties[indexOfHouseToBuy]);
     } catch(NoPropertyException &exception) {
         cout << exception.message << " Cancelling trade." << endl;
         return;
@@ -102,11 +100,10 @@ double GameMechanics::Trade::offerCash(Participant *buyer) {
 
 GameBoard::Property *GameMechanics::Trade::offerProperty(Participant *buyer) {
     try {
-        vector<GameBoard::Property *> nonImprovedProperties;
-        buyer->getNonImprovedParticipantProperties(nonImprovedProperties);
-        Util::displayNonImprovedHouseForPlayer(buyer, nonImprovedProperties);
-        int indexOfHouseToOffer = Util::readIntegerWithRange(0, (int) nonImprovedProperties.size() - 1);
-        GameBoard::Property * property = nonImprovedProperties[indexOfHouseToOffer];
+        vector<GameBoard::Property *> &allParticipantProperty = buyer->getParticipantProperties();
+        Util::displayHouseForPlayer(buyer, allParticipantProperty);
+        int indexOfHouseToOffer = Util::readIntegerWithRange(0, (int) allParticipantProperty.size() - 1);
+        GameBoard::Property * property = allParticipantProperty[indexOfHouseToOffer];
         return property;
     } catch(NoPropertyException &exception) {
         cout << exception.message << " Cancelling property offer. (Make cash only)" << endl;

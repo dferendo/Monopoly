@@ -9,7 +9,6 @@
 #include "../Player/Participant.h"
 #include "../GameMechanics/Trade.h"
 #include "../GameMechanics/Move.h"
-#include "../GameMechanics/SellingBuilding.h"
 
 using namespace std;
 using namespace Player;

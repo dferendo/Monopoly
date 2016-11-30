@@ -36,6 +36,7 @@ double Util::readPositiveDoubleWithLimit(double limit) {
         try {
             getline(cin, number);
             // stoi will throw an exception if no numbers were given
+            // TODO not reading double
             double givenNumber = stoi(number);
             if (givenNumber >= 0 && givenNumber <= limit) {
                 return givenNumber;

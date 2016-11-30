@@ -23,6 +23,7 @@ void GameBoard::Property::setOwner(Participant *owner) {
 
 void GameBoard::Property::noOwner(Participant *player, GameMechanics::Game * game) {
     vector<string> noOwnerChoice;
+    // TODO add property details
     noOwnerChoice.push_back("Buy property");
     noOwnerChoice.push_back("Banker auction property");
 

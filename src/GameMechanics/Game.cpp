@@ -21,13 +21,12 @@ void GameMechanics::Game::play() {
     // Every player turn will have these options
     vector<string> displayMenu;
 
+    // TODO check property details
     displayMenu.push_back("Trade");
-    displayMenu.push_back("Sell buildings(houses)");
+    displayMenu.push_back("Manage properties");
     displayMenu.push_back("Player Profile");
-    displayMenu.push_back("Mortgage");
     displayMenu.push_back("Move");
 
-    // TODO player playing twice after deleting one
     while (true) {
         // Not using foreach because when people are bankrupt they are removed from the list
         // and a player would repeat a turn.
@@ -37,27 +36,22 @@ void GameMechanics::Game::play() {
             cout << "\033[1;31m" << participantsPlaying[i]->getName() << "'s turn." << "\033[0m" << endl;
             int selection = 0;
             // Trade, sell property, display participant information or move
-            while (selection != 4) {
+            while (selection != 3) {
                 Util::displayMenu(displayMenu);
-                selection = Util::readIntegerWithRange(0, 4);
+                selection = Util::readIntegerWithRange(0, 3);
                 switch (selection) {
                     case 0: {
                         Trade::tradePropertyBuyerKnown(this, participantsPlaying[i]);
                         break;
                     }
                     case 1: {
-                        SellingBuilding::sellBuilding(participantsPlaying[i]);
+                        manageProperties(participantsPlaying[i], this);
                         break;
                     }
                     case 2: {
                         cout << participantsPlaying[i]->toString(*participantsPlaying[i]) << endl;
                         break;
                     }
-                    case 3: {
-                        mortgage(participantsPlaying[i]);
-                        break;
-                    }
-                        // TODO remove it useless, handled by menu. So that IntelliJ doesnt complain
                     default:break;
                 }
             }
@@ -72,55 +66,22 @@ void GameMechanics::Game::play() {
         // When only 1 participant left, he won
         if (participantsPlaying.size() == 1) {
             break;
-        } else if (participantsPlaying.size())
+        }
         cout << "New turn!!" << endl;
         Util::pressEnterToContinue();
     }
     cout << "Congratulation to " << participantsPlaying[0]->getName() << " for winning!" << endl;
 }
 
-void GameMechanics::Game::mortgage(Participant *participant) {
-    vector<string> displayMenu;
-
-    displayMenu.push_back("Mortgage a property");
-    displayMenu.push_back("Remove mortgage (10% increase interest)");
-    displayMenu.push_back("Return to previous menu");
-
-    Util::displayMenu(displayMenu);
-    int selection = Util::readIntegerWithRange(0, (int) displayMenu.size() - 1);
-    if (selection == 0) {
-        mortgageProperty(participant);
-    } else if (selection == 1) {
-        removeMortgageFromProperty(participant);
-    }
-    return;
-}
-
-void GameMechanics::Game::mortgageProperty(Participant *participant) {
-    vector<GameBoard::Property *> nonImprovedProperties;
+void GameMechanics::Game::manageProperties(Participant *participant, GameMechanics::Game *game) {
+    string input;
     try {
-        participant->getNonImprovedParticipantProperties(nonImprovedProperties);
-        Util::displayNonImprovedHouseForPlayer(participant, nonImprovedProperties);
-        int mortgageBuildingIndex = Util::readIntegerWithRange(0, (int) nonImprovedProperties.size() - 1);
-        GameBoard::Property * property = nonImprovedProperties[mortgageBuildingIndex];
-        property->makePropertyMortgage(participant);
-    } catch (NoPropertyException &exception) {
-        cout << exception.message << " Returning to previous menu." << endl;
-    } catch (PropertyIsAlreadyMortgageException &error) {
-        // This exception can be remove by not letting the user see mortgaged building,
-        // left to understand better concepts
-        cout << error.message << " Returning to previous menu." << endl;
-    }
-}
-
-void GameMechanics::Game::removeMortgageFromProperty(Participant *participant) {
-    vector<GameBoard::Property *> mortgageProperties;
-    try {
-        participant->getMortgageParticipantProperties(mortgageProperties);
-        Util::displayAllMortgageProperties(participant, mortgageProperties);
-        int mortgageBuildingIndex = Util::readIntegerWithRange(0, (int) mortgageProperties.size() - 1);
-        GameBoard::Property * property = mortgageProperties[mortgageBuildingIndex];
-        property->removeMortgage(participant);
+        std::vector<GameBoard::Property *> &properties = participant->getParticipantProperties();
+        Util::displayHouseForPlayer(participant, properties);
+        int sellBuildingPropertyIndex = Util::readIntegerWithRange(0, (int) properties.size() - 1);
+        GameBoard::Property * property = properties[sellBuildingPropertyIndex];
+        // If building has houses, it is an upgradeableProperty
+        property->doActionWithoutBeingOnProperty(game);
     } catch (NoPropertyException &exception) {
         cout << exception.message << " Returning to previous menu." << endl;
     }
@@ -165,5 +126,3 @@ GameMechanics::Game::~Game() {
         delete participant;
     }
 }
-
-

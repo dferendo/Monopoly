@@ -12,7 +12,6 @@
 #include "../GameBoard/Property.h"
 #include "Trade.h"
 #include "Move.h"
-#include "SellingBuilding.h"
 using namespace Player;
 
 namespace GameMechanics {
@@ -28,22 +27,19 @@ namespace GameMechanics {
         map<string, int> groupColoursSize;
         double freeParkingJackpot = 0;
         int diceCount;
-        // Functions
-        void mortgage(Participant *participant);
-        void removeMortgageFromProperty(Participant *participant);
     public:
         Game();
         virtual ~Game();
         void play();
         // Can change properties of players
         vector<Participant *> &getParticipantsPlaying();
+        void manageProperties(Participant* participant, GameMechanics::Game *game);
         int getGroupColoursSize(string colourType);
         int getDiceCount() const;
         void setDiceCount(int diceCount);
         double getFreeParkingJackpot() const;
         void setFreeParkingJackpot(double freeParkingJackpot);
         const vector<GameBoard::Tile *> &getGameBoard() const;
-        void mortgageProperty(Participant *participant);
     };
 }
 #endif //MONOPOLY_GAME_H
