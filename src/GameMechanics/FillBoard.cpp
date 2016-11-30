@@ -7,8 +7,6 @@
 using namespace GameBoard;
 
 void GameMechanics::fillGameBoard(vector<Tile *> &gameBoard) {
-    // Xorti does not differ in the game, can use the same pointer
-    Xorti * xorti = new Xorti("Xorti");
     HousesPrice purpleHousePrice(50, 10, 30, 90, 160);
     HousesPrice lightBlueHousePrice(50, 30, 90, 270, 400);
     HousesPrice violetHousePrice(100, 50, 150, 450, 625);
@@ -20,12 +18,12 @@ void GameMechanics::fillGameBoard(vector<Tile *> &gameBoard) {
 
     gameBoard.push_back(new Tile("Go"));
     gameBoard.push_back(new UpgradableProperty("Mediterranean Avenue", 60, 2, "PURPLE", purpleHousePrice, 30));
-    gameBoard.push_back(xorti);
+    gameBoard.push_back(new Xorti("Xorti_1"));
     gameBoard.push_back(new UpgradableProperty("Baltic Avenue", 60, 2, "PURPLE", purpleHousePrice, 30));
     gameBoard.push_back(new Tax("Income Tax", 200));
     gameBoard.push_back(new RailRoad("Reading Railroad", 200, 25, "BLACK", 100));
     gameBoard.push_back(new UpgradableProperty("Oriental Avenue", 100, 6, "LIGHT_BLUE", lightBlueHousePrice, 50));
-    gameBoard.push_back(xorti);
+    gameBoard.push_back(new Xorti("Xorti_2"));
     gameBoard.push_back(new UpgradableProperty("Vermont Avenue", 100, 6, "LIGHT_BLUE", lightBlueHousePrice, 50));
     gameBoard.push_back(new UpgradableProperty("Connecticut Avenue", 100, 6, "LIGHT_BLUE", lightBlueHousePrice, 50));
     gameBoard.push_back(new Tile("Visiting Jail"));
@@ -35,12 +33,12 @@ void GameMechanics::fillGameBoard(vector<Tile *> &gameBoard) {
     gameBoard.push_back(new UpgradableProperty("Virginia Avenue", 140, 10, "VIOLET", violetHousePrice, 70));
     gameBoard.push_back(new RailRoad("Pennsylvania RailRoad", 200, 25, "BLACK", 100));
     gameBoard.push_back(new UpgradableProperty("St. James Place", 180, 14, "ORANGE", orangeHousePrice, 90));
-    gameBoard.push_back(xorti);
+    gameBoard.push_back(new Xorti("Xorti_3"));
     gameBoard.push_back(new UpgradableProperty("Tennessee Avenue", 180, 14, "ORANGE", orangeHousePrice, 90));
     gameBoard.push_back(new UpgradableProperty("New York Avenue", 180, 14, "ORANGE", orangeHousePrice, 90));
     gameBoard.push_back(new Parking("Parking"));
     gameBoard.push_back(new UpgradableProperty("Kentucky", 220, 18, "RED", redHousePrice, 110));
-    gameBoard.push_back(xorti);
+    gameBoard.push_back(new Xorti("Xorti_4"));
     gameBoard.push_back(new UpgradableProperty("Indiana Avenue", 220, 18, "RED", redHousePrice, 110));
     gameBoard.push_back(new UpgradableProperty("Illinois Avenue", 220, 18, "RED", redHousePrice, 110));
     gameBoard.push_back(new RailRoad("B. & O. RailRoad", 200, 25, "BLACK", 100));
@@ -51,10 +49,10 @@ void GameMechanics::fillGameBoard(vector<Tile *> &gameBoard) {
     gameBoard.push_back(new Tile("Go to jail"));
     gameBoard.push_back(new UpgradableProperty("Pacific Avenue", 300, 26, "DARK_GREEN", darkGreenHousePrice, 150));
     gameBoard.push_back(new UpgradableProperty("North Carolina Avenue", 300, 26, "DARK_GREEN", darkGreenHousePrice, 150));
-    gameBoard.push_back(xorti);
+    gameBoard.push_back(new Xorti("Xorti_5"));
     gameBoard.push_back(new UpgradableProperty("Pennsylvania Avenue", 300, 26, "DARK_GREEN", darkGreenHousePrice, 150));
     gameBoard.push_back(new RailRoad("Short Line", 200, 25, "BLACK", 100));
-    gameBoard.push_back(xorti);
+    gameBoard.push_back(new Xorti("Xorti_6"));
     gameBoard.push_back(new UpgradableProperty("Park Place", 350, 35, "DARK_BLUE", darkBlueHousePrice, 175));
     gameBoard.push_back(new Tax("Luxury Tax", 100));
     gameBoard.push_back(new UpgradableProperty("Boardwalk", 400, 50, "DARK_BLUE", darkBlueHousePrice, 175));

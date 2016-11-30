@@ -13,6 +13,7 @@ void Bankruptcy::transferProperties(GameMechanics::Game * game, Player::Particip
     // Remove bankrupt player from list, Note it is non de-allocated yet
     participantsPlaying.erase(remove(participantsPlaying.begin(), participantsPlaying.end(), currentOwner),
                               participantsPlaying.end());
+
     cout << "Cleaning " << currentOwner->getName() << " remaining items." << endl;
     // New owner gets the cash, if new Owner is bank ignore it
     if (moneyAmount > 0 && newOwner != nullptr) {
@@ -24,10 +25,7 @@ void Bankruptcy::transferProperties(GameMechanics::Game * game, Player::Particip
         if (newOwner == nullptr) {
             property->auctionHouse(game);
         } else {
-            if (property->isPropertyMortgage()) {
-                cout << newOwner->getName() << ": " << property->getName() << "property is mortgage!" << endl;
-                property->removeMortgage(newOwner);
-            }
+            cout << "Transferring " << property->getName() << " to " << newOwner->getName() << endl;
             newOwner->addParticipantProperty(property);
             currentOwner->removeProperty(property);
         }

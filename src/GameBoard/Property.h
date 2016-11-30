@@ -19,7 +19,9 @@ namespace GameBoard {
         double propertyPrice;
         double rentCost;
         Participant * owner = nullptr;
-        int currentHousesBuild = 0;
+        // TODO remove this
+        // TODO player can only sell houses when he is on tile.
+        int currentHousesBuild = 0;cd
         string colour;
         // This can be accessed only by UpgradableProperty
         void setCurrentHousesBuild(int currentHousesBuild);

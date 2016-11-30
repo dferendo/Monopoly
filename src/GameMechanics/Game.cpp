@@ -17,6 +17,7 @@ GameMechanics::Game::Game() {
 
 void GameMechanics::Game::play() {
     Dice dice;
+    unsigned long size;
     // Every player turn will have these options
     vector<string> displayMenu;
 
@@ -26,10 +27,14 @@ void GameMechanics::Game::play() {
     displayMenu.push_back("Mortgage");
     displayMenu.push_back("Move");
 
+    // TODO player playing twice after deleting one
     while (true) {
-        for (auto &participant : participantsPlaying) {
+        // Not using foreach because when people are bankrupt they are removed from the list
+        // and a player would repeat a turn.
+        for (vector<Player::Participant>::size_type i = 0; i != participantsPlaying.size(); i++) {
+            size = participantsPlaying.size();
             // Change terminal colour, better for reading
-            cout << "\033[1;31m" << participant->getName() << "'s turn." << "\033[0m" << endl;
+            cout << "\033[1;31m" << participantsPlaying[i]->getName() << "'s turn." << "\033[0m" << endl;
             int selection = 0;
             // Trade, sell property, display participant information or move
             while (selection != 4) {
@@ -37,19 +42,19 @@ void GameMechanics::Game::play() {
                 selection = Util::readIntegerWithRange(0, 4);
                 switch (selection) {
                     case 0: {
-                        Trade::tradePropertyBuyerKnown(this, participant);
+                        Trade::tradePropertyBuyerKnown(this, participantsPlaying[i]);
                         break;
                     }
                     case 1: {
-                        SellingBuilding::sellBuilding(participant);
+                        SellingBuilding::sellBuilding(participantsPlaying[i]);
                         break;
                     }
                     case 2: {
-                        cout << participant->toString(*participant) << endl;
+                        cout << participantsPlaying[i]->toString(*participantsPlaying[i]) << endl;
                         break;
                     }
                     case 3: {
-                        mortgage(participant);
+                        mortgage(participantsPlaying[i]);
                         break;
                     }
                         // TODO remove it useless, handled by menu. So that IntelliJ doesnt complain
@@ -57,12 +62,17 @@ void GameMechanics::Game::play() {
                 }
             }
             // Move will go to another player after execution
-            Move::move(this, participant, &dice);
+            Move::move(this, participantsPlaying[i], &dice);
+            // If size is not equal to the participants size, there was a player that was bankrupt thus
+            // the vector moved and the current player is located at the current index located by i.
+            if (size != participantsPlaying.size()) {
+                i--;
+            }
         }
         // When only 1 participant left, he won
         if (participantsPlaying.size() == 1) {
             break;
-        }
+        } else if (participantsPlaying.size())
         cout << "New turn!!" << endl;
         Util::pressEnterToContinue();
     }
