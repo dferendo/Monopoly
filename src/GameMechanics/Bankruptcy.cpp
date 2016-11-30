@@ -14,8 +14,8 @@ void Bankruptcy::transferProperties(GameMechanics::Game * game, Player::Particip
     participantsPlaying.erase(remove(participantsPlaying.begin(), participantsPlaying.end(), currentOwner),
                               participantsPlaying.end());
     cout << "Cleaning " << currentOwner->getName() << " remaining items." << endl;
-    // New owner gets the cash
-    if (moneyAmount > 0) {
+    // New owner gets the cash, if new Owner is bank ignore it
+    if (moneyAmount > 0 && newOwner != nullptr) {
         newOwner->getMoney().addBalance(moneyAmount);
     }
     // New owner gets the property

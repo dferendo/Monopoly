@@ -52,6 +52,7 @@ void GameBoard::Property::buyProperty(Participant *player) {
     }
 }
 
+// TODO improve this
 void GameBoard::Property::auctionHouse(GameMechanics::Game * game) {
     // Bids can start from any amount including 0
     double currentBid = -1;

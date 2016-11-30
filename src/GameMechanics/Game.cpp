@@ -147,13 +147,13 @@ void GameMechanics::Game::setDiceCount(int diceCount) {
 
 GameMechanics::Game::~Game() {
     // Clearing game board
-//    for (auto &tile : gameBoard) {
-//        delete tile;
-//    }
+    for (auto &tile : gameBoard) {
+        delete tile;
+    }
     // Clearing players
-//    for (auto &participant : participantsPlaying) {
-//        delete participant;
-//    }
+    for (auto &participant : participantsPlaying) {
+        delete participant;
+    }
 }
 
 

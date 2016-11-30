@@ -7,7 +7,7 @@
 void GameMechanics::Move::move(Game * game, Participant * participant, Dice *dice) {
     Move move;
     bool anotherTurnForPlayer = true;
-    int totalParticipants = (int) game->getParticipantsPlaying().size();
+    unsigned long totalParticipants = game->getParticipantsPlaying().size();
     int counter = 0;
     while (anotherTurnForPlayer) {
         // Roll dice to move
