@@ -33,6 +33,7 @@ namespace GameMechanics {
         void removeMortgageFromProperty(Participant *participant);
     public:
         Game();
+        virtual ~Game();
         void play();
         // Can change properties of players
         vector<Participant *> &getParticipantsPlaying();

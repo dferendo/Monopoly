@@ -66,7 +66,7 @@ void GameBoard::Property::auctionHouse(GameMechanics::Game * game) {
         tempBidder = selectBidder(game->getParticipantsPlaying(), bidder);
         double highestAmount = tempBidder->getMoney().getBalance();
         cout << tempBidder->getName() << " highest offer is " << highestAmount << "." <<endl;
-        cout << "Enter amount: ";
+        cout << "Enter amount greater or equal to 0: ";
         double amount = Util::readPositiveDoubleWithLimit(tempBidder->getMoney().getBalance());
         // First bid will always be greater or equal than 0, thus the first bid
         // is always accepted. No nullptr risk.

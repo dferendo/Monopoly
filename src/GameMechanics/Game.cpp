@@ -26,8 +26,7 @@ void GameMechanics::Game::play() {
     displayMenu.push_back("Mortgage");
     displayMenu.push_back("Move");
 
-    // When only 1 participant left, he won
-    while (participantsPlaying.size() != 1) {
+    while (true) {
         for (auto &participant : participantsPlaying) {
             // Change terminal colour, better for reading
             cout << "\033[1;31m" << participant->getName() << "'s turn." << "\033[0m" << endl;
@@ -53,16 +52,21 @@ void GameMechanics::Game::play() {
                         mortgage(participant);
                         break;
                     }
-                    // TODO remove it useless, handled by menu. So that IntelliJ doesnt complain
+                        // TODO remove it useless, handled by menu. So that IntelliJ doesnt complain
                     default:break;
                 }
             }
             // Move will go to another player after execution
             Move::move(this, participant, &dice);
         }
+        // When only 1 participant left, he won
+        if (participantsPlaying.size() == 1) {
+            break;
+        }
         cout << "New turn!!" << endl;
         Util::pressEnterToContinue();
     }
+    cout << "Congratulation to " << participantsPlaying[0]->getName() << " for winning!" << endl;
 }
 
 void GameMechanics::Game::mortgage(Participant *participant) {
@@ -108,7 +112,7 @@ void GameMechanics::Game::removeMortgageFromProperty(Participant *participant) {
         GameBoard::Property * property = mortgageProperties[mortgageBuildingIndex];
         property->removeMortgage(participant);
     } catch (NoHousesException &exception) {
-        cout << exception.message << ". Returning to previous menu." << endl;
+        cout << exception.message << " Returning to previous menu." << endl;
     }
 }
 
@@ -139,6 +143,17 @@ const vector<GameBoard::Tile *> &GameMechanics::Game::getGameBoard() const {
 
 void GameMechanics::Game::setDiceCount(int diceCount) {
     Game::diceCount = diceCount;
+}
+
+GameMechanics::Game::~Game() {
+    // Clearing game board
+//    for (auto &tile : gameBoard) {
+//        delete tile;
+//    }
+    // Clearing players
+//    for (auto &participant : participantsPlaying) {
+//        delete participant;
+//    }
 }
 
 

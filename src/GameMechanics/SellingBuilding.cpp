@@ -27,6 +27,6 @@ void GameMechanics::SellingBuilding::sellBuilding(Participant *participant) {
             // TODO check with JP for this thing
         }
     } catch (NoHousesException &exception) {
-        cout << exception.message << ". Returning to previous menu." << endl;
+        cout << exception.message << " Returning to previous menu." << endl;
     }
 }

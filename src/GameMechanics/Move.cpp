@@ -7,6 +7,7 @@
 void GameMechanics::Move::move(Game * game, Participant * participant, Dice *dice) {
     Move move;
     bool anotherTurnForPlayer = true;
+    int totalParticipants = (int) game->getParticipantsPlaying().size();
     int counter = 0;
     while (anotherTurnForPlayer) {
         // Roll dice to move
@@ -21,6 +22,10 @@ void GameMechanics::Move::move(Game * game, Participant * participant, Dice *dic
         }
         move.determineParticipantLocation(game, participant, game->getDiceCount());
         game->getGameBoard()[participant->getCurrentPosition()]->action(participant, game);
+        // If a player went bankrupt, he cannot have another turn thus stop moving.
+        if (totalParticipants != game->getParticipantsPlaying().size()) {
+            return;
+        }
         counter++;
         Util::pressEnterToContinue();
     }
@@ -48,7 +53,7 @@ void GameMechanics::Move::validateGoFunds(Participant *participant, int location
 bool GameMechanics::Move::checkDiceDouble(GameMechanics::Dice *dice) {
     pair<int, int> * diceRoll = dice->getCurrentDiceRoll();
     if (diceRoll->first == diceRoll->second) {
-        cout << "Doubles!! Player gets another dice roll after doing a  tile action unless it"
+        cout << "Doubles!! Player gets another dice roll after doing a tile action unless it"
                 " is the third consecutive time!" << endl;
         return true;
     }
