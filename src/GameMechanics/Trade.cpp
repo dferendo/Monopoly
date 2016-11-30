@@ -4,7 +4,7 @@
 
 #include <sstream>
 #include "Trade.h"
-#include "../Exception/NoHousesException.h"
+#include "../Exception/NoPropertyException.h"
 using namespace Exception;
 
 void GameMechanics::Trade::tradePropertyBuyerKnown(GameMechanics::Game *game, Participant *buyer) {
@@ -19,7 +19,7 @@ void GameMechanics::Trade::tradePropertyBuyerKnown(GameMechanics::Game *game, Pa
         Util::displayNonImprovedHouseForPlayer(seller, nonImprovedProperties);
         int indexOfHouseToBuy = Util::readIntegerWithRange(0, (int) nonImprovedProperties.size() - 1);
         trade.transactionTrade(buyer, seller, nonImprovedProperties[indexOfHouseToBuy]);
-    } catch(NoHousesException &exception) {
+    } catch(NoPropertyException &exception) {
         cout << exception.message << " Cancelling trade." << endl;
         return;
     }
@@ -37,7 +37,7 @@ void GameMechanics::Trade::tradePropertySellerKnown(GameMechanics::Game *game, P
         Util::displayNonImprovedHouseForPlayer(seller, nonImprovedProperties);
         int indexOfHouseToBuy = Util::readIntegerWithRange(0, (int) nonImprovedProperties.size() - 1);
         trade.transactionTrade(buyer, seller, nonImprovedProperties[indexOfHouseToBuy]);
-    } catch(NoHousesException &exception) {
+    } catch(NoPropertyException &exception) {
         cout << exception.message << " Cancelling trade." << endl;
         return;
     }
@@ -108,7 +108,7 @@ GameBoard::Property *GameMechanics::Trade::offerProperty(Participant *buyer) {
         int indexOfHouseToOffer = Util::readIntegerWithRange(0, (int) nonImprovedProperties.size() - 1);
         GameBoard::Property * property = nonImprovedProperties[indexOfHouseToOffer];
         return property;
-    } catch(NoHousesException &exception) {
+    } catch(NoPropertyException &exception) {
         cout << exception.message << " Cancelling property offer. (Make cash only)" << endl;
         return nullptr;
     }

@@ -4,8 +4,8 @@
 
 #include "Game.h"
 #include "FillBoard.h"
-#include "../Exception/NoHousesException.h"
-#include "../Exception/HouseIsAlreadyMortgageException.h"
+#include "../Exception/NoPropertyException.h"
+#include "../Exception/PropertyIsAlreadyMortgageException.h"
 using namespace Exception;
 
 GameMechanics::Game::Game() {
@@ -104,9 +104,9 @@ void GameMechanics::Game::mortgageProperty(Participant *participant) {
         int mortgageBuildingIndex = Util::readIntegerWithRange(0, (int) nonImprovedProperties.size() - 1);
         GameBoard::Property * property = nonImprovedProperties[mortgageBuildingIndex];
         property->makePropertyMortgage(participant);
-    } catch (NoHousesException &exception) {
+    } catch (NoPropertyException &exception) {
         cout << exception.message << " Returning to previous menu." << endl;
-    } catch (HouseIsAlreadyMortgageException &error) {
+    } catch (PropertyIsAlreadyMortgageException &error) {
         // This exception can be remove by not letting the user see mortgaged building,
         // left to understand better concepts
         cout << error.message << " Returning to previous menu." << endl;
@@ -121,7 +121,7 @@ void GameMechanics::Game::removeMortgageFromProperty(Participant *participant) {
         int mortgageBuildingIndex = Util::readIntegerWithRange(0, (int) mortgageProperties.size() - 1);
         GameBoard::Property * property = mortgageProperties[mortgageBuildingIndex];
         property->removeMortgage(participant);
-    } catch (NoHousesException &exception) {
+    } catch (NoPropertyException &exception) {
         cout << exception.message << " Returning to previous menu." << endl;
     }
 }

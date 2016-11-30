@@ -42,9 +42,9 @@ namespace Player {
         void getNonImprovedParticipantProperties(vector<GameBoard::Property *> &nonImprovedProperties);
         void getImprovedParticipantProperties(vector<GameBoard::Property *> &improvedProperties);
         void getMortgageParticipantProperties(vector<GameBoard::Property *> &mortgageProperties);
-//        string toString(Participant& participant);
+        string toString(Participant& participant);
         // TODO ask JP for this << operator
-         ostream& operator<<(std::ostream& stream, const Participant& participant);
+//         ostream& operator<<(std::ostream& stream, const Participant& participant);
     };
 }
 #endif //MONOPOLY_PARTICIPANT_H

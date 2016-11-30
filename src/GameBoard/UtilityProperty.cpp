@@ -9,7 +9,7 @@ using namespace Exception;
 
 GameBoard::UtilityProperty::UtilityProperty(const string &name, double propertyPrice, double rentCost,
                                             const string &colour, double mortgage)
-        : Property(name, propertyPrice, rentCost, colour, mortgage) {}
+        : NonUpgradableProperty(name, propertyPrice, rentCost, colour, mortgage) {}
 
 void GameBoard::UtilityProperty::action(Player::Participant *player, GameMechanics::Game * game) {
     // Nobody owns the property
@@ -28,7 +28,7 @@ void GameBoard::UtilityProperty::payRent(Player::Participant *player, GameMechan
         cout << "Property is mortgage, no rent is due." << endl;
         return;
     }
-    amount = game->getDiceCount() * rentCost(player);
+    amount = getRentCost(game);
     try {
         player->getMoney().subtractBalance(amount);
         getOwner()->getMoney().addBalance(amount);
@@ -42,10 +42,10 @@ void GameBoard::UtilityProperty::payRent(Player::Participant *player, GameMechan
     }
 }
 
-double GameBoard::UtilityProperty::rentCost(Player::Participant *player) {
-    if (getOwner()->getSameGroupColourPropertiesAmount("WHITE") == 2) {
-        return OWNER_OWNS_BOTH_UTILITY;
+double GameBoard::UtilityProperty::getRentCost(GameMechanics::Game *game) {
+    if (checkIfOwnerHasAllSameColour(getOwner(), game)) {
+        return OWNER_OWNS_BOTH_UTILITY * game->getDiceCount();
     }
-    return getRentCost();
+    return rentCost * game->getDiceCount();
 }
 

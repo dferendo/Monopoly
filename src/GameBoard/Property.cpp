@@ -102,14 +102,6 @@ const string &GameBoard::Property::getColour() const {
     return colour;
 }
 
-double GameBoard::Property::getRentCost() const {
-    return rentCost;
-}
-
-int GameBoard::Property::getCurrentHousesBuild() const {
-    return currentHousesBuild;
-}
-
 string GameBoard::Property::getName() {
     if (isPropertyMortgage()) {
         return Tile::getName() + " - Mortgage";
@@ -117,8 +109,6 @@ string GameBoard::Property::getName() {
     return Tile::getName();
 }
 
-void GameBoard::Property::setCurrentHousesBuild(int currentHousesBuild) {
-    Property::currentHousesBuild = currentHousesBuild;
+bool GameBoard::Property::checkIfOwnerHasAllSameColour(Player::Participant *player, GameMechanics::Game *game) {
+    return player->getSameGroupColourPropertiesAmount(getColour()) == game->getGroupColoursSize(getColour());
 }
-
-

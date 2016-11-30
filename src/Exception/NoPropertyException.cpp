@@ -3,16 +3,16 @@
 //
 
 #include <sstream>
-#include "NoHousesException.h"
+#include "NoPropertyException.h"
 
 namespace Exception {
-    NoHousesException::NoHousesException(Player::Participant &participant) {
+    NoPropertyException::NoPropertyException(Player::Participant &participant) {
         stringstream messageCompose;
-        messageCompose << participant.getName() << " has no houses!";
+        messageCompose << participant.getName() << " has no properties!";
         message = messageCompose.str();
     }
 
-    NoHousesException::NoHousesException(Player::Participant &participant, string message) {
+    NoPropertyException::NoPropertyException(Player::Participant &participant, string message) {
         stringstream messageCompose;
         messageCompose << participant.getName() << message;
         this->message = messageCompose.str();

@@ -4,7 +4,7 @@
 
 #include <sstream>
 #include "Participant.h"
-#include "../Exception/NoHousesException.h"
+#include "../Exception/NoPropertyException.h"
 using namespace Exception;
 
 namespace Player {
@@ -71,7 +71,7 @@ namespace Player {
             }
         }
         if (nonImprovedProperties.size() == 0) {
-            throw NoHousesException(*this);
+            throw NoPropertyException(*this);
         }
     }
 
@@ -82,7 +82,7 @@ namespace Player {
             }
         }
         if (improvedProperties.size() == 0) {
-            throw NoHousesException(*this);
+            throw NoPropertyException(*this);
         }
     }
 
@@ -93,7 +93,7 @@ namespace Player {
             }
         }
         if (mortgageProperties.size() == 0) {
-            throw NoHousesException(*this);
+            throw NoPropertyException(*this);
         }
     }
 

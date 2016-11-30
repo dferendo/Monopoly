@@ -4,7 +4,7 @@
 
 #include "Mortgage.h"
 #include "../Player/Participant.h"
-#include "../Exception/HouseIsAlreadyMortgageException.h"
+#include "../Exception/PropertyIsAlreadyMortgageException.h"
 #include "../Exception/NoMoneyException.h"
 using namespace Exception;
 
@@ -22,7 +22,7 @@ void GameBoard::Mortgage::makePropertyMortgage(Player::Participant *participant)
     string input;
 
     if (isPropertyMortgage()) {
-        throw HouseIsAlreadyMortgageException();
+        throw PropertyIsAlreadyMortgageException();
     }
     cout << "You will receive " << getMortgagePrice() << ". Do you accept? (Y/n)" << endl;
     getline(cin, input);

@@ -5,7 +5,6 @@
 #ifndef MONOPOLY_UPGRADABLEPROPERTY_H
 #define MONOPOLY_UPGRADABLEPROPERTY_H
 
-#include "Property.h"
 #include "../GameMechanics/Game.h"
 #include "HousesPrice.h"
 
@@ -15,17 +14,20 @@ namespace GameBoard {
     class UpgradableProperty: public Property {
     private:
         HousesPrice housesPrice;
+        int currentHousesBuild = 0;
+        void setCurrentHousesBuild(int currentHousesBuild);
     public:
         UpgradableProperty(const string &name, double propertyPrice, double rentCost, const string &colour,
                            GameBoard::HousesPrice housesPrice, double mortgage);
         void action(Player::Participant *player, GameMechanics::Game * game) override;
-        bool checkIfOwnerHasAllSameColour(Player::Participant *player, GameMechanics::Game *game);
-        void upgradeProperty(Player::Participant *player);
         void payRent(Player::Participant *player, GameMechanics::Game * game) override;
         void addHouseToProperty(Player::Participant *player);
         void removeHouseFromProperty(Player::Participant *player);
         const HousesPrice &getHousesPrice() const;
         string getName();
+        void doActionWithoutBeingOnProperty(GameMechanics::Game *game) override;
+        int getCurrentHousesBuild() const;
+        double getRentCost(GameMechanics::Game *game) override;
     };
 }
 

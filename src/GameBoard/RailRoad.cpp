@@ -2,15 +2,15 @@
 // Created by dylan on 19/11/2016.
 //
 
-#include <cmath>
 #include "RailRoad.h"
 #include "../Exception/NoMoneyException.h"
 #include "../GameMechanics/Bankruptcy.h"
+#include <math.h>
 using namespace Exception;
 
 GameBoard::RailRoad::RailRoad(const string &name, double propertyPrice,
                               double rentCost, const string &colour, double mortgage)
-        : Property(name, propertyPrice, rentCost, colour, mortgage) {}
+        : NonUpgradableProperty(name, propertyPrice, rentCost, colour, mortgage) {}
 
 
 void GameBoard::RailRoad::action(Player::Participant *player, GameMechanics::Game *game) {
@@ -24,13 +24,10 @@ void GameBoard::RailRoad::action(Player::Participant *player, GameMechanics::Gam
 }
 
 void GameBoard::RailRoad::payRent(Player::Participant *player, GameMechanics::Game * game) {
-    int numberOfRailRoad = getOwner()->getSameGroupColourPropertiesAmount("BLACK");
-    cout << "The owner has in total " << numberOfRailRoad << " railroads" << endl;
-    // Charge 25 if one owned, 50 if two owned, 100 if three owned, 200 if all owned by the same owner
-    int amountToBePaid = pow(2, numberOfRailRoad - 1) * 25;
+    double amount = getRentCost(game);
     try {
-        player->getMoney().subtractBalance(amountToBePaid);
-        getOwner()->getMoney().addBalance(amountToBePaid);
+        player->getMoney().subtractBalance(amount);
+        getOwner()->getMoney().addBalance(amount);
     } catch (NoMoneyException & exception) {
         cout << exception.message << endl;
         // If player cannot pay debt, he will be declared bankrupt
@@ -39,4 +36,11 @@ void GameBoard::RailRoad::payRent(Player::Participant *player, GameMechanics::Ga
             Bankruptcy::transferProperties(game, player, getOwner());
         }
     }
+}
+
+double GameBoard::RailRoad::getRentCost(GameMechanics::Game *game) {
+    int numberOfRailRoad = getOwner()->getSameGroupColourPropertiesAmount(getColour());
+    cout << "The owner has in total " << numberOfRailRoad << " railroads" << endl;
+    // Charge 25 if one owned, 50 if two owned, 100 if three owned, 200 if all owned by the same owner
+    return pow(2, (double) numberOfRailRoad - 1) * 25;
 }

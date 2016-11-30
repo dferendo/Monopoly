@@ -8,11 +8,11 @@
 #include "../Player/Participant.h"
 
 namespace Exception {
-    class NoHousesException {
+    class NoPropertyException {
     public:
-        string message = " ran out of money!";
-        NoHousesException(Player::Participant &participant);
-        NoHousesException(Player::Participant &participant, string message);
+        string message;
+        NoPropertyException(Player::Participant &participant);
+        NoPropertyException(Player::Participant &participant, string message);
     };
 }
 

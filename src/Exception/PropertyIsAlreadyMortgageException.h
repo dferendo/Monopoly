@@ -7,7 +7,7 @@
 
 #include <iostream>
 namespace Exception {
-    class HouseIsAlreadyMortgageException {
+    class PropertyIsAlreadyMortgageException {
     public:
         std::string message = "House is already mortgage!";
     };
