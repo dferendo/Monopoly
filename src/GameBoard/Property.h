@@ -9,6 +9,7 @@
 #include "../Util/ReadInput.h"
 #include "../Util/MenuHelper.h"
 #include "Mortgage.h"
+
 using namespace Player;
 
 namespace GameBoard {
@@ -23,18 +24,20 @@ namespace GameBoard {
         Participant * selectBidder(vector<Participant *> participants, Participant *currentBidder);
         double rentCost;
     private:
-        string colour;
+        Colour colour;
     public:
-        Property(const string &name, double propertyPrice, double rentCost, string colour, double mortgage);
+        Property(const string &name, double propertyPrice, double rentCost, Colour colour, double mortgage);
         Participant * getOwner();
         string getName();
         void setOwner(Participant *owner);
-        const string &getColour() const;
+        double getPropertyPrice() const;
+        const Colour &getColour() const;
         virtual double getRentCost(GameMechanics::Game * game) = 0;
         virtual void action(Participant *player, GameMechanics::Game * game) = 0;
         // The 3 types of property pay differently.
         virtual void payRent(Participant *player, GameMechanics::Game * game) = 0;
         virtual void doActionWithoutBeingOnProperty(GameMechanics::Game * game) = 0;
+        virtual string toString(Property & property) = 0;
         void auctionHouse(GameMechanics::Game * game);
         bool checkIfOwnerHasAllSameColour(Player::Participant *player, GameMechanics::Game *game);
     };

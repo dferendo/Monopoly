@@ -5,6 +5,7 @@
 #ifndef MONOPOLY_TILE_H
 #define MONOPOLY_TILE_H
 #include <iostream>
+#include "Colours.h"
 using namespace std;
 
 // This forward declaration is needed since every tile action is done by a player, and every player has some tiles

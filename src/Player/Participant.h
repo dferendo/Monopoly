@@ -9,9 +9,8 @@
 #include <iostream>
 #include <map>
 #include "Money.h"
-#include "../GameBoard/Property.h"
+#include "../GameBoard/Colours.h"
 #include <algorithm>
-
 using namespace std;
 
 namespace GameBoard {
@@ -35,9 +34,9 @@ namespace Player {
         Money & getMoney();
         vector<GameBoard::Property *> & getParticipantProperties();
         void removeProperty(GameBoard::Property *property);
-        vector<GameBoard::Property *> getGroupColoursProperties(string colourType);
+        vector<GameBoard::Property *> getGroupColoursProperties(GameBoard::Colour colourType);
         void addParticipantProperty(GameBoard::Property *property);
-        int getSameGroupColourPropertiesAmount(string colourType);
+        int getSameGroupColourPropertiesAmount(GameBoard::Colour colourType);
         string toString(Participant &participant);
         bool operator==(const Participant &rhs);
     };

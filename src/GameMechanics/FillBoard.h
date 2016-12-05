@@ -18,6 +18,7 @@
 #include "../Util/ReadInput.h"
 #include "../GameMechanics/Dice.h"
 #include "../GameBoard/RailRoad.h"
+#include "../GameBoard/Colours.h"
 
 namespace GameMechanics {
     const int MINIMUM_PLAYERS = 2;
@@ -25,6 +26,18 @@ namespace GameMechanics {
 
     void fillGameBoard(vector<GameBoard::Tile *> &gameBoard);
     void determinePlayers(vector<Player::Participant *> &participantsPlaying);
-    void fillGroupColourSizeOfUpgradableProperties(map<string, int> &groupColoursSize);
+    void fillGroupColourSizeOfUpgradableProperties(map<GameBoard::Colour, int> &groupColoursSize);
+
+    // All houses will have same properties thus a method for all different type of houses Colours
+    GameBoard::UpgradableProperty* createPurpleHouse(string houseName);
+    GameBoard::RailRoad* createRailRoad(string houseName);
+    GameBoard::UpgradableProperty* createLightBlueHouse(string houseName);
+    GameBoard::UpgradableProperty* createVioletHouse(string houseName);
+    GameBoard::UtilityProperty* createUtilityHouse(string houseName);
+    GameBoard::UpgradableProperty* createOrangeHouse(string houseName);
+    GameBoard::UpgradableProperty* createRedHouse(string houseName);
+    GameBoard::UpgradableProperty* createYellowHouse(string houseName);
+    GameBoard::UpgradableProperty* createDarkGreenHouse(string houseName);
+    GameBoard::UpgradableProperty* createDarkBlueHouse(string houseName);
 }
 #endif //MONOPOLY_FILLBOARD_H

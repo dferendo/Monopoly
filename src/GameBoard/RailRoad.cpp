@@ -9,7 +9,7 @@
 using namespace Exception;
 
 GameBoard::RailRoad::RailRoad(const string &name, double propertyPrice,
-                              double rentCost, const string &colour, double mortgage)
+                              double rentCost, const Colour &colour, double mortgage)
         : NonUpgradableProperty(name, propertyPrice, rentCost, colour, mortgage) {}
 
 

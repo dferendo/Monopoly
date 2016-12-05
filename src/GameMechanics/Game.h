@@ -24,7 +24,7 @@ namespace GameMechanics {
         // Variables
         vector<GameBoard::Tile *> gameBoard;
         vector<Player::Participant *> participantsPlaying;
-        map<string, int> groupColoursSize;
+        map<GameBoard::Colour, int> groupColoursSize;
         double freeParkingJackpot = 0;
         int diceCount;
     public:
@@ -34,7 +34,7 @@ namespace GameMechanics {
         // Can change properties of players
         vector<Participant *> &getParticipantsPlaying();
         void manageProperties(Participant* participant, GameMechanics::Game *game);
-        int getGroupColoursSize(string colourType);
+        int getGroupColoursSize(const GameBoard::Colour colourType);
         int getDiceCount() const;
         void setDiceCount(int diceCount);
         double getFreeParkingJackpot() const;

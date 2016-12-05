@@ -10,7 +10,7 @@
 namespace GameBoard {
     class RailRoad: public NonUpgradableProperty {
     public:
-        RailRoad(const string &name, double propertyPrice, double rentCost, const string &colour, double mortgage);
+        RailRoad(const string &name, double propertyPrice, double rentCost, const Colour &colour, double mortgage);
         void payRent(Player::Participant *player, GameMechanics::Game * game) override;
         void action(Player::Participant *player, GameMechanics::Game *game) override;
         double getRentCost(GameMechanics::Game *game) override;

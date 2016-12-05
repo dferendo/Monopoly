@@ -2,6 +2,7 @@
 // Created by dylan on 18/11/2016.
 //
 #include "MenuHelper.h"
+#include "../GameBoard/Property.h"
 using namespace Exception;
 
 void Util::displayMenu(vector<string> &options) {

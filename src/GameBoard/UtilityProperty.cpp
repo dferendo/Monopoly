@@ -8,7 +8,7 @@
 using namespace Exception;
 
 GameBoard::UtilityProperty::UtilityProperty(const string &name, double propertyPrice, double rentCost,
-                                            const string &colour, double mortgage)
+                                            const Colour &colour, double mortgage)
         : NonUpgradableProperty(name, propertyPrice, rentCost, colour, mortgage) {}
 
 void GameBoard::UtilityProperty::action(Player::Participant *player, GameMechanics::Game * game) {

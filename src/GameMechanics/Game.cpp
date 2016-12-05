@@ -92,8 +92,8 @@ vector<Participant *> &GameMechanics::Game::getParticipantsPlaying() {
     return participantsPlaying;
 }
 
-int GameMechanics::Game::getGroupColoursSize(string colourType) {
-    map<string, int>::iterator it = groupColoursSize.find(colourType);
+int GameMechanics::Game::getGroupColoursSize(const GameBoard::Colour colourType) {
+    map<GameBoard::Colour, int>::iterator it = groupColoursSize.find(colourType);
     return it->second;
 }
 

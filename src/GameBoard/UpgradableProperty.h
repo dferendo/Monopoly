@@ -17,7 +17,7 @@ namespace GameBoard {
         int currentHousesBuild = 0;
         void setCurrentHousesBuild(int currentHousesBuild);
     public:
-        UpgradableProperty(const string &name, double propertyPrice, double rentCost, const string &colour,
+        UpgradableProperty(const string &name, double propertyPrice, double rentCost, const Colour &colour,
                            GameBoard::HousesPrice housesPrice, double mortgage);
         void action(Player::Participant *player, GameMechanics::Game * game) override;
         void payRent(Player::Participant *player, GameMechanics::Game * game) override;
@@ -28,6 +28,8 @@ namespace GameBoard {
         void doActionWithoutBeingOnProperty(GameMechanics::Game *game) override;
         int getCurrentHousesBuild() const;
         double getRentCost(GameMechanics::Game *game) override;
+
+        string toString(Property &property) override;
     };
 }
 

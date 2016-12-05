@@ -10,7 +10,7 @@
 using namespace Exception;
 
 GameBoard::UpgradableProperty::UpgradableProperty(const string &name, double propertyPrice, double rentCost,
-                                                  const string &colour, GameBoard::HousesPrice housesPrice, double mortgage) :
+                                                  const Colour &colour, GameBoard::HousesPrice housesPrice, double mortgage) :
         Property(name, propertyPrice, rentCost, colour, mortgage), housesPrice(housesPrice) {}
 
 const GameBoard::HousesPrice &GameBoard::UpgradableProperty::getHousesPrice() const {
@@ -152,4 +152,9 @@ double GameBoard::UpgradableProperty::getRentCost(GameMechanics::Game *game) {
     } else {
         return getHousesPrice().getHousePrice(currentHousesBuild);
     }
+}
+
+string GameBoard::UpgradableProperty::toString(GameBoard::Property &property) {
+    // TODO
+    return nullptr;
 }

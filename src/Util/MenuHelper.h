@@ -7,7 +7,6 @@
 
 #include <iostream>
 #include <vector>
-#include "../Player/Participant.h"
 #include "../Exception/NoPropertyException.h"
 
 using namespace std;

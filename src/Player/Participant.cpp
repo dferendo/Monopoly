@@ -5,6 +5,7 @@
 #include <sstream>
 #include "Participant.h"
 #include "../Exception/NoPropertyException.h"
+#include "../GameBoard/Property.h"
 using namespace Exception;
 
 namespace Player {
@@ -35,7 +36,7 @@ namespace Player {
         Participant::currentPosition = currentPosition;
     }
 
-    int Participant::getSameGroupColourPropertiesAmount(string colourType) {
+    int Participant::getSameGroupColourPropertiesAmount(const GameBoard::Colour colourType) {
         int counter = 0;
         for (auto const &property : participantProperties) {
             if (property->getColour() == colourType) {
@@ -45,7 +46,7 @@ namespace Player {
         return counter;
     }
 
-    vector<GameBoard::Property *> Participant::getGroupColoursProperties(string colourType) {
+    vector<GameBoard::Property *> Participant::getGroupColoursProperties(GameBoard::Colour colourType) {
         vector<GameBoard::Property *> groupColoursProperties;
         for (auto const &property : participantProperties) {
             if (property->getColour() == colourType) {

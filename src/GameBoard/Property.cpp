@@ -3,13 +3,12 @@
 //
 
 #include "Property.h"
-#include "../GameMechanics/Game.h"
 #include "../Exception/NoMoneyException.h"
-#include <algorithm>
+
 using namespace Exception;
 
 GameBoard::Property::Property(const string &name, double propertyPrice,
-                              double rentCost, string colour, double mortgage) : Tile(name), Mortgage(mortgage), propertyPrice(propertyPrice),
+                              double rentCost, Colour colour, double mortgage) : Tile(name), Mortgage(mortgage), propertyPrice(propertyPrice),
                                                                                  rentCost(rentCost), colour(colour){}
 
 
@@ -27,7 +26,8 @@ void GameBoard::Property::noOwner(Participant *player, GameMechanics::Game * gam
     noOwnerChoice.push_back("Buy property");
     noOwnerChoice.push_back("Banker auction property");
 
-    cout << getName() << " is currently on sale!!\nChoices available: " << endl;
+    cout << getName() << " is currently on sale for the price of "<< getPropertyPrice()
+         << "!!\nChoices available: " << endl;
     Util::displayMenu(noOwnerChoice);
     int choice = Util::readIntegerWithRange(0, 1);
     try {
@@ -99,7 +99,7 @@ Participant * GameBoard::Property::selectBidder(vector<Participant *> participan
     return participants[participantIndex];
 }
 
-const string &GameBoard::Property::getColour() const {
+const GameBoard::Colour &GameBoard::Property::getColour() const {
     return colour;
 }
 
@@ -111,5 +111,10 @@ string GameBoard::Property::getName() {
 }
 
 bool GameBoard::Property::checkIfOwnerHasAllSameColour(Player::Participant *player, GameMechanics::Game *game) {
+    // TODO fix this
     return player->getSameGroupColourPropertiesAmount(getColour()) == game->getGroupColoursSize(getColour());
+}
+
+double GameBoard::Property::getPropertyPrice() const {
+    return propertyPrice;
 }
