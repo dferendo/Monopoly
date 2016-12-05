@@ -27,6 +27,7 @@ void GameMechanics::Game::play() {
     displayMenu.push_back("Player Profile");
     displayMenu.push_back("Move");
 
+    // Display colour properly
     while (true) {
         // Not using foreach because when people are bankrupt they are removed from the list
         // and a player would repeat a turn.

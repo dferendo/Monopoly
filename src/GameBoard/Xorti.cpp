@@ -32,6 +32,7 @@ void GameBoard::Xorti::action(Player::Participant * player, GameMechanics::Game 
 }
 
 void GameBoard::Xorti::birthday(Player::Participant &player) {
+    // TODO collect from every one
     double birthdayMoney = rand() % (MAXIMUM_BIRTHDAY_PRICE - MINIMUM_BIRTHDAY_PRICE) + MINIMUM_BIRTHDAY_PRICE;
     std::cout << "It's your birthday!!! Take " << birthdayMoney << " as a gift." << std::endl;
     player.getMoney().addBalance(birthdayMoney);

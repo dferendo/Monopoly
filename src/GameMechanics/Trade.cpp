@@ -2,6 +2,9 @@
 // Created by dylan on 27/11/2016.
 //
 
+#include <iostream>
+#include <vector>
+#include <algorithm>
 #include <sstream>
 #include "Trade.h"
 #include "../Exception/NoPropertyException.h"
@@ -146,7 +149,7 @@ bool GameMechanics::Trade::makeTransaction(Participant *buyer, Participant *sell
 }
 
 string GameMechanics::Trade::buyerOffer(Participant *buyer, double cashOffered,
-                                        set<GameBoard::Property *> propertiesOffered) {
+                                        set<GameBoard::Property *> &propertiesOffered) {
     stringstream buyerOffer;
     buyerOffer << buyer->getName() << " offered: ";
     if (cashOffered == 0 && propertiesOffered.size() == 0) {
@@ -157,10 +160,11 @@ string GameMechanics::Trade::buyerOffer(Participant *buyer, double cashOffered,
         }
         if (propertiesOffered.size() != 0) {
             buyerOffer << " Properties: ";
-            for (auto &property : propertiesOffered) {
-                // TODO fix comma
+            for (auto & property : propertiesOffered) {
                 buyerOffer << property->getName() << ", ";
             }
+            // Remove comma
+            return buyerOffer.str().substr(0, buyerOffer.str().size() - 2);
         }
     }
     return buyerOffer.str();

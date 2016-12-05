@@ -24,7 +24,7 @@ void GameBoard::Mortgage::makePropertyMortgage(Player::Participant *participant)
     if (isPropertyMortgage()) {
         throw PropertyIsAlreadyMortgageException();
     }
-    cout << "You will receive " << getMortgagePrice() << ". Do you accept? (Y/n)" << endl;
+    cout << "You will receive " << getMortgagePrice() << " for this house to be mortgage. Do you accept? (Y/n)" << endl;
     getline(cin, input);
 
     if (input[0] == 'Y' || input[1] == 'y') {

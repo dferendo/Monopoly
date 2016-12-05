@@ -22,7 +22,7 @@ namespace GameMechanics {
                              double cashOffered, set<GameBoard::Property *> propertiesOffered,
                              GameBoard::Property *propertyForSale);
         string buyerOffer(Participant *buyer, double cashOffered,
-                          set<GameBoard::Property *> propertiesOffered);
+                          set<GameBoard::Property *> &propertiesOffered);
     public:
         static void tradePropertyBuyerKnown(Game *game, Participant *buyer);
         static void tradePropertySellerKnown(Game *game, Participant *seller);

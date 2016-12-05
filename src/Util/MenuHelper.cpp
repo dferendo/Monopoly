@@ -11,7 +11,7 @@ void Util::displayMenu(vector<string> &options) {
 }
 
 void Util::displayPlayers(vector<Player::Participant *> participants) {
-    for (vector<string>::size_type i = 0; i != participants.size(); i++) {
+    for (vector<Player::Participant *>::size_type i = 0; i != participants.size(); i++) {
         cout << i << ". " << participants[i]->getName() << endl;
     }
 }
