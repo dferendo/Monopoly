@@ -2,6 +2,7 @@
 // Created by dylan on 16/11/2016.
 //
 
+#include <sstream>
 #include "UpgradableProperty.h"
 #include "../Exception/NoHouseException.h"
 #include "../Exception/NoMoneyException.h"
@@ -155,6 +156,17 @@ double GameBoard::UpgradableProperty::getRentCost(GameMechanics::Game *game) {
 }
 
 string GameBoard::UpgradableProperty::toString(GameBoard::Property &property) {
-    // TODO
-    return nullptr;
+    stringstream displayProperty;
+    displayProperty << "Property name: " << getName();
+    displayProperty << "\nProperty Price: " << getPropertyPrice();
+    displayProperty << "\nOwner: ";
+    if (getOwner() == nullptr) {
+        displayProperty << "Banker";
+    } else {
+        displayProperty << getOwner();
+    }
+    displayProperty << "\nMortgage value: " << getMortgagePrice();
+    displayProperty << "\nColour type: " << Colours::getColourInString(getColour());
+    displayProperty << "\n" << getHousesPrice();
+    return displayProperty.str();
 }

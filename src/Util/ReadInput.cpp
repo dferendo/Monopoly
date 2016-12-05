@@ -14,7 +14,9 @@ int Util::readIntegerWithRange(int lowerRange, int upperRange) {
             if (givenNumber >= lowerRange && givenNumber <= upperRange) {
                 return givenNumber;
             }
-        } catch (invalid_argument error){};
+        }
+        catch (invalid_argument error){}
+        catch (out_of_range) {};
         cout << "Invalid input, try again." << endl;
     }
 }
@@ -35,13 +37,14 @@ double Util::readPositiveDoubleWithLimit(double limit) {
     while(true) {
         try {
             getline(cin, number);
-            // stoi will throw an exception if no numbers were given
-            // TODO not reading double
-            double givenNumber = stoi(number);
+            // stod will throw an exception if no numbers were given
+            double givenNumber = stod(number);
             if (givenNumber >= 0 && givenNumber <= limit) {
                 return givenNumber;
             }
-        } catch (invalid_argument error){};
+        }
+        catch (invalid_argument error){}
+        catch (out_of_range){};
         cout << "Invalid input, try again." << endl;
     }
 }

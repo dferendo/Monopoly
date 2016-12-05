@@ -21,20 +21,25 @@ void GameBoard::Property::setOwner(Participant *owner) {
 }
 
 void GameBoard::Property::noOwner(Participant *player, GameMechanics::Game * game) {
+    int choice = 0;
     vector<string> noOwnerChoice;
-    // TODO add property details
+    noOwnerChoice.push_back("Property details");
     noOwnerChoice.push_back("Buy property");
     noOwnerChoice.push_back("Banker auction property");
 
     cout << getName() << " is currently on sale for the price of "<< getPropertyPrice()
          << "!!\nChoices available: " << endl;
-    Util::displayMenu(noOwnerChoice);
-    int choice = Util::readIntegerWithRange(0, 1);
     try {
-        if (choice == 0) {
-            buyProperty(player);
-        } else {
-            auctionHouse(game);
+        while (choice == 0) {
+            Util::displayMenu(noOwnerChoice);
+            choice = Util::readIntegerWithRange(0, (int) noOwnerChoice.size());
+            if (choice == 0) {
+                cout << toString(*this) << endl;
+            } else if (choice == 1) {
+                buyProperty(player);
+            } else {
+                auctionHouse(game);
+            }
         }
     } catch (NoMoneyException & exception) {
         cout << exception.message << " The house will be auctioned." << endl;

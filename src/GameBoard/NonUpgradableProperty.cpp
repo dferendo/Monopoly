@@ -24,7 +24,15 @@ void GameBoard::NonUpgradableProperty::doActionWithoutBeingOnProperty(GameMechan
 string GameBoard::NonUpgradableProperty::toString(GameBoard::Property &property) {
     stringstream displayProperty;
     displayProperty << "Property name: " << getName();
-    displayProperty << "\nProperty Price: ";
-    // TODO to string continue
-    return std::__cxx11::string();
+    displayProperty << "\nProperty Price: " << getPropertyPrice();
+    displayProperty << "\nOwner: ";
+    if (getOwner() == nullptr) {
+        displayProperty << "Banker";
+    } else {
+        displayProperty << getOwner();
+    }
+    displayProperty << "\nMortgage value: " << getMortgagePrice();
+    displayProperty << "\nColour type: " << Colours::getColourInString(getColour());
+    displayProperty << "\nDoes not build houses";
+    return displayProperty.str();
 }

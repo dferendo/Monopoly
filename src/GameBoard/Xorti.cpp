@@ -13,7 +13,7 @@ void GameBoard::Xorti::action(Player::Participant * player, GameMechanics::Game 
     int xorti = rand() % MAXIMUM_XORTI;
     try {
         if (xorti == 0) {
-            birthday(*player);
+            birthday(*player, game);
         } else if (xorti == 1) {
             parkingFine(*player, game);
         } else if (xorti == 2) {
@@ -31,11 +31,26 @@ void GameBoard::Xorti::action(Player::Participant * player, GameMechanics::Game 
     }
 }
 
-void GameBoard::Xorti::birthday(Player::Participant &player) {
-    // TODO collect from every one
+void GameBoard::Xorti::birthday(Player::Participant &player, GameMechanics::Game * game) {
     double birthdayMoney = rand() % (MAXIMUM_BIRTHDAY_PRICE - MINIMUM_BIRTHDAY_PRICE) + MINIMUM_BIRTHDAY_PRICE;
-    std::cout << "It's your birthday!!! Take " << birthdayMoney << " as a gift." << std::endl;
-    player.getMoney().addBalance(birthdayMoney);
+    std::cout << "It's your birthday!!! Take " << birthdayMoney << " as a gift from everyone." << std::endl;
+    for (auto &participant : game->getParticipantsPlaying()) {
+        // If player is the same, skip him
+        if (participant == &player) {
+            continue;
+        }
+        try {
+            participant->getMoney().subtractBalance(birthdayMoney);
+            player.getMoney().addBalance(birthdayMoney);
+        } catch (NoMoneyException &noMoneyException) {
+            cout << noMoneyException.message << endl;
+            // If player cannot pay debt, he will be declared bankrupt
+            bool isPlayerNotBankrupt = noMoneyException.payAmountDue(game, noMoneyException.amountDue, participant, &player);
+            if (!isPlayerNotBankrupt) {
+                Bankruptcy::transferProperties(game, participant, &player);
+            }
+        }
+    }
 }
 
 void GameBoard::Xorti::parkingFine(Player::Participant &player, GameMechanics::Game * game) {

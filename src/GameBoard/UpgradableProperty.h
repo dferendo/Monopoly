@@ -28,7 +28,6 @@ namespace GameBoard {
         void doActionWithoutBeingOnProperty(GameMechanics::Game *game) override;
         int getCurrentHousesBuild() const;
         double getRentCost(GameMechanics::Game *game) override;
-
         string toString(Property &property) override;
     };
 }

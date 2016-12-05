@@ -22,6 +22,7 @@ namespace Exception {
         displayMenu.push_back("Manage properties");
         displayMenu.push_back("Pay debt");
         displayMenu.push_back("Declare Bankruptcy");
+        cout << debitor->getName() << " you need to get some money now!!!" << endl;
         // Trade, sell property, display participant information or move
         while (!amountIsPaid) {
             Util::displayMenu(displayMenu);

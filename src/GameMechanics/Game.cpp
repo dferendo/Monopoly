@@ -21,13 +21,11 @@ void GameMechanics::Game::play() {
     // Every player turn will have these options
     vector<string> displayMenu;
 
-    // TODO check property details
     displayMenu.push_back("Trade");
     displayMenu.push_back("Manage properties");
     displayMenu.push_back("Player Profile");
     displayMenu.push_back("Move");
 
-    // Display colour properly
     while (true) {
         // Not using foreach because when people are bankrupt they are removed from the list
         // and a player would repeat a turn.
@@ -37,9 +35,9 @@ void GameMechanics::Game::play() {
             cout << "\033[1;31m" << participantsPlaying[i]->getName() << "'s turn." << "\033[0m" << endl;
             int selection = 0;
             // Trade, sell property, display participant information or move
-            while (selection != 3) {
+            while (selection != (int) displayMenu.size() - 1) {
                 Util::displayMenu(displayMenu);
-                selection = Util::readIntegerWithRange(0, 3);
+                selection = Util::readIntegerWithRange(0, (int) displayMenu.size() - 1);
                 switch (selection) {
                     case 0: {
                         Trade::tradePropertyBuyerKnown(this, participantsPlaying[i]);

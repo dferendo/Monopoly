@@ -22,7 +22,7 @@ namespace GameBoard {
     public:
         Xorti(const string &name);
         void action(Player::Participant *player, GameMechanics::Game * game) override;
-        void birthday(Player::Participant &player);
+        void birthday(Player::Participant &player, GameMechanics::Game * game);
         void parkingFine(Player::Participant &player, GameMechanics::Game * game);
         void mepaFine(Player::Participant &player, GameMechanics::Game * game);
         void moveToRandomPlace(Player::Participant &player, GameMechanics::Game * game);
