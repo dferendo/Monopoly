@@ -37,12 +37,9 @@ namespace Player {
         void removeProperty(GameBoard::Property *property);
         vector<GameBoard::Property *> getGroupColoursProperties(string colourType);
         void addParticipantProperty(GameBoard::Property *property);
-        // TODO operator ==
-        bool isEqual(Participant *participant);
         int getSameGroupColourPropertiesAmount(string colourType);
-        string toString(Participant& participant);
-        // TODO ask JP for this << operator
-//         ostream& operator<<(std::ostream& stream, const Participant& participant);
+        string toString(Participant &participant);
+        bool operator==(const Participant &rhs);
     };
 }
 #endif //MONOPOLY_PARTICIPANT_H

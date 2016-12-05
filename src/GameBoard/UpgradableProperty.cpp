@@ -20,7 +20,7 @@ const GameBoard::HousesPrice &GameBoard::UpgradableProperty::getHousesPrice() co
 void GameBoard::UpgradableProperty::action(Player::Participant *player, GameMechanics::Game * game) {
     if (getOwner() == nullptr) {
         noOwner(player, game);
-    } else if (getOwner()->isEqual(player)) {
+    } else if (getOwner() == player) {
         // Upgrade hotel
         if (checkIfOwnerHasAllSameColour(player, game)) {
             addHouseToProperty(player);

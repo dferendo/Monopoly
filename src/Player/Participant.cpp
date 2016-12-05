@@ -35,10 +35,6 @@ namespace Player {
         Participant::currentPosition = currentPosition;
     }
 
-    bool Participant::isEqual(Participant *participant) {
-        return participantId == participant->participantId;
-    }
-
     int Participant::getSameGroupColourPropertiesAmount(string colourType) {
         int counter = 0;
         for (auto const &property : participantProperties) {
@@ -64,37 +60,27 @@ namespace Player {
                                     participantProperties.end());
     }
 
-//    ostream &Participant::operator<<(std::ostream &stream, const Participant &participant) {
-//        stringstream properties;
-//        properties << "Current properties: ";
-//        if (participant.getParticipantProperties().size() == 0) {
-//            properties << "Nothing";
-//        } else {
-//            for (auto &property : participant.getParticipantProperties()) {
-//                // TODO fix comma
-//                properties << property->getName() << ", ";
-//            }
-//        }
-//        return stream << participant.getName() << " is at position: " << participant.getCurrentPosition() << "\n"
-//                      << "Current balance: " << participant.getMoney().getBalance() << "\n"
-//                      << properties.str();
-//    }
-
     string Participant::toString(Participant &participant) {
         stringstream properties;
-        stringstream message;
+        string displayProperties;
+
         properties << "Current properties: ";
         if (participant.getParticipantProperties().size() == 0) {
             properties << "Nothing";
         } else {
             for (auto &property : participant.getParticipantProperties()) {
-                // TODO fix comma
                 properties << property->getName() << ", ";
             }
+            displayProperties = properties.str().substr(0, properties.str().size() - 2);
         }
+        stringstream message;
         message << participant.getName() << " is at position: " << participant.getCurrentPosition() << "\n"
-                << "Current balance: " << participant.getMoney().getBalance() << "\n"
-                << properties.str();
+                                                  << "Current balance: " << participant.getMoney().getBalance() << "\n"
+                                                  << displayProperties;
         return message.str();
+    }
+
+    bool Participant::operator==(const Participant &rhs) {
+        return this->participantId == rhs.participantId;
     }
 }

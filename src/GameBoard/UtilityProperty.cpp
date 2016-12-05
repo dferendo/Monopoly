@@ -15,7 +15,7 @@ void GameBoard::UtilityProperty::action(Player::Participant *player, GameMechani
     // Nobody owns the property
     if (getOwner() == nullptr) {
         noOwner(player, game);
-    } else if (!getOwner()->isEqual(player)) {
+    } else if (!(getOwner() == player)) {
         // Pay rent
         payRent(player, game);
     }
