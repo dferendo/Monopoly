@@ -10,7 +10,6 @@ using namespace Player;
 
 namespace GameMechanics {
     class Move {
-        // TODO ask JP if should be static?
     private:
         void determineParticipantLocation(Game * game, Participant *participant, int diceCount);
         void validateGoFunds(Participant *participant, int location);

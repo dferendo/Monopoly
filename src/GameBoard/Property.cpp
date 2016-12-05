@@ -58,7 +58,6 @@ void GameBoard::Property::buyProperty(Participant *player) {
     }
 }
 
-// TODO improve this
 void GameBoard::Property::auctionHouse(GameMechanics::Game * game) {
     // Bids can start from any amount including 0
     double currentBid = -1;
@@ -69,8 +68,11 @@ void GameBoard::Property::auctionHouse(GameMechanics::Game * game) {
     cout << "Auctioning " << getName() << "." << endl;
     // Will loop until quit
     while (input[0] == 'Y' || input[0] == 'y')  {
-        cout << "Current bid: " << currentBid << endl;
+        if (currentBid != -1) {
+            cout << "Current bid: " << currentBid << endl;
+        }
         tempBidder = selectBidder(game->getParticipantsPlaying(), bidder);
+        // Get balance so that player cannot offer more money than he can afford
         double highestAmount = tempBidder->getMoney().getBalance();
         cout << tempBidder->getName() << " highest offer is " << highestAmount << "." <<endl;
         cout << "Enter amount greater or equal to 0: ";
@@ -87,6 +89,7 @@ void GameBoard::Property::auctionHouse(GameMechanics::Game * game) {
         getline(cin, input);
     }
     // This exception can be thrown since participant can never enter an amount greater then he can afford
+
     bidder->getMoney().subtractBalance(currentBid);
     bidder->addParticipantProperty(this);
     setOwner(bidder);
@@ -116,7 +119,6 @@ string GameBoard::Property::getName() {
 }
 
 bool GameBoard::Property::checkIfOwnerHasAllSameColour(Player::Participant *player, GameMechanics::Game *game) {
-    // TODO fix this
     return player->getSameGroupColourPropertiesAmount(getColour()) == game->getGroupColoursSize(getColour());
 }
 
