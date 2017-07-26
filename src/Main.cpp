@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Monopoly.h"
+#include "../include/Monopoly.h"
 
 int main() {
     srand (time(NULL));

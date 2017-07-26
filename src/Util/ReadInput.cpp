@@ -2,7 +2,9 @@
 // Created by dylan on 17/11/2016.
 //
 
-#include "ReadInput.h"
+#include "../../include/Util/ReadInput.h"
+
+using namespace std;
 
 int Util::readIntegerWithRange(int lowerRange, int upperRange) {
     string number;
@@ -13,11 +15,16 @@ int Util::readIntegerWithRange(int lowerRange, int upperRange) {
             int givenNumber = stoi(number);
             if (givenNumber >= lowerRange && givenNumber <= upperRange) {
                 return givenNumber;
+            } else {
+                cout << "Invalid input, number not within range try again" << endl;
             }
         }
-        catch (invalid_argument error){}
-        catch (out_of_range) {};
-        cout << "Invalid input, try again." << endl;
+        catch (invalid_argument error) {
+            cout << "Invalid input, try again." << endl;
+        }
+        catch (out_of_range) {
+            cout << "Invalid input, input out of range try again." << endl;
+        };
     }
 }
 
@@ -41,11 +48,16 @@ double Util::readPositiveDoubleWithLimit(double limit) {
             double givenNumber = stod(number);
             if (givenNumber >= 0 && givenNumber <= limit) {
                 return givenNumber;
+            } else {
+                cout << "Invalid input, number not within range try again" << endl;
             }
         }
-        catch (invalid_argument error){}
-        catch (out_of_range){};
-        cout << "Invalid input, try again." << endl;
+        catch (invalid_argument error) {
+            cout << "Invalid input, try again." << endl;
+        }
+        catch (out_of_range) {
+            cout << "Invalid input, input out of range try again." << endl;
+        };
     }
 }
 

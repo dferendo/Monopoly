@@ -3,12 +3,16 @@
 //
 
 #include <sstream>
-#include "NoMoneyException.h"
+#include "../../include/Exception/NoMoneyException.h"
+
+using namespace GameMechanics;
+using namespace std;
+using namespace Player;
 
 namespace Exception {
     NoMoneyException::NoMoneyException(double amountDue) : amountDue(amountDue) {
         stringstream messageCompose;
-        messageCompose << "You ran out of Money! You need to have " << amountDue << " more.";
+        messageCompose << "You ran out of Money! You need to have " << amountDue << " cash.";
         message = messageCompose.str();
     }
 
@@ -16,12 +20,8 @@ namespace Exception {
                                         Participant *creditor) {
         int selection = 0;
         bool amountIsPaid = false;
-        vector<string> displayMenu;
+        vector<string> displayMenu = {"Trade", "Manage properties", "Pay debt", "Declare Bankruptcy"};
 
-        displayMenu.push_back("Trade");
-        displayMenu.push_back("Manage properties");
-        displayMenu.push_back("Pay debt");
-        displayMenu.push_back("Declare Bankruptcy");
         cout << debitor->getName() << " you need to get some money now!!!" << endl;
         // Trade, sell property, display participant information or move
         while (!amountIsPaid) {

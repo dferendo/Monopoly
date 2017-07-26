@@ -1,14 +1,11 @@
 #include <fstream>
-#include "Monopoly.h"
-#include "GameMechanics/Game.h"
+#include "../include/Monopoly.h"
+#include "../include/GameMechanics/Game.h"
+using namespace std;
 
 void Monopoly::start() {
-    vector<string> displayMenu;
+    vector<string> displayMenu = {"Play game", "User guide with assumptions made", "Quit"};
     int selection = 0;
-
-    displayMenu.push_back("Play game");
-    displayMenu.push_back("User guide with assumptions made");
-    displayMenu.push_back("Quit");
 
     cout << "Welcome to Mon\033[1;31mOOP\033[0moly!" << endl;
     while (selection != (int) displayMenu.size() - 1) {
@@ -34,25 +31,12 @@ void Monopoly::play() {
 }
 
 void Monopoly::userManual() {
-    vector<string> displayMenu;
+    vector<string> displayMenu = {"Game objective", "Preparation", "The bank", "The play", "GO", "Buying property",
+                                  "Paying rent", "Xorti", "Income tax", "Free parking", "Houses", "Selling property",
+                                  "Mortgages", "Bankruptcy", "Go back"};
     int selection = 0;
     cout << "This menu includes the rules and assumptions made using the monopoly classic rules. "
             "\nIf there are no assumptions for a chapter, that means that all rules were followed." << endl;
-    displayMenu.push_back("Game objective");
-    displayMenu.push_back("Preparation");
-    displayMenu.push_back("The bank");
-    displayMenu.push_back("The play");
-    displayMenu.push_back("GO");
-    displayMenu.push_back("Buying property");
-    displayMenu.push_back("Paying rent");
-    displayMenu.push_back("Xorti");
-    displayMenu.push_back("Income tax");
-    displayMenu.push_back("Free parking");
-    displayMenu.push_back("Houses");
-    displayMenu.push_back("Selling property");
-    displayMenu.push_back("Mortgages");
-    displayMenu.push_back("Bankruptcy");
-    displayMenu.push_back("Go back");
 
     while (true) {
         Util::displayMenu(displayMenu);
@@ -67,7 +51,7 @@ void Monopoly::userManual() {
 
 void Monopoly::readFromFile(int chapterNumber) {
     // Open file
-    ifstream file("../resources/UserManual.txt");
+    ifstream file("../doc/UserManual.txt");
     string readFromFile;
     int counter = 0;
     if (file) {

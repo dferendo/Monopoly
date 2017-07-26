@@ -2,7 +2,7 @@
 // Created by dylan on 19/11/2016.
 //
 
-#include "HousesPrice.h"
+#include "../../include/GameBoard/HousesPrice.h"
 
 namespace GameBoard {
     HousesPrice::HousesPrice(int priceToUpgrade, int oneHouse, int secondHouse, int thirdHouse,
@@ -10,7 +10,7 @@ namespace GameBoard {
                                                          secondHouse(secondHouse), thirdHouse(thirdHouse),
                                                          fourHouse(fourHouse) {}
 
-    int HousesPrice::getHousePrice(int numberOfHouse) const {
+    int HousesPrice::getHouseRent(int numberOfHouse) const {
         if (numberOfHouse == 1) {
             return oneHouse;
         } else if (numberOfHouse == 2) {
@@ -26,7 +26,7 @@ namespace GameBoard {
     std::ostream &operator<<(std::ostream &stream, const HousesPrice &housesPrice) {
         return stream << "Price of house starting from one house: " << housesPrice.oneHouse << ", "
                       << housesPrice.secondHouse << ", " << housesPrice.thirdHouse << ", "
-                      << housesPrice.fourHouse << ". Price to upgrade: " << housesPrice.priceToUpgrade << endl;
+                      << housesPrice.fourHouse << ". Price to upgrade: " << housesPrice.priceToUpgrade;
     }
 
     int HousesPrice::getPriceToUpgrade() const {

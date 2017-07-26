@@ -3,8 +3,66 @@ project(Monopoly)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror")
 
-set(SOURCE_FILES src/Main.cpp src/Exception/NoMoneyException.h src/Exception/NoHouseException.cpp src/Exception/NoHouseException.h)
-add_executable(Monopoly ${SOURCE_FILES} src/Main.cpp
-        src/GameBoard/Tile.cpp src/GameBoard/Tile.h src/GameBoard/Parking.cpp
-        src/GameBoard/Parking.h src/GameBoard/Xorti.cpp src/GameBoard/Xorti.h
-        src/GameBoard/Property.cpp src/GameBoard/Property.h src/GameBoard/UtilityProperty.cpp src/GameBoard/UtilityProperty.h src/GameBoard/UpgradableProperty.cpp src/GameBoard/UpgradableProperty.h src/Monopoly.cpp src/Monopoly.h src/GameBoard/Tax.cpp src/GameBoard/Tax.h src/Player/Participant.cpp src/Player/Participant.h src/Player/Money.cpp src/Player/Money.h src/Util/ReadInput.cpp src/Util/ReadInput.h src/GameMechanics/Dice.cpp src/GameMechanics/Dice.h src/Util/MenuHelper.cpp src/Util/MenuHelper.h src/GameMechanics/Game.cpp src/GameMechanics/Game.h src/GameMechanics/FillBoard.cpp src/GameMechanics/FillBoard.h src/GameBoard/RailRoad.cpp src/GameBoard/RailRoad.h src/GameBoard/HousesPrice.cpp src/GameBoard/HousesPrice.h src/Exception/NoPropertyException.cpp src/Exception/NoPropertyException.h src/GameMechanics/Trade.cpp src/GameMechanics/Trade.h src/GameBoard/Mortgage.cpp src/GameBoard/Mortgage.h src/GameMechanics/Move.cpp src/GameMechanics/Move.h src/Exception/PropertyIsAlreadyMortgageException.h src/Exception/NoMoneyException.cpp src/GameMechanics/Bankruptcy.cpp src/GameMechanics/Bankruptcy.h src/GameBoard/NonUpgradableProperty.h src/GameBoard/NonUpgradableProperty.cpp src/GameBoard/Colours.h)
+set(HEADER_FILES
+        include/Monopoly.h
+        include/Exception/NoHouseException.h
+        include/Exception/NoMoneyException.h
+        include/Exception/NoPropertyException.h
+        include/Exception/PropertyIsAlreadyMortgageException.h
+        include/Exception/PropertyIsNotMortgagedException.h
+        include/GameBoard/Colour.h
+        include/GameBoard/HousesPrice.h
+        include/GameBoard/Mortgage.h
+        include/GameBoard/NonUpgradableProperty.h
+        include/GameBoard/Parking.h
+        include/GameBoard/Property.h
+        include/GameBoard/RailRoad.h
+        include/GameBoard/Tax.h
+        include/GameBoard/Tile.h
+        include/GameBoard/UpgradableProperty.h
+        include/GameBoard/UtilityProperty.h
+        include/GameBoard/Xorti.h
+        include/GameMechanics/Bankruptcy.h
+        include/GameMechanics/Dice.h
+        include/GameMechanics/FillBoard.h
+        include/GameMechanics/Game.h
+        include/GameMechanics/Move.h
+        include/GameMechanics/Trade.h
+        include/Player/Money.h
+        include/Player/Participant.h
+        include/Util/MenuHelper.h
+        include/Util/ReadInput.h
+        )
+
+set(SOURCE_FILES
+        src/Main.cpp
+        src/Monopoly.cpp
+        src/Exception/NoHouseException.cpp
+        src/Exception/NoMoneyException.cpp
+        src/Exception/NoPropertyException.cpp
+        src/GameBoard/Colour.cpp
+        src/GameBoard/HousesPrice.cpp
+        src/GameBoard/Mortgage.cpp
+        src/GameBoard/NonUpgradableProperty.cpp
+        src/GameBoard/Parking.cpp
+        src/GameBoard/Property.cpp
+        src/GameBoard/RailRoad.cpp
+        src/GameBoard/Tax.cpp
+        src/GameBoard/Tile.cpp
+        src/GameBoard/UpgradableProperty.cpp
+        src/GameBoard/UtilityProperty.cpp
+        src/GameBoard/Xorti.cpp
+        src/GameMechanics/Bankruptcy.cpp
+        src/GameMechanics/Dice.cpp
+        src/GameMechanics/FillBoard.cpp
+        src/GameMechanics/Game.cpp
+        src/GameMechanics/Move.cpp
+        src/GameMechanics/Trade.cpp
+        src/Player/Money.cpp
+        src/Player/Participant.cpp
+        src/Util/MenuHelper.cpp
+        src/Util/ReadInput.cpp
+        )
+
+
+add_executable(Monopoly ${HEADER_FILES} ${SOURCE_FILES})

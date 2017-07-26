@@ -2,31 +2,30 @@
 // Created by dylan on 18/11/2016.
 //
 
-#include "Game.h"
-#include "FillBoard.h"
-#include "../Exception/NoPropertyException.h"
-#include "../Exception/PropertyIsAlreadyMortgageException.h"
+#include "../../include/GameMechanics/Game.h"
+#include "../../include/GameMechanics/FillBoard.h"
+#include "../../include/Exception/NoPropertyException.h"
+#include "../../include/Exception/PropertyIsAlreadyMortgageException.h"
 using namespace Exception;
+using namespace std;
+using namespace Player;
 
 GameMechanics::Game::Game() {
+    FillBoard fillBoard;
     // Initialise
-    GameMechanics::fillGameBoard(gameBoard);
-    GameMechanics::determinePlayers(participantsPlaying);
-    GameMechanics::fillGroupColourSizeOfUpgradableProperties(groupColoursSize);
+    fillBoard.fillGameBoard(gameBoard);
+    fillBoard.determinePlayers(participantsPlaying);
 }
 
 void GameMechanics::Game::play() {
     Dice dice;
     unsigned long size;
+    unsigned long round = 0;
     // Every player turn will have these options
-    vector<string> displayMenu;
-
-    displayMenu.push_back("Trade");
-    displayMenu.push_back("Manage properties");
-    displayMenu.push_back("Player Profile");
-    displayMenu.push_back("Move");
+    vector<string> displayMenu = {"Trade", "Manage properties", "Player Profile", "Move"};
 
     while (true) {
+        cout << "| Round: " << ++round << " |" << endl;
         // Not using foreach because when people are bankrupt they are removed from the list
         // and a player would repeat a turn.
         for (vector<Player::Participant>::size_type i = 0; i != participantsPlaying.size(); i++) {
@@ -48,7 +47,7 @@ void GameMechanics::Game::play() {
                         break;
                     }
                     case 2: {
-                        cout << participantsPlaying[i]->toString(*participantsPlaying[i]) << endl;
+                        cout << participantsPlaying[i]->toString() << endl;
                         break;
                     }
                     default:break;
@@ -66,7 +65,7 @@ void GameMechanics::Game::play() {
         if (participantsPlaying.size() == 1) {
             break;
         }
-        cout << "New turn!!" << endl;
+        cout << "New Round!!" << endl;
         Util::pressEnterToContinue();
     }
     cout << "Congratulation to " << participantsPlaying[0]->getName() << " for winning!" << endl;
@@ -76,10 +75,9 @@ void GameMechanics::Game::manageProperties(Participant *participant, GameMechani
     string input;
     try {
         std::vector<GameBoard::Property *> &properties = participant->getParticipantProperties();
-        Util::displayHouseForPlayer(participant, properties);
+        Util::displayHousesForParticipant(participant);
         int sellBuildingPropertyIndex = Util::readIntegerWithRange(0, (int) properties.size() - 1);
         GameBoard::Property * property = properties[sellBuildingPropertyIndex];
-        // If building has houses, it is an upgradeableProperty
         property->doActionWithoutBeingOnProperty(game);
     } catch (NoPropertyException &exception) {
         cout << exception.message << " Returning to previous menu." << endl;
@@ -88,11 +86,6 @@ void GameMechanics::Game::manageProperties(Participant *participant, GameMechani
 
 vector<Participant *> &GameMechanics::Game::getParticipantsPlaying() {
     return participantsPlaying;
-}
-
-int GameMechanics::Game::getGroupColoursSize(const GameBoard::Colour colourType) {
-    map<GameBoard::Colour, int>::iterator it = groupColoursSize.find(colourType);
-    return it->second;
 }
 
 int GameMechanics::Game::getDiceCount() const {

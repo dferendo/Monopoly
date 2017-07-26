@@ -3,7 +3,7 @@
 //
 
 #include <cstdlib>
-#include "Dice.h"
+#include "../../include/GameMechanics/Dice.h"
 
 std::pair<int, int> * GameMechanics::Dice::generateNewDiceRoll() {
     int firstDice = rand() % MAXIMUM_DICE + MINIMUM_DICE;

@@ -3,10 +3,11 @@
 //
 
 #include <sstream>
-#include "Participant.h"
-#include "../Exception/NoPropertyException.h"
-#include "../GameBoard/Property.h"
+#include "../../include/Player/Participant.h"
+#include "../../include/Exception/NoPropertyException.h"
+#include "../../include/GameBoard/Property.h"
 using namespace Exception;
+using namespace std;
 
 namespace Player {
     Participant::Participant(int participantId, const string &name) : participantId(participantId),
@@ -36,24 +37,14 @@ namespace Player {
         Participant::currentPosition = currentPosition;
     }
 
-    int Participant::getSameGroupColourPropertiesAmount(const GameBoard::Colour colourType) {
+    int Participant::getSameGroupColourPropertiesAmount(const GameBoard::ColourType colourType) {
         int counter = 0;
         for (auto const &property : participantProperties) {
-            if (property->getColour() == colourType) {
+            if (property->getColourType() == colourType) {
                 counter++;
             }
         }
         return counter;
-    }
-
-    vector<GameBoard::Property *> Participant::getGroupColoursProperties(GameBoard::Colour colourType) {
-        vector<GameBoard::Property *> groupColoursProperties;
-        for (auto const &property : participantProperties) {
-            if (property->getColour() == colourType) {
-                groupColoursProperties.push_back(property);
-            }
-        }
-        return groupColoursProperties;
     }
 
     void Participant::removeProperty(GameBoard::Property *property) {
@@ -61,22 +52,23 @@ namespace Player {
                                     participantProperties.end());
     }
 
-    string Participant::toString(Participant &participant) {
+    string Participant::toString() {
         stringstream properties;
         string displayProperties;
 
-        properties << "Current properties: ";
-        if (participant.getParticipantProperties().size() == 0) {
-            properties << "Nothing";
+        properties << "\nCurrent properties: ";
+        if (getParticipantProperties().size() == 0) {
+            properties << "Nothing!";
+            displayProperties = properties.str();
         } else {
-            for (auto &property : participant.getParticipantProperties()) {
+            for (auto &property : getParticipantProperties()) {
                 properties << property->getName() << ", ";
             }
             displayProperties = properties.str().substr(0, properties.str().size() - 2);
         }
         stringstream message;
-        message << participant.getName() << " is at position: " << participant.getCurrentPosition() << "\n"
-                                                  << "Current balance: " << participant.getMoney().getBalance() << "\n"
+        message << getName() << " is at position: " << getCurrentPosition() << "\n"
+                                                  << "Current balance: " << getMoney().getBalance()
                                                   << displayProperties;
         return message.str();
     }

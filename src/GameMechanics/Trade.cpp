@@ -6,9 +6,13 @@
 #include <vector>
 #include <algorithm>
 #include <sstream>
-#include "Trade.h"
-#include "../Exception/NoPropertyException.h"
+#include "../../include/GameMechanics/Trade.h"
+#include "../../include/Exception/NoPropertyException.h"
+#include "../../include/Exception/NoMoneyException.h"
+
 using namespace Exception;
+using namespace Player;
+using namespace std;
 
 void GameMechanics::Trade::tradePropertyBuyerKnown(GameMechanics::Game *game, Participant *buyer) {
     Trade trade;
@@ -18,7 +22,7 @@ void GameMechanics::Trade::tradePropertyBuyerKnown(GameMechanics::Game *game, Pa
     try {
         // Display properties
         vector<GameBoard::Property *> &allParticipantsProperties= seller->getParticipantProperties();
-        Util::displayHouseForPlayer(seller, allParticipantsProperties);
+        Util::displayHousesForParticipant(seller);
         int indexOfHouseToBuy = Util::readIntegerWithRange(0, (int) allParticipantsProperties.size() - 1);
         trade.transactionTrade(buyer, seller, allParticipantsProperties[indexOfHouseToBuy]);
     } catch(NoPropertyException &exception) {
@@ -35,7 +39,7 @@ void GameMechanics::Trade::tradePropertySellerKnown(GameMechanics::Game *game, P
     try {
         // Display properties
         vector<GameBoard::Property *> &allParticipantProperties = seller->getParticipantProperties();
-        Util::displayHouseForPlayer(seller, allParticipantProperties);
+        Util::displayHousesForParticipant(seller);
         int indexOfHouseToBuy = Util::readIntegerWithRange(0, (int) allParticipantProperties.size() - 1);
         trade.transactionTrade(buyer, seller, allParticipantProperties[indexOfHouseToBuy]);
     } catch(NoPropertyException &exception) {
@@ -44,10 +48,10 @@ void GameMechanics::Trade::tradePropertySellerKnown(GameMechanics::Game *game, P
     }
 }
 
-Participant *GameMechanics::Trade::determineTrader(vector<Participant *> participants, Participant *buyer) {
+Participant *GameMechanics::Trade::determineTrader(vector<Participant *> participants, Participant *trader) {
     // Erase is done on a copy of the reference
-    participants.erase(remove(participants.begin(), participants.end(), buyer), participants.end());
-    Util::displayPlayers(participants);
+    participants.erase(remove(participants.begin(), participants.end(), trader), participants.end());
+    Util::displayParticipants(participants);
     int indexOfParticipant = Util::readIntegerWithRange(0, (int) participants.size() - 1);
     return participants[indexOfParticipant];
 }
@@ -55,14 +59,10 @@ Participant *GameMechanics::Trade::determineTrader(vector<Participant *> partici
 void GameMechanics::Trade::transactionTrade(Participant *buyer, Participant *seller,
                                             GameBoard::Property *propertyForSale) {
     set<GameBoard::Property *> propertiesOffered;
-    vector<string> displayTradeOptions;
+    vector<string> displayTradeOptions = {"Offer new cash amount", "Offer property(Can offer multiple properties)",
+                                          "Make transaction", "Quit transaction"};
     double cashOffered = 0;
     int offerChoice = 0;
-
-    displayTradeOptions.push_back("Offer new cash amount");
-    displayTradeOptions.push_back("Offer property(Can offer multiple properties)");
-    displayTradeOptions.push_back("Make transaction");
-    displayTradeOptions.push_back("Quit transaction");
 
     cout << buyer->getName() << " request to buy " << propertyForSale->getName() << " from " << seller->getName()
          << "." << endl;
@@ -104,7 +104,7 @@ double GameMechanics::Trade::offerCash(Participant *buyer) {
 GameBoard::Property *GameMechanics::Trade::offerProperty(Participant *buyer) {
     try {
         vector<GameBoard::Property *> &allParticipantProperty = buyer->getParticipantProperties();
-        Util::displayHouseForPlayer(buyer, allParticipantProperty);
+        Util::displayHousesForParticipant(buyer);
         int indexOfHouseToOffer = Util::readIntegerWithRange(0, (int) allParticipantProperty.size() - 1);
         GameBoard::Property * property = allParticipantProperty[indexOfHouseToOffer];
         return property;
@@ -123,11 +123,16 @@ bool GameMechanics::Trade::makeTransaction(Participant *buyer, Participant *sell
     getline(cin, input);
     if (input[0] == 'y' || input[0] == 'Y') {
         // Add cash to seller
-        if (cashOffered != 0) {
+        try {
+            if (cashOffered != 0) {
+                buyer->getMoney().subtractBalance(cashOffered);
+                seller->getMoney().addBalance(cashOffered);
+            }
+        } catch (NoMoneyException &noMoneyException) {
             // The NoMoneyException can never be triggered since user can only enter an amount
             // that he has.
-            buyer->getMoney().subtractBalance(cashOffered);
-            seller->getMoney().addBalance(cashOffered);
+            cout << noMoneyException.message << endl;
+            return false;
         }
         // Set properties to new owner. Buyer offered properties to seller
         if (propertiesOffered.size() != 0) {

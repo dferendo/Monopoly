@@ -2,7 +2,8 @@
 // Created by dylan on 16/11/2016.
 //
 
-#include "Tile.h"
+#include "../../include/GameBoard/Tile.h"
+using namespace std;
 
 string GameBoard::Tile::getName() {
     return name;
@@ -10,8 +11,6 @@ string GameBoard::Tile::getName() {
 
 GameBoard::Tile::Tile(const string &name) : name(name) {}
 
-void GameBoard::Tile::action(Player::Participant *player, GameMechanics::Game *game) {
-
-}
+void GameBoard::Tile::action(Player::Participant *participant, GameMechanics::Game *game) {}
 
 GameBoard::Tile::~Tile() {}
