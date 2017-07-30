@@ -18,3 +18,9 @@ The following shows the UML diagram for the project.
 
 This project is licensed under MIT. The game is taken from
 https://www.hasbro.com/en-us/brands/monopoly.
+
+## Future Updates
+
+The implementation will be made on QT to allow GUI to play the game
+(some time in the near future) to learn/practice QT. Currently, the
+game can only be played in a console based system.
